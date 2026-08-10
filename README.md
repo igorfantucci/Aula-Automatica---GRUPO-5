@@ -9,4 +9,7 @@ Neste contexto, o projeto integrará os fundamentos da matemática discreta à e
 ## Funcionamento Detalhado
 
 - [ ] Descrever o funcionamento detalhado do processo. — *@Gabriel*
-- [ ] Desenhar a malha de controle. — *@André*
+
+# Malha de controle do processo
+<img width="1536" height="1024" alt="1523cd44-3c4d-4cdc-9a3a-a7728ef68286" src="https://github.com/user-attachments/assets/c2f47d93-0785-449d-a177-3682025b3f6e" />
+
