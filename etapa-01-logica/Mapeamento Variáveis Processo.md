@@ -48,7 +48,7 @@
 | **LT-402** | Transmissor de Nível | Nível Tanque Final | $l_{fim}$ | **ALARME:** Tanque de produto acabado CHEIO |
 | **P-401** | Motor / Bomba | Transf. Biodiesel Puro | $b_{final}$ | Bomba de transferência final LIGADA |
 
-
+<img width="1408" height="768" alt="Gemini_Generated_Image_lw1a21lw1a21lw1a" src="https://github.com/user-attachments/assets/56be4ad7-533a-4c4a-99ce-232f6df7f6b9" />
 
 
 
