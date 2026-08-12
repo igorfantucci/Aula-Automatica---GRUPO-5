@@ -442,3 +442,52 @@ Dessa forma, o projeto integra conceitos de **Matemática Discreta, Automação 
 # Malha de controle do processo
 <img width="1536" height="1024" alt="1523cd44-3c4d-4cdc-9a3a-a7728ef68286" src="https://github.com/user-attachments/assets/c2f47d93-0785-449d-a177-3682025b3f6e" />
 
+# Mapeamento de Variáveis de Processo para Proposições Lógicas (ISA-5.1)
+
+## Setor 100: Armazenamento e Preparação do Metóxido
+
+| Tag Instrumento | Tipo de Dispositivo | Variável Física | Proposição Lógica | Descrição do Estado 1 (Verdadeiro) |
+| :--- | :--- | :--- | :--- | :--- |
+| **LT-101** | Chave de Nível | Nível do Tanque de Óleo | $l_{oleo}$ | Nível de óleo **suficiente** para uma batelada |
+| **P-101** | Motor / Bomba | Bomba de Óleo Vegetal | $b_{oleo}$ | Bomba de óleo LIGADA |
+| **XV-101** | Válvula On/Off | Saída de Óleo | $v_{oleo}$ | Válvula de saída de óleo ABERTA |
+| **LT-102** | Chave de Nível | Nível do Tanque de Metanol | $l_{met}$ | Nível de metanol **suficiente** para uma batelada |
+| **P-102** | Motor / Bomba | Bomba de Metanol | $b_{met}$ | Bomba de metanol LIGADA |
+| **XV-102** | Válvula de Corte | Saída de Metanol | $v_{met}$ | Válvula de segurança de metanol ABERTA |
+| **LT-103** | Transmissor de Nível | Nível Tanque de Metóxido | $l_{mix}$ | Nível de metóxido atingiu o setpoint da receita |
+| **AG-103** | Contator / Motor | Misturador de Metóxido | $m_{mix}$ | Agitador do metóxido LIGADO |
+| **AT-100** | Detector de Gás | Vapores Inflamáveis | $g_{alm}$ | **ALARME:** Concentração de gás acima do limite |
+
+## Setor 200: Reação (Reator CSTR)
+
+| Tag Instrumento | Tipo de Dispositivo | Variável Física | Proposição Lógica | Descrição do Estado 1 (Verdadeiro) |
+| :--- | :--- | :--- | :--- | :--- |
+| **LT-201** | Transmissor de Nível | Nível do Reator | $l_{reator}$ | Nível atingiu o volume total da batelada |
+| **LSH-201** | Chave de Nível Alto | Transbordamento | $l_{alto}$ | **ALARME:** Nível acima do limite de segurança |
+| **TT-201** | Transmissor Temp. | Temperatura de Processo | $t_{proc}$ | Temperatura atingiu o setpoint da reação |
+| **TSH-201** | Chave de Temp. Alta | Temperatura Crítica | $t_{alta}$ | **ALARME:** Temperatura excede o limite seguro |
+| **AG-201** | Inversor / Motor | Agitador do Reator | $m_{reator}$ | Agitador do reator LIGADO |
+| **HT-201** | Atuador Térmico | Aquecimento do Reator | $h_{1}$ | Sistema de aquecimento AUTORIZADO/LIGADO |
+| **CW-201** | Circuito Hidráulico | Resfriamento Emergência | $r_{1}$ | Sistema de emergência DISPONÍVEL (Pressão OK) |
+| **CW-202** | Circuito Hidráulico | Resfriamento Processo | $c_{proc}$ | Resfriamento de fim de reação LIGADO |
+| **XV-201** | Válvula On/Off | Entrada de Óleo | $v_{in\_oleo}$ | Válvula de entrada de óleo no reator ABERTA |
+| **XV-202** | Válvula On/Off | Entrada de Metóxido | $v_{in\_mix}$ | Válvula de entrada de metóxido no reator ABERTA |
+| **XV-203** | Válvula On/Off | Saída do Reator | $v_{out\_r}$ | Válvula de esvaziamento do reator ABERTA |
+
+## Setor 300: Decantação e Separação
+
+| Tag Instrumento | Tipo de Dispositivo | Variável Física | Proposição Lógica | Descrição do Estado 1 (Verdadeiro) |
+| :--- | :--- | :--- | :--- | :--- |
+| **LT-301** | Transmissor de Nível | Nível do Decantador | $l_{dec}$ | Decantador cheio (pronto para repouso) |
+| **IT-301** | Sensor de Interface | Divisão de Fases | $i_{glic}$ | Interface Glicerina/Biodiesel detectada no fundo |
+| **XV-301** | Válvula Proporcional | Dreno de Glicerina | $v_{glic}$ | Válvula de retirada de glicerina ABERTA |
+| **XV-302** | Válvula On/Off | Saída Biodiesel Bruto | $v_{bruto}$ | Válvula de transferência para purificação ABERTA |
+
+## Setor 400: Purificação e Armazenamento Final
+
+| Tag Instrumento | Tipo de Dispositivo | Variável Física | Proposição Lógica | Descrição do Estado 1 (Verdadeiro) |
+| :--- | :--- | :--- | :--- | :--- |
+| **FS-401** | Chave de Fluxo | Água de Lavagem | $f_{lav}$ | Fluxo de água de lavagem PRESENTE |
+| **XV-401** | Válvula On/Off | Entrada Tanque Final | $v_{final}$ | Válvula do tanque de armazenamento ABERTA |
+| **LT-402** | Transmissor de Nível | Nível Tanque Final | $l_{fim}$ | **ALARME:** Tanque de produto acabado CHEIO |
+| **P-401** | Motor / Bomba | Transf. Biodiesel Puro | $b_{final}$ | Bomba de transferência final LIGADA |
