@@ -437,7 +437,3 @@ Finalizar batelada
 A principal função do SCADA-Core será garantir que essa sequência seja executada de maneira **determinística, segura e supervisionada**, impedindo transições indevidas, identificando falhas e permitindo o diagnóstico das condições anormais.
 
 Dessa forma, o projeto integra conceitos de **Matemática Discreta, Automação Industrial, Controle de Processos e Sistemas Supervisórios** em uma única aplicação.
-
-
-# Malha de controle do processo
-<img width="1536" height="1024" alt="1523cd44-3c4d-4cdc-9a3a-a7728ef68286" src="https://github.com/user-attachments/assets/c2f47d93-0785-449d-a177-3682025b3f6e" />
