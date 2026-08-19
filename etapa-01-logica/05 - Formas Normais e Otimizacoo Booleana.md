@@ -74,8 +74,8 @@ $$V_{\text{reagente}} = (\neg D \land A \land B \land C) \lor (\neg D \land A \l
 4. **Fatoração de $(\neg D \land A)$:**
    $$V{\text{reagente}} = (\neg D \land A) \land [B \lor (\neg B \land C)]$$
 
-5. **Aplicação da Distributiva/Absorção Estendida $[B \lor (\neg B \land C) \equiv B \lor C]$:
-   $$V_{\text{reagente\_otimizado}} = \neg D \land A \land (B \lor C)$$
+5. **Aplicação da Distributiva/Absorção Estendida $[B \lor (\neg B \land C) \equiv B \lor C]$:**
+   $$V_{\text{otim}} = \neg D \land A \land (B \lor C)$$
 
 ### 4.3. Ganho Prático em Engenharia de Automação
 * **Redução de Complexidade:** A expressão passa de **11 operadores lógicos** para apenas **3 operadores lógicos**.
