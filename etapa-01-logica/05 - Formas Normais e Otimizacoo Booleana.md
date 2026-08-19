@@ -65,16 +65,16 @@ $$V_{\text{reagente}} = (\neg D \land A \land B \land C) \lor (\neg D \land A \l
    Agrupando os termos $(\neg D \land A \land B \land C)$ e $(\neg D \land A \land B \land \neg C)$:
    $$(\neg D \land A \land B) \land (C \lor \neg C)$$
 
-2. **Aplicação do Elemento Inverso ($C \lor \neg C = \top$):**
-   $$(\neg D \land A \land B) \land 1 = \neg D \land A \land B$$
+2. **Aplicação do Elemento Inverso ($C \lor \neg C \equiv \top$):**
+   $$(\neg D \land A \land B) \land 1 \equiv \neg D \land A \land B$$
 
 3. **Recombinação com o Termo Remanescente:**
    $$V_{\text{reagente}} = (\neg D \land A \land B) \lor (\neg D \land A \land \neg B \land C)$$
 
 4. **Fatoração de $(\neg D \land A)$:**
-   $$V_{\text{reagente}} = (\neg D \land A) \land [B \lor (\neg B \land C)]$$
+   $$V{\text{reagente}} = (\neg D \land A) \land [B \lor (\neg B \land C)]$$
 
-5. **Aplicação da Distributiva/Absorção Estendida $[B \lor (\neg B \land C) \equiv B \lor C]$:**
+5. **Aplicação da Distributiva/Absorção Estendida $[B \lor (\neg B \land C) \equiv B \lor C]$:
    $$V_{\text{reagente\_otimizado}} = \neg D \land A \land (B \lor C)$$
 
 ### 4.3. Ganho Prático em Engenharia de Automação
