@@ -75,8 +75,8 @@ A planta de transesterificação em batelada é monitorada pelos seguintes instr
 | **S-200** | `AG-201` | Inversor / Motor | Agitador Principal Reator | $m_{\text{reator}}$ | Agitador do reator R-200 em rotação |
 | **S-200** | `HT-201` | Atuador Térmico | Jaqueta de Aquecimento | $h_1$ | Aquecedor elétrico/vapor ligado |
 | **S-200** | `CW-201` | Circuito Água | Resfriamento Emergência $\ge 3\text{ bar}$ | $r_1$ | Resfriamento de emergência pressurizado |
-| **S-200** | `XV-201` | Válvula On/Off | Entrada Óleo Vegetal | $v_{\text{in\_oleo}}$ | Válvula de alimentação de óleo aberta |
-| **S-200** | `XV-202` | Válvula On/Off | Entrada Metóxido | $v_{\text{in\_mix}}$ | Válvula de alimentação de metóxido aberta |
+| **S-200** | `XV-201` | Válvula On/Off | Entrada Óleo Vegetal | $v_{in\_oleo}$ | Válvula de alimentação de óleo aberta |
+| **S-200** | `XV-202` | Válvula On/Off | Entrada Metóxido | $v_{in\_mix}$ | Válvula de alimentação de metóxido aberta |
 | **S-300** | `LT-301` | Transmissor Nível | Decantador $\ge 90\%$ | $l_{\text{dec}}$ | Decantador com volume de repouso completo |
 | **S-300** | `IT-301` | Sensor de Interface | Interface Glicerina/Biodiesel | $i_{\text{glic}}$ | Interface de separação detectada no fundo |
 | **S-300** | `XV-301` | Válvula Proporcional| Dreno de Glicerina | $v_{\text{glic}}$ | Válvula de descarte de glicerina aberta |
