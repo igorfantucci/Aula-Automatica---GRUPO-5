@@ -13,6 +13,7 @@
 | **LT-103** | Transmissor de Nível | Nível Tanque de Metóxido | $l_{mix}$ | Nível de metóxido atingiu o setpoint da receita |
 | **AG-103** | Contator / Motor | Misturador de Metóxido | $m_{mix}$ | Agitador do metóxido LIGADO |
 | **AT-100** | Detector de Gás | Vapores Inflamáveis | $g_{alm}$ | **ALARME:** Concentração de gás acima do limite |
+| **FS-102** | Sensor / Chave de Fluxo | Fluxo de Metanol | $f_{met}$ | Fluxo de alimentação de metanol CONFIRMADO |
 
 ## Setor 200: Reação (Reator CSTR)
 
@@ -20,6 +21,8 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **LT-201** | Transmissor de Nível | Nível do Reator | $l_{reator}$ | Nível atingiu o volume total da batelada |
 | **LSH-201** | Chave de Nível Alto | Transbordamento | $l_{alto}$ | **ALARME:** Nível acima do limite de segurança |
+| **LSL-201** | Chave de Nível Baixo | Nível Mínimo do Reator | $l_{baixo}$ | **ALARME:** Nível de líquido insuficiente para agitação |
+| **PT-201** | Transmissor de Pressão | Pressão no Reator | $p_1$ | **ALARME:** Sobrepressão no vaso do reator ($\ge 2.5\text{ bar}$) |
 | **TT-201** | Transmissor Temp. | Temperatura de Processo | $t_{proc}$ | Temperatura atingiu o setpoint da reação |
 | **TSH-201** | Chave de Temp. Alta | Temperatura Crítica | $t_{alta}$ | **ALARME:** Temperatura excede o limite seguro |
 | **AG-201** | Inversor / Motor | Agitador do Reator | $m_{reator}$ | Agitador do reator LIGADO |
@@ -47,6 +50,44 @@
 | **XV-401** | Válvula On/Off | Entrada Tanque Final | $v_{final}$ | Válvula do tanque de armazenamento ABERTA |
 | **LT-402** | Transmissor de Nível | Nível Tanque Final | $l_{fim}$ | **ALARME:** Tanque de produto acabado CHEIO |
 | **P-401** | Motor / Bomba | Transf. Biodiesel Puro | $b_{final}$ | Bomba de transferência final LIGADA |
+
+---
+
+## Dispositivos Globais e Sistema Instrumentado de Segurança (SIS / ESD)
+
+| Tag Instrumento | Tipo de Dispositivo | Variável Física | Proposição Lógica | Descrição do Estado 1 (Verdadeiro) |
+| :--- | :--- | :--- | :--- | :--- |
+| **ESD-100** | Botoeira / Chave ESD | Parada de Emergência Geral | $e_1$ | **EMERGÊNCIA:** Botoeira acionada no painel (Safe State Global) |
+
+---
+
+## Tabela de Correspondência e Notações Complementares (Mnemônica vs. Compacta)
+
+Para assegurar total consistência entre a notação mnemônica (Aulas 02, 04, 08, 09 e 10) e a notação compacta/numérica adotada nas deduções e provas formais (Aulas 03 e 07), estabelece-se a seguinte equivalência:
+
+| Tag Instrumento | Notação Mnemônica | Notação Compacta / Prova | Descrição do Sinal |
+| :--- | :---: | :---: | :--- |
+| **HT-201** | $h_1$ | $h_1$ | Aquecedor do reator ligado |
+| **CW-201** | $r_1$ | $r_1$ | Resfriamento de emergência disponível |
+| **PT-201** | $p_1$ | $p_1$ | Sobrepressão no vaso do reator |
+| **TSH-201** | $t_{\text{alta}}$ | $t_1$ | Alarme de temperatura crítica no reator |
+| **LSH-201** | $l_{\text{alto}}$ | $l_{high}$ | Alarme de nível alto / transbordamento |
+| **LSL-201** | $l_{\text{baixo}}$ | $l_{low}$ | Alarme de nível baixo no reator |
+| **ESD-100** | $e_1$ | $e_1$ | Parada geral de emergência ativada |
+| **XV-202** | $v_{\text{in\_mix}}$ | $v_2$ | Válvula de alimentação de metóxido aberta |
+| **AG-201** | $m_{\text{reator}}$ | $m_2$ | Agitador do reator em rotação |
+| **XV-301** | $v_{\text{glic}}$ | $v_3$ | Válvula de dreno de glicerina aberta |
+| **IT-301** | $i_{\text{glic}}$ | $l_3$ | Interface de glicerina/biodiesel detectada |
+| **AG-103** | $m_{\text{mix}}$ | $m_1$ | Misturador de metóxido ligado |
+| **AT-100** | $g_{\text{alm}}$ | $g_1$ | Alarme de detecção de gás inflamável |
+| **P-401** | $b_{\text{final}}$ | $b_1$ | Bomba de transferência final ligada |
+| **FS-401** | $f_{\text{lav}}$ | $f_1$ | Fluxo de água de lavagem presente |
+
+---
+
+## Diagrama Técnico de Blocos Funcionais da Planta
+
+![Diagrama Técnico da Planta de Biodiesel](./Industria_Biodiesel.jpg)
 
 <img width="1408" height="768" alt="Gemini_Generated_Image_lw1a21lw1a21lw1a" src="https://github.com/user-attachments/assets/56be4ad7-533a-4c4a-99ce-232f6df7f6b9" />
 

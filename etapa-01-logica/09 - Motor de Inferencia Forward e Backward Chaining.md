@@ -85,7 +85,7 @@ A base de conhecimento do Grupo 5 cobre as contingências dos quatro setores ope
 
 ## 4. Entregável da Aula 09
 
-* **Notebook Jupyter Pré-Executado:** [`09 - Motor de Inferencia Forward e Backward Chaining.ipynb`](file:///c:/Users/Vitória/Documents/GitHub/Aula-Automatica---GRUPO-5/etapa-01-logica/09%20-%20Motor%20de%20Inferencia%20Forward%20e%20Backward%20Chaining.ipynb) com suporte total ao Google Colab, tabelas ASCII alinhadas e bateria completa de asserções formais (`assert`).
+* **Notebook Jupyter Pré-Executado:** [`09 - Motor de Inferencia Forward e Backward Chaining.ipynb`](./09%20-%20Motor%20de%20Inferencia%20Forward%20e%20Backward%20Chaining.ipynb) com suporte total ao Google Colab, tabelas ASCII alinhadas e bateria completa de asserções formais (`assert`).
 
 ---
 

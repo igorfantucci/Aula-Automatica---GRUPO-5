@@ -1,3 +1,5 @@
+<a href="https://colab.research.google.com/github/igorfantucci/Aula-Automatica---GRUPO-5/blob/main/etapa-01-logica/06%20-%20Quantificadores%20e%20Predicados%20em%20Redes%20de%20Sensores.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 # Aula 06: Lógica de Predicados e Quantificadores em Redes de Sensores
 
 ## 1. Fundamentos Matemáticos: Lógica de Primeira Ordem (FOL)
@@ -17,3 +19,4 @@ Enquanto a lógica proposicional trata sentenças atômicas indivisíveis, a Ló
 ## 2. Entregável da Aula 06
 
 * **Motor de Varredura de Predicados em Redes de Sensores:** Módulo em Python que implementa operadores `FORALL` e `EXISTS` sobre a malha de instrumentos do SCADA da **planta de biodiesel**, permitindo a injeção dinâmica de falhas distribuídas para validação de segurança.
+* **Notebook Jupyter Pré-Executado:** [`06 - Quantificadores e Predicados em Redes de Sensores.ipynb`](./06%20-%20Quantificadores%20e%20Predicados%20em%20Redes%20de%20Sensores.ipynb) com suporte ao Google Colab.

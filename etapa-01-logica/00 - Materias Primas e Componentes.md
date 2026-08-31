@@ -2,9 +2,9 @@
 
 ## 1. Matérias-primas e insumos
 
-### Óleo vegetal
+### Óleo vegetal e fontes de lipídios
 
-É a principal matéria-prima utilizada na produção do biodiesel. O óleo contém os triglicerídeos que participam da reação de transesterificação. Ele é armazenado em um tanque próprio e posteriormente transferido para o reator na quantidade determinada para cada batelada.
+É a principal matéria-prima utilizada na produção do biodiesel. O óleo vegetal (soja, girassol, etc.) contém os triglicerídeos que participam da reação de transesterificação. A planta também é projetada para processar fontes secundárias alternativas de lipídios, tais como óleos residuais de fritura ou gorduras animais, desde que atendam aos requisitos prévios de umidade e acidez livre. Ele é armazenado em tanque próprio e posteriormente transferido para o reator na quantidade determinada para cada batelada.
 
 ### Metanol (CH₃OH)
 
@@ -20,7 +20,11 @@ O metóxido é uma mistura intermediária formada pela combinação do metanol c
 
 ### Água de lavagem
 
-É utilizada durante a etapa de purificação do biodiesel. Sua função é auxiliar na remoção de resíduos e impurezas presentes no produto após a reação e a separação da glicerina.
+É utilizada durante a etapa de purificação do biodiesel. Sua função é auxiliar na remoção de resíduos e impurezas (sabões, metanol remanescente e traços de catalisador) presentes no produto após a reação e a separação da glicerina.
+
+### Ácido de neutralização (Ácido Cítrico ou Clorídrico — HCl)
+
+Utilizado em pequenas dosagens na etapa de lavagem e tratamento aquoso para neutralizar traços de catalisador alcalino remanescentes e estabilizar o pH do biodiesel antes das etapas de secagem e filtragem final.
 
 ---
 
@@ -144,3 +148,9 @@ O sistema executa a sequência da batelada, controla os equipamentos, verifica o
 Dessa forma, a planta é organizada em:
 
 **Matérias-primas → Preparação do metóxido → Reator → Decantação → Separação → Purificação → Armazenamento do biodiesel.**
+
+---
+
+### Diagrama Funcional da Planta
+
+![Diagrama Técnico da Planta de Biodiesel](./Industria_Biodiesel.jpg)

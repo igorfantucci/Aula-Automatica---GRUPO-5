@@ -1,3 +1,5 @@
+<a href="https://colab.research.google.com/github/igorfantucci/Aula-Automatica---GRUPO-5/blob/main/etapa-01-logica/08%20-%20Base%20de%20Conhecimento%20e%20Regras%20de%20Diagnostico.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 # Aula 08: Sistemas Especialistas — Base de Conhecimento e Regras de Diagnóstico
 **Projeto:** Automação e Supervisão da Planta de Produção de Biodiesel (Transesterificação em Batelada)  
 **Módulo:** Sistemas Especialistas Baseados em Regras (RBS), Cláusulas de Horn e Diagnóstico de Causa-Raiz
@@ -51,7 +53,7 @@ A base de conhecimento cobre as anomalias e contingências operacionais mais cr�
 | ID Regra | Antecedentes ($\bigwedge A_i$) | Consequente ($C_i$) | Diagnóstico de Causa-Raiz | Severidade / Prioridade | $t_{\text{max}}$ | POP Associado |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- |
 | **R-01** | $p_1 \land t_{\text{alta}}$ | <code>EXOTERMIA_RUNAWAY_REATOR</code> | **Exotermia Descontrolada e Sobrepressão no Reator R-200** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-01:** Desarme total de <code>HT-201</code>, corte de <code>XV-202</code> e abertura plena de <code>CW-201</code> |
-| **R-02** | <code>EXOTERMIA_RUNAWAY</code> $\land$ <i>v</i><sub>in_mix</sub> | <code>TRIP_ALIMENTACAO_METOXIDO</code> | **Corte Imediato da Dosagem de Metóxido por Reação Fora de Controle** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-02:** Fechar imediatamente <code>XV-202</code>, desenergizar <code>P-102</code> e inertizar com $\text{N}_2$ |
+| **R-02** | <code>EXOTERMIA_RUNAWAY_REATOR</code> $\land$ <i>v</i><sub>in_mix</sub> | <code>TRIP_ALIMENTACAO_METOXIDO</code> | **Corte Imediato da Dosagem de Metóxido por Reação Fora de Controle** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-02:** Fechar imediatamente <code>XV-202</code>, desenergizar <code>P-102</code> e inertizar com $\text{N}_2$ |
 | **R-03** | $g_{\text{alm}}$ | <code>VAZAMENTO_GAS_METANOL_S100</code> | **Detecção de Vapores Inflamáveis/Tóxicos de Metanol no Setor 100** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SST-03:** Cortar <code>XV-102</code> e <code>XV-202</code>, ligar exaustão e desenergizar bombas <code>P-102</code> |
 | **R-04** | $l_{\text{alto}} \land$ <i>v</i><sub>in_oleo</sub> | <code>TRANSBORDAMENTO_REATOR_R200</code> | **Sobrecarga Volumétrica de Óleo Vegetal no Reator de Transesterificação** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-PR-01:** Fechar <code>XV-201</code>, desligar bomba de óleo <code>P-101</code> e reter batelada |
 | **R-05** | $h_1 \land \neg r_1$ | <code>OPERACAO_TERMICA_SEM_SALVAGUARDA</code> | **Acionamento de Aquecedor HT-201 sem Resfriamento de Emergência** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SIS-04:** Trip imediato de <code>HT-201</code> e alarme de manutenção na linha <code>CW-201</code> |
@@ -85,6 +87,7 @@ O sistema especialista opera por **Encadeamento Progressivo (*Forward Chaining*)
   1. `Fato`: Estrutura de dados para proposições com carimbo de tempo (*timestamp*), valor lógico, descrição e rastreabilidade de origem (`"SENSOR"` vs `"INFERIDO"`).
   2. `RegraDiagnostico`: Estrutura de Cláusulas de Horn com antecedentes, consequente, severidade, prioridade, tempo máximo de resposta e Procedimento Operacional Padrão (POP).
   3. `BaseConhecimentoSCADA`: Gerenciador central com motor de indexação invertida por antecedentes, rotina de verificação de consistência lógica, exportação tabular ASCII e motor de inferência em cenários reais.
+* **Notebook Jupyter Pré-Executado:** [`08 - Base de Conhecimento e Regras de Diagnostico.ipynb`](./08%20-%20Base%20de%20Conhecimento%20e%20Regras%20de%20Diagnostico.ipynb) com suporte ao Google Colab.
 
 ---
 

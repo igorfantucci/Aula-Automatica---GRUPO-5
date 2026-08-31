@@ -1,3 +1,5 @@
+<a href="https://colab.research.google.com/github/igorfantucci/Aula-Automatica---GRUPO-5/blob/main/etapa-01-logica/07%20-%20Validade%20e%20Inferencia%20Logica%20na%20Seguranca%20de%20Processos.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 # Aula 07: Validade e Inferência Lógica na Segurança de Processos
 **Projeto:** Automação e Segurança Funcional da Planta de Biodiesel (Transesterificação em Batelada)  
 **Módulo:** Validade de Argumentos Dedutivos, Inferência Lógica e Prova de Consistência da Matriz de Segurança (ESD / SIS)
@@ -119,6 +121,7 @@ A verificação computacional exaustiva sobre todos os $2^{11} = 2048$ estados d
 
 ## 7. Entregável da Aula 07: Síntese da Validação Dedutiva
 
+* **Notebook Jupyter Pré-Executado:** [`07 - Validade e Inferencia Logica na Seguranca de Processos.ipynb`](./07%20-%20Validade%20e%20Inferencia%20Logica%20na%20Seguranca%20de%20Processos.ipynb) com suporte total ao Google Colab, tabelas ASCII e bateria de testes dedutivos.
 * **Módulo `ProvadorDedutivoFormal` em Python:**
   1. Motor de prova exaustiva por **Tabela-Verdade** com isolamento de linhas críticas e detecção de contraexemplos.
   2. Motor de verificação por **Refutação / SAT Solver** com validação de insatisfatibilidade ($\bot$).

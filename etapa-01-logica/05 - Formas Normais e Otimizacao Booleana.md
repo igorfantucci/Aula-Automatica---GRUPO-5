@@ -1,3 +1,5 @@
+<a href="https://colab.research.google.com/github/igorfantucci/Aula-Automatica---GRUPO-5/blob/main/etapa-01-logica/05%20-%20Formas%20Normais%20e%20Otimizacao%20Booleana.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 # Aula 05: Formas Normais e Otimização Booleana
 **Projeto:** Automação do Processo de Produção de Biodiesel (Transesterificação)  
 **Módulo:** Representação Canonica e Minimização de Algoritmos de Controle
@@ -72,7 +74,7 @@ $$V_{\text{reagente}} = (\neg D \land A \land B \land C) \lor (\neg D \land A \l
    $$V_{\text{reagente}} = (\neg D \land A \land B) \lor (\neg D \land A \land \neg B \land C)$$
 
 4. **Fatoração de $(\neg D \land A)$:**
-   $$V{\text{reagente}} = (\neg D \land A) \land [B \lor (\neg B \land C)]$$
+   $$V_{\text{reagente}} = (\neg D \land A) \land [B \lor (\neg B \land C)]$$
 
 5. **Aplicação da Distributiva/Absorção Estendida $[B \lor (\neg B \land C) \equiv B \lor C]$:**
    $$V_{\text{otim}} = \neg D \land A \land (B \lor C)$$
@@ -81,3 +83,9 @@ $$V_{\text{reagente}} = (\neg D \land A \land B \land C) \lor (\neg D \land A \l
 * **Redução de Complexidade:** A expressão passa de **11 operadores lógicos** para apenas **3 operadores lógicos**.
 * **Impacto no CLP:** Menor tempo de varredura (*scan time*), menor ocupação de memória e facilidade na implementação do diagrama ladder e blocos de função FBD.
 * **Segurança:** O termo $\neg D \land A$ atua como o *interlock* mestre obrigatório (ausência de emergência e pressão adequada) antes de avaliar a temperatura ou entrada de matéria-prima.
+
+---
+
+## 5. Entregável da Aula 05
+
+* **Notebook Jupyter Interativo:** [`05 - Formas Normais e Otimizacao Booleana.ipynb`](./05%20-%20Formas%20Normais%20e%20Otimizacao%20Booleana.ipynb) com suporte ao Google Colab, contendo a modelagem das formas normais (FND e FNC), simplificação booleana passo a passo e rotinas de validação comparativa.

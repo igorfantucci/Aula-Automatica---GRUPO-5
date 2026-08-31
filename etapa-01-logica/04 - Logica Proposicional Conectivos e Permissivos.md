@@ -1,3 +1,5 @@
+<a href="https://colab.research.google.com/github/igorfantucci/Aula-Automatica---GRUPO-5/blob/main/etapa-01-logica/04%20-%20Logica%20Proposicional%20Conectivos%20e%20Permissivos.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 # Aula 04: Lógica Proposicional — Conectivos e Blocos de Permissivos
 
 ## 1. Fundamentos Matemáticos: Conectivos Lógicos
@@ -8,14 +10,10 @@ No contexto de sistemas de controle, automação de processos e segurança funci
 
 As operações fundamentais sobre essas variáveis são formalizadas pelos seguintes conectivos lógicos:
 
-1. **Negação ($\neg A$ ou $\bar{A}$):** Inverte o valor-verdade da proposição de entrada. Utilizada para tratar sinais de contato normalmente fechado (NF), alarmes ativos em nível lógico baixo ou condições de ausência de falha ($
-eg e_1$, $
-eg p_1$, $
-eg g_{alm}$).
+1. **Negação ($\neg A$ ou $\bar{A}$):** Inverte o valor-verdade da proposição de entrada. Utilizada para tratar sinais de contato normalmente fechado (NF), alarmes ativos em nível lógico baixo ou condições de ausência de falha ($\neg e_1$, $\neg p_1$, $\neg g_{\text{alm}}$).
 2. **Conjunção ($A \land B$):** Resulta em verdadeiro se e somente se ambos os operandos forem simultaneamente verdadeiros. Na engenharia de automação, modela circuitos e condições em **série**, tais como cadeias de permissivos de partida (*Start Permissives*) e requisitos simultâneos de segurança.
 3. **Disjunção ($A \lor B$):** Resulta em verdadeiro se ao menos um dos operandos for verdadeiro. Modela circuitos e condições em **paralelo**, caminhos redundantes de segurança ou múltiplas causas independentes de desarme (*Trip/Interlock*).
-4. **Disjunção Exclusiva ($A \oplus B$):** Resulta em verdadeiro se e somente se exatamente um dos operandos for verdadeiro (equivalente a $
-eg(A \leftrightarrow B)$). É rigorosamente empregada em seletores de modo operacional mutuamente exclusivos (ex.: $\text{Auto} \oplus \text{Manual}$).
+4. **Disjunção Exclusiva ($A \oplus B$):** Resulta em verdadeiro se e somente se exatamente um dos operandos for verdadeiro (equivalente a $\neg(A \leftrightarrow B)$). É rigorosamente empregada em seletores de modo operacional mutuamente exclusivos (ex.: $\text{Auto} \oplus \text{Manual}$).
 5. **Implicação / Condicional ($A \rightarrow B \equiv \neg A \lor B$):** Estabelece uma relação de causa e efeito ou regra de garantia operacional: "SE a condição/comando $A$ está ativa, ENTÃO o estado/restrição $B$ deve ser satisfeito".
 6. **Bicondicional ($A \leftrightarrow B \equiv (A \rightarrow B) \land (B \rightarrow A)$):** Modela a estrita equivalência lógica e sincronismo entre dois estados operacionais.
 
@@ -132,6 +130,7 @@ $$\text{Trip}_{\text{P-401}} \equiv \neg f_{lav} \lor \neg v_{final} \lor l_{fim
 ## 3. Entregável da Aula 04
 
 * **Algoritmo de Intertravamento e Permissivos da Planta de Biodiesel:** Implementação modular em Python dos operadores fundamentais, das funções de permissivos e trips para os atuadores críticos ($\text{HT-201}$, $\text{XV-202}$, $\text{AG-103}$, $\text{XV-301}$ e $\text{P-401}$), validação através de cenários de contingência e geração exaustiva de tabelas-verdade.
+* **Notebook Jupyter Pré-Executado:** [`04 - Logica Proposicional Conectivos e Permissivos.ipynb`](./04%20-%20Logica%20Proposicional%20Conectivos%20e%20Permissivos.ipynb) com suporte ao Google Colab.
 
 ---
 

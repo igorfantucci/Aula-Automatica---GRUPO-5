@@ -1,3 +1,5 @@
+<a href="https://colab.research.google.com/github/igorfantucci/Aula-Automatica---GRUPO-5/blob/main/etapa-01-logica/03%20-%20Tautologias%20e%20Contradicoes.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
 # Tautologias e Contradições — Planta de Biodiesel
 
 ## 1. Definições Formais Utilizadas
@@ -33,6 +35,27 @@ Equivalências lógicas usadas nas provas:
 | R6 | Permissivo de dreno de glicerina | $v_3 \rightarrow (l_3 \land \neg e_1)$ |
 | R7 | Permissivo de partida do misturador de metóxido | $m_1 \rightarrow (\neg g_1 \land \neg e_1)$ |
 | R8 | Bloqueio de transferência final de biodiesel | $b_1 \rightarrow (\neg e_1 \land f_1)$ |
+
+### Mapeamento e Equivalência de Notações (ISA-5.1):
+Para assegurar total coerência com o mapeamento de variáveis de processo da planta (Aulas 02, 04, 07 e 10), as variáveis proposicionais indexadas utilizadas nas provas formais equivalem aos seguintes instrumentos e tags ISA:
+
+| Símbolo Prova | Tag ISA | Símbolo Mnemônico | Descrição Funcional |
+| :---: | :---: | :---: | :--- |
+| $h_1$ | **HT-201** | $h_1$ | Sistema de aquecimento do reator |
+| $r_1$ | **CW-201** | $r_1$ | Resfriamento de emergência disponível |
+| $p_1$ | **PT-201** | $p_1$ | Alarme de sobrepressão no vaso do reator |
+| $t_1$ | **TSH-201** | $t_{\text{alta}}$ | Alarme de temperatura crítica no reator |
+| $l_{high}$ | **LSH-201** | $l_{\text{alto}}$ | Alarme de nível alto / transbordamento |
+| $e_1$ | **ESD-100** | $e_1$ | Botoeira de parada geral de emergência |
+| $v_2$ | **XV-202** | $v_{\text{in\_mix}}$ | Válvula de alimentação de metóxido |
+| $m_2$ | **AG-201** | $m_{\text{reator}}$ | Agitador principal do reator |
+| $l_{low}$ | **LSL-201** | $l_{\text{baixo}}$ | Alarme de nível mínimo no reator |
+| $v_3$ | **XV-301** | $v_{\text{glic}}$ | Válvula de dreno de glicerina |
+| $l_3$ | **IT-301** | $i_{\text{glic}}$ | Interface glicerina/biodiesel detectada |
+| $m_1$ | **AG-103** | $m_{\text{mix}}$ | Agitador do tanque de metóxido |
+| $g_1$ | **AT-100** | $g_{\text{alm}}$ | Alarme de detecção de vapores de metanol |
+| $b_1$ | **P-401** | $b_{\text{final}}$ | Bomba de transferência final de biodiesel |
+| $f_1$ | **FS-401** | $f_{\text{lav}}$ | Fluxo de água de lavagem presente |
 
 ---
 
@@ -154,4 +177,6 @@ $$m_1 \rightarrow (\neg g_1 \land \neg e_1)$$
 | S2 — Dreno aberto sem interface | Contradição | Estado inatingível sob R6 |
 | Contraexemplo — Partida do misturador | Contingência | Depende da implementação correta de R7 no CLP |
 
-*(Detalhamento superficial/didático — aprofundamento formal, com tabelas-verdade completas de todas as regras (R1–R8) e formas normais, previsto para as Aulas 03 e 05 do módulo.)*
+* **Notebook Jupyter Pré-Executado:** [`03 - Tautologias e Contradicoes.ipynb`](./03%20-%20Tautologias%20e%20Contradicoes.ipynb) com suporte ao Google Colab, tabelas-verdade exaustivas e simulação de estados.
+
+*(Detalhamento formal das regras R1–R8 com validação computacional exaustiva no notebook associado.)*
