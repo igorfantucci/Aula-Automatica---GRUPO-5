@@ -50,17 +50,14 @@ A base de conhecimento cobre as anomalias e contingências operacionais mais cr�
 
 | ID Regra | Antecedentes ($\bigwedge A_i$) | Consequente ($C_i$) | Diagnóstico de Causa-Raiz | Severidade / Prioridade | $t_{\text{max}}$ | POP Associado |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- |
-| **R-01** | $p_1 \land t_{\text{alta}}$ | `EXOTERMIA_RUNAWAY_REATOR` | **Exotermia Descontrolada e Sobrepressão no Reator R-200** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-01:** Desarme total de $\text{HT-201}$, corte de $\text{XV-202}$ e abertura plena de $\text{CW-201}$ |
-| **R-02** | `EXOTERMIA_RUNAWAY` $\land v_{\text{in\_mix}}$ | `TRIP_ALIMENTACAO_METOXIDO` | **Corte Imediato da Dosagem de Metóxido por Reação Fora de Controle** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-02:** Fechar imediatamente $\text{XV-202}$, desenergizar $\text{P-102}$ e inertizar com $\text{N}_2$ |
-| **R-03** | $g_{\text{alm}}$ | `VAZAMENTO_GAS_METANOL_S100` | **Detecção de Vapores Inflamáveis/Tóxicos de Metanol no Setor 100** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SST-03:** Cortar $\text{XV-102}$ e $\text{XV-202}$, ligar exaustão e desenergizar bombas $\text{P-102}$ |
-| **R-04** | $l_{\text{alto}} \land v_{\text{in\_oleo}}$ | `TRANSBORDAMENTO_REATOR_R200` | **Sobrecarga Volumétrica de Óleo Vegetal no Reator de Transesterificação** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-PR-01:** Fechar $\text{XV-201}$, desligar bomba de óleo $\text{P-101}$ e reter batelada |
-| **R-05** | $h_1 \land \neg r_1$ | `OPERACAO_TERMICA_SEM_SALVAGUARDA` | **Acionamento de Aquecedor HT-201 sem Resfriamento de Emergência** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SIS-04:** Trip imediato de $\text{HT-201}$ e alarme de manutenção na linha $\text{CW-201}$ |
-| **R-06** | $l_{\text{baixo}} \land m_{\text{reator}}$ | `RISCO_CAVITACAO_AGITADOR_R200` | **Operação do Agitador sem Carga Hidráulica Mínima no Reator R-200** | **ALTA** (Prio: 8) | $2.0\text{ s}$ | **POP-MA-05:** Desarmar inversor de $\text{AG-201}$ e bloquear aquecimento $\text{HT-201}$ |
-| **R-07** | $v_{\text{glic}} \land \neg i_{\text{glic}}$ | `PERDA_BIODIESEL_DRENO_GLICERINA` | **Drenagem Indevida de Biodiesel Bruto pela Linha de Glicerina** | **ALTA** (Prio: 8) | $1.5\text{ s}$ | **POP-SEP-02:** Fechar válvula $\text{XV-301}$ e reajustar tempo de decantação |
-| **R-08** | $b_{\text{final}} \land \neg f_{\text{lav}}$ | `IMPUREZA_CATALISADOR_BIODIESEL` | **Transferência de Biodiesel sem Etapa de Lavagem Concluída** | **ALTA** (Prio: 7) | $3.0\text{ s}$ | **POP-PUR-04:** Bloquear bomba $\text{P-401}$, fechar $\text{XV-401}$ e restabelecer água |
-
----
-
+| **R-01** | $p_1 \land t_{\text{alta}}$ | <code>EXOTERMIA_RUNAWAY_REATOR</code> | **Exotermia Descontrolada e Sobrepressão no Reator R-200** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-01:** Desarme total de <code>HT-201</code>, corte de <code>XV-202</code> e abertura plena de <code>CW-201</code> |
+| **R-02** | <code>EXOTERMIA_RUNAWAY</code> $\land$ <i>v</i><sub>in_mix</sub> | <code>TRIP_ALIMENTACAO_METOXIDO</code> | **Corte Imediato da Dosagem de Metóxido por Reação Fora de Controle** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-02:** Fechar imediatamente <code>XV-202</code>, desenergizar <code>P-102</code> e inertizar com $\text{N}_2$ |
+| **R-03** | $g_{\text{alm}}$ | <code>VAZAMENTO_GAS_METANOL_S100</code> | **Detecção de Vapores Inflamáveis/Tóxicos de Metanol no Setor 100** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SST-03:** Cortar <code>XV-102</code> e <code>XV-202</code>, ligar exaustão e desenergizar bombas <code>P-102</code> |
+| **R-04** | $l_{\text{alto}} \land$ <i>v</i><sub>in_oleo</sub> | <code>TRANSBORDAMENTO_REATOR_R200</code> | **Sobrecarga Volumétrica de Óleo Vegetal no Reator de Transesterificação** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-PR-01:** Fechar <code>XV-201</code>, desligar bomba de óleo <code>P-101</code> e reter batelada |
+| **R-05** | $h_1 \land \neg r_1$ | <code>OPERACAO_TERMICA_SEM_SALVAGUARDA</code> | **Acionamento de Aquecedor HT-201 sem Resfriamento de Emergência** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SIS-04:** Trip imediato de <code>HT-201</code> e alarme de manutenção na linha <code>CW-201</code> |
+| **R-06** | $l_{\text{baixo}} \land m_{\text{reator}}$ | <code>RISCO_CAVITACAO_AGITADOR_R200</code> | **Operação do Agitador sem Carga Hidráulica Mínima no Reator R-200** | **ALTA** (Prio: 8) | $2.0\text{ s}$ | **POP-MA-05:** Desarmar inversor de <code>AG-201</code> e bloquear aquecimento <code>HT-201</code> |
+| **R-07** | $v_{\text{glic}} \land \neg i_{\text{glic}}$ | <code>PERDA_BIODIESEL_DRENO_GLICERINA</code> | **Drenagem Indevida de Biodiesel Bruto pela Linha de Glicerina** | **ALTA** (Prio: 8) | $1.5\text{ s}$ | **POP-SEP-02:** Fechar válvula <code>XV-301</code> e reajustar tempo de decantação |
+| **R-08** | $b_{\text{final}} \land \neg f_{\text{lav}}$ | <code>IMPUREZA_CATALISADOR_BIODIESEL</code> | **Transferência de Biodiesel sem Etapa de Lavagem Concluída** | **ALTA** (Prio: 7) | $3.0\text{ s}$ | **POP-PUR-04:** Bloquear bomba <code>P-401</code>, fechar <code>XV-401</code> e restabelecer água |
 ## 3. Resolução de Conflitos, Consistência e Integridade da Base
 
 Uma Base de Conhecimento de nível industrial deve obedecer a critérios rigorosos de **integridade semântica**:
@@ -77,10 +74,9 @@ O sistema especialista opera por **Encadeamento Progressivo (*Forward Chaining*)
 
 ### Exemplo de Encadeamento no Reator R-200:
 * **Passo 1 (Leitura de Sensores):** Os sensores registram sobrepressão ($p_1 = 1$) e temperatura crítica ($t_{\text{alta}} = 1$).
-* **Passo 2 (Disparo da Regra R-01):** Dispara o diagnóstico de causa-raiz `EXOTERMIA_RUNAWAY_REATOR` (Prioridade 10) e executa o POP-SIS-01.
-* **Passo 3 (Adição de Fato Inferido):** O fato `EXOTERMIA_RUNAWAY_REATOR` é inserido em $\mathcal{F}(t)$.
-* **Passo 4 (Disparo em Cascata da Regra R-02):** Se a válvula de metóxido estiver aberta ($v_{\text{in\_mix}} = 1$), a Regra R-02 é imediatamente ativada, comandando o corte de alimentação de reagente inflamável (`TRIP_ALIMENTACAO_METOXIDO`) e emitindo o POP-SIS-02.
-
+* **Passo 2 (Disparo da Regra R-01):** Dispara o diagnóstico de causa-raiz <code>EXOTERMIA_RUNAWAY_REATOR</code> (Prioridade 10) e executa o POP-SIS-01.
+* **Passo 3 (Adição de Fato Inferido):** O fato <code>EXOTERMIA_RUNAWAY_REATOR</code> é inserido em $\mathcal{F}(t)$.
+* **Passo 4 (Disparo em Cascata da Regra R-02):** Se a válvula de metóxido estiver aberta (<i>v</i><sub>in_mix</sub> = 1), a Regra R-02 é imediatamente ativada, comandando o corte de alimentação de reagente inflamável (<code>TRIP_ALIMENTACAO_METOXIDO</code>) e emitindo o POP-SIS-02.
 ---
 
 ## 5. Entregável da Aula 08: Módulo de Base de Conhecimento SCADA
