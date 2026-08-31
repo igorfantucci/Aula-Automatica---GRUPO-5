@@ -1,5 +1,20 @@
 # Industria escolhida: Produção de Biodiesel (Transesterificação)
 
+## 🌐 Simulador SCADA em Operação (GitHub Pages)
+
+Acesse o sistema supervisório e motor de inferência em tempo real diretamente pelo navegador:
+
+👉 **[SCADA-Core Automática — Planta de Biodiesel (Grupo 5)](https://igorfantucci.github.io/Aula-Automatica---GRUPO-5/)**
+
+O simulador web permite:
+* Testar os **5 cenários de estresse operacional** da Aula 10 com 1 clique;
+* Manipular as variáveis analógicas ($PT-201, TT-201, LT-201, AT-100$) e digitais com cálculo dinâmico de histerese;
+* Avaliar em tempo real os **Permissivos e Trips Fail-Safe** da Matriz SIS/SIL 3;
+* Acompanhar a cadeia de inferência por **Forward Chaining** (Cláusulas de Horn R-01 a R-08);
+* Conduzir **Auditorias Forenses por Backward Chaining** com árvore de explicabilidade dedutiva (*Explainable AI*).
+
+---
+
 ## Insumos: Matérias-Primas e Reagentes Químicos
 
 * **Fontes de Lipídios (Base da Reação):**
@@ -38,5 +53,21 @@ A pasta [`etapa-01-logica`](./etapa-01-logica/) contém toda a modelagem formal,
 ## Diagrama Funcional da Planta de Biodiesel
 
 ![Diagrama Técnico de Blocos Funcionais](./etapa-01-logica/Industria_Biodiesel.jpg)
+
+---
+
+## 📽️ Apresentação Executiva em LaTeX (Beamer)
+
+Para a defesa do **Motor de Intertravamento e Diagnóstico**, foi elaborada uma apresentação completa em LaTeX Beamer estruturada para apresentação compartilhada por 4 integrantes:
+
+* **Código-fonte em LaTeX:** [`apresentacao_etapa_01.tex`](./apresentacao_etapa_01.tex)
+* **Slides Compilados em PDF:** [`apresentacao_etapa_01.pdf`](./apresentacao_etapa_01.pdf)
+
+### Estrutura das Falas (4 Apresentadores):
+1. **Apresentador 1 — Fundamentos \& Modelagem ISA-5.1:** Contexto da Planta de Biodiesel, Reação Química, Topologia dos 4 Setores Industriais, Instrumentação ISA-5.1 e Discretização Matemática de Sinais com Banda Morta ($\delta$).
+2. **Apresentador 2 — Lógica Proposicional \& Otimização Booleana:** Permissivos de Partida (*Start Permissives*), Desarmes *Fail-Safe*, Prova de Tautologias de Segurança, Formas Normais (FND/FNC) e Minimização de Scan no CLP.
+3. **Apresentador 3 — Redes de Sensores \& Prova SIS:** Predicados e Quantificadores ($\forall, \exists$), Regras Canônicas de Inferência (MP, MT, Silogismos), Rejeição Formal de Falácias Industriais e Prova por SAT Solver da Matriz ESD ($2^{11}$ estados).
+4. **Apresentador 4 — Sistemas Especialistas \& SCADA Integrado:** Arquitetura do RBS, Catálogo de 8 Cláusulas de Horn (R-01 a R-08), Motores *Forward* e *Backward Chaining* (XAI), Bateria de 5 Cenários de Estresse e Demonstração do Simulador SCADA em Tempo Real.
+
 
 

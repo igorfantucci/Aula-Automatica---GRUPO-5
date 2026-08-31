@@ -1,0 +1,596 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+
+% Configuração do Tema Beamer
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+% Paleta de Cores Customizada
+\definecolor{primaryblue}{RGB}{27, 54, 93}
+\definecolor{accentblue}{RGB}{37, 99, 235}
+\definecolor{safegreen}{RGB}{16, 140, 90}
+\definecolor{alertred}{RGB}{190, 30, 45}
+\definecolor{warndark}{RGB}{180, 100, 10}
+\definecolor{darkslate}{RGB}{15, 23, 42}
+\definecolor{lightgray}{RGB}{241, 245, 249}
+
+\setbeamercolor{palette primary}{bg=primaryblue, fg=white}
+\setbeamercolor{palette secondary}{bg=accentblue, fg=white}
+\setbeamercolor{palette tertiary}{bg=darkslate, fg=white}
+\setbeamercolor{structure}{fg=accentblue}
+\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{block title}{bg=primaryblue, fg=white}
+\setbeamercolor{block body}{bg=lightgray, fg=darkslate}
+\setbeamercolor{block title alerted}{bg=alertred, fg=white}
+\setbeamercolor{block body alerted}{bg=lightgray, fg=darkslate}
+\setbeamercolor{block title example}{bg=safegreen, fg=white}
+\setbeamercolor{block body example}{bg=lightgray, fg=darkslate}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+\title[SCADA-Core: Motor de Intertravamento e Diagnóstico]{SCADA-Core: Motor de Intertravamento e Diagnóstico}
+\subtitle{Automação, Segurança Funcional e Sistemas Especialistas na Planta de Biodiesel}
+\author[ECAA08 -- Grupo 5]{ECAA08 -- Matemática Discreta Aplicada ao Controle\\ \textbf{Grupo 5: Planta de Produção de Biodiesel em Batelada}}
+\institute[UNIFEI]{Universidade Federal de Itajubá -- UNIFEI\\Instituto de Engenharia de Sistemas e Tecnologias da Informação}
+\date{2026.2}
+
+\begin{document}
+
+% -------------------------------------------------------------
+% SLIDE DE TÍTULO
+% -------------------------------------------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% -------------------------------------------------------------
+% SLIDE DE SUMÁRIO & DIVISÃO DE FALA
+% -------------------------------------------------------------
+\begin{frame}{Estrutura da Apresentação (Divisão entre 4 Integrantes)}
+  \begin{columns}[t]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\textbf{Parte I: Fundamentos \& Modelagem} \hfill \textit{Apresentador 1}}
+        \footnotesize
+        \begin{itemize}
+          \item Contexto Industrial: Síntese do Biodiesel
+          \item Topologia em 4 Setores Operacionais
+          \item Instrumentação ISA-5.1 e Variáveis Físicas
+          \item Discretização de Sinais e Histerese ($\delta$)
+        \end{itemize}
+      \end{block}
+      \vspace{0.2cm}
+      \begin{block}{\textbf{Parte II: Lógica \& Otimização} \hfill \textit{Apresentador 2}}
+        \footnotesize
+        \begin{itemize}
+          \item Conectivos e Permissivos de Partida
+          \item Desarmes \textit{Fail-Safe} do Reator R-200
+          \item Prova de Tautologias e Contradições
+          \item Formas Normais (FND/FNC) e Otimização
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\textbf{Parte III: Redes \& Prova SIS} \hfill \textit{Apresentador 3}}
+        \footnotesize
+        \begin{itemize}
+          \item Predicados em Redes de Sensores ($\forall, \exists$)
+          \item Regras de Inferência (MP, MT, Silogismos)
+          \item Detecção e Rejeição Formal de Falácias
+          \item Prova de Consistência da Matriz ESD
+        \end{itemize}
+      \end{block}
+      \vspace{0.2cm}
+      \begin{block}{\textbf{Parte IV: Inferência \& SCADA} \hfill \textit{Apresentador 4}}
+        \footnotesize
+        \begin{itemize}
+          \item Cláusulas de Horn e Priorização SIL
+          \item Motores \textit{Forward} e \textit{Backward Chaining}
+          \item Validação com 5 Cenários de Estresse
+          \item Demonstração do SCADA em Tempo Real
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% =============================================================
+% PARTE I -- APRESENTADOR 1
+% =============================================================
+\section{Parte I: Processo e Modelagem ISA-5.1}
+
+\begin{frame}{Contexto da Planta: Síntese de Biodiesel por Transesterificação}
+  \framesubtitle{Parte I -- Apresentador 1: Química do Processo e Dinâmica de Batelada}
+  \begin{columns}
+    \begin{column}{0.58\textwidth}
+      \begin{itemize}
+        \item \textbf{Reação Química Principal:}
+        $$\text{Triglicerídeo} + 3\,\text{CH}_3\text{OH} \xrightarrow{\text{NaOH/KOH}} 3\,\text{Ésteres (Biodiesel)} + \text{Glicerol}$$
+        \item \textbf{Aspectos Termodinâmicos e Cinéticos:}
+        \begin{itemize}
+          \item Reação exotérmica branda ($\Delta H^\circ \approx -15\text{ a }-25\text{ kJ/mol}$), porém sensível ao acúmulo de reagentes e temperatura ($55^\circ\text{C}$ a $60^\circ\text{C}$).
+          \item Ebulição do Metanol: $64.7^\circ\text{C}$ à pressão atmosférica.
+        \end{itemize}
+        \item \textbf{Fatores de Risco de Severidade Crítica:}
+        \begin{itemize}
+          \item \textcolor{alertred}{\textbf{Vaporização e Sobrepressão:}} Se $T > 65^\circ\text{C}$ e vaso fechado $\to$ flash de metanol e risco de explosão.
+          \item \textcolor{alertred}{\textbf{Toxicidade/Inflamabilidade:}} Vazamento de metanol (LEL $6\%$, IDLH $300\text{ ppm}$).
+          \item \textcolor{alertred}{\textbf{Contaminação da Linha de Dreno:}} Drenar éster no lugar da glicerina por erro de interface.
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \begin{alertblock}{Restrição Crítica de Operação}
+        A temperatura deve ser mantida rigidamente em:
+        $$55^\circ\text{C} \le T \le 60^\circ\text{C}$$
+        Sobretaxa térmica ou falha de agitação leva à formação de bolsões superaquecidos e perda de contenção.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Topologia Industrial em 4 Setores Operacionais}
+  \framesubtitle{Parte I -- Apresentador 1: Arquitetura P\&ID e Rastreabilidade}
+  \begin{columns}[t]
+    \begin{column}{0.24\textwidth}
+      \begin{block}{\textbf{Setor 100}}
+        \scriptsize
+        \textbf{Metóxido \& Óleo}
+        \begin{itemize}
+          \item Tanque de Óleo (TK-101)
+          \item Bomba Metanol (P-102)
+          \item Misturador (AG-103)
+          \item Detector Gás (AT-100)
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.24\textwidth}
+      \begin{block}{\textbf{Setor 200}}
+        \scriptsize
+        \textbf{Reator CSTR}
+        \begin{itemize}
+          \item Reator de Batelada (R-200)
+          \item Agitador Principal (AG-201)
+          \item Aquecedor (HT-201)
+          \item Salvaguarda (CW-201)
+          \item Válvula Dosagem (XV-202)
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.24\textwidth}
+      \begin{block}{\textbf{Setor 300}}
+        \scriptsize
+        \textbf{Decantação}
+        \begin{itemize}
+          \item Decantador (TK-300)
+          \item Sensor Óptico (IT-301)
+          \item Válvula Glicerina (XV-301)
+          \item Saída Biodiesel (XV-302)
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.24\textwidth}
+      \begin{block}{\textbf{Setor 400}}
+        \scriptsize
+        \textbf{Purificação}
+        \begin{itemize}
+          \item Lavagem com Água
+          \item Fluxômetro (FS-401)
+          \item Bomba Envio (P-401)
+          \item Tanque Final (TK-402)
+          \item Nível Final (LT-402)
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vspace{0.4cm}
+  \begin{exampleblock}{Norma ISA-5.1 e IEC 61511}
+    Toda a nomenclatura segue rigorosamente a norma ISA-5.1 (primeira letra: variável medida; segunda letra: função do instrumento). A arquitetura foi concebida para atender à integridade SIL 3.
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Discretização de Sinais e Mapeamento Proposicional}
+  \framesubtitle{Parte I -- Apresentador 1: Transição 4--20 mA $\to$ Proposição Booleana com Histerese}
+  \begin{itemize}
+    \item Grandezas analógicas de processo $x(t)$ são transformadas em variáveis binárias $p \in \{0, 1\}$ usando funções características com histerese $\delta$ para evitar trepidação (\textit{chattering}):
+  \end{itemize}
+  $$\chi_{\text{High}}(x) = \begin{cases} 1, & \text{se } x \ge L_{\text{crit}} \\ 0, & \text{se } x < L_{\text{crit}} - \delta \end{cases} \qquad\qquad \chi_{\text{Low}}(x) = \begin{cases} 1, & \text{se } x \le L_{\text{min}} \\ 0, & \text{se } x > L_{\text{min}} + \delta \end{cases}$$
+
+  \begin{table}[h]
+    \centering
+    \tiny
+    \begin{tabular}{lllll}
+      \toprule
+      \textbf{Tag ISA-5.1} & \textbf{Descrição Física} & \textbf{Faixa Nominal} & \textbf{Proposição Lógica} & \textbf{Condição Ativa ($=1$)} \\
+      \midrule
+      \texttt{PT-201} & Pressão do Reator R-200 & $0.0 \dots 4.0\text{ bar}$ & $p_1$ & Pressão crítica: $P \ge 2.5\text{ bar}$ \\
+      \texttt{TT-201} & Temperatura do Reator R-200 & $20.0 \dots 100.0^\circ\text{C}$ & $t_{\text{alta}}$ ($t_1$) & Temperatura crítica: $T \ge 65.0^\circ\text{C}$ \\
+      \texttt{LT-201} & Nível do Reator R-200 & $0 \dots 100\%$ & $l_{\text{baixo}} / l_{\text{reator}} / l_{\text{alto}}$ & Nível Baixo $\le 15\%$ / Nom $\ge 80\%$ / Alto $\ge 95\%$ \\
+      \texttt{AT-100} & Vapores de Metanol no S-100 & $0 \dots 50\text{ ppm}$ & $g_{\text{alm}}$ ($g_1$) & Alarme de gás: $\text{Conc} \ge 20\text{ ppm}$ \\
+      \texttt{CW-201} & Circuito Resfriamento Emergência & Pressostato binário & $r_1$ & Pressão d'água OK ($P \ge 3.0\text{ bar}$) \\
+      \texttt{IT-301} & Sensor Interface Óptica & Sensor binário & $i_{\text{glic}}$ ($l_3$) & Interface de separação detectada no decantador \\
+      \texttt{ESD-100} & Botoeira Parada Geral SIS & Contato NF Fail-Safe & $e_1$ & Parada geral ativada (circuito aberto) \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+% =============================================================
+% PARTE II -- APRESENTADOR 2
+% =============================================================
+\section{Parte II: Lógica Proposicional e Otimização}
+
+\begin{frame}{Permissivos de Partida e Blocos de Intertravamento}
+  \framesubtitle{Parte II -- Apresentador 2: Segurança Positiva e Desarmes Fail-Safe}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Permissivo do Aquecedor HT-201}
+        O aquecedor elétrico/vapor só pode ser energizado se todas as salvaguardas estiverem ativas:
+        $$P_{\text{HT-201}} \equiv r_1 \land m_{\text{reator}} \land l_{\text{reator}} \land \neg t_{\text{alta}} \land \neg p_1 \land \neg e_1$$
+        \begin{itemize}
+          \item $r_1$: Água de emergência disponível.
+          \item $m_{\text{reator}}$: Agitação ativa (troca térmica homogênea).
+          \item $l_{\text{reator}}$: Nível nominal para cobrir resistências.
+          \item $\neg t_{\text{alta}} \land \neg p_1 \land \neg e_1$: Sem sobretemperatura, sobrepressão ou ESD.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Permissivo da Válvula de Metóxido XV-202}
+        A injeção do reagente químico no reator exige:
+        $$P_{\text{XV-202}} \equiv m_{\text{reator}} \land l_{\text{reator}} \land \neg p_1 \land \neg t_{\text{alta}} \land \neg l_{\text{alto}} \land \neg g_{\text{alm}} \land \neg e_1$$
+      \end{block}
+
+      \begin{alertblock}{Condição de Trip (Desarme Imediato)}
+        Pelas Leis de De Morgan, o desarme imediato ocorre na negação estrita do permissivo:
+        $$\text{Trip}_{\text{HT-201}} \equiv \neg P_{\text{HT-201}} \equiv \neg r_1 \lor \neg m_{\text{reator}} \lor \neg l_{\text{reator}} \lor t_{\text{alta}} \lor p_1 \lor e_1$$
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Prova de Tautologias de Segurança e Contradições de Risco}
+  \framesubtitle{Parte II -- Apresentador 2: Verificação Formal por Tabela-Verdade e Álgebra Booleana}
+  \begin{itemize}
+    \item \textbf{Teorema 1 (Garantia de Não-Sobreposição Operacional):}
+    Um equipamento não pode estar simultaneamente com permissão de partida e sinal de desarme:
+    $$\tau_1 \equiv \neg (P_{\text{HT-201}} \land \text{Trip}_{\text{HT-201}}) \equiv \neg (P \land \neg P) \equiv \neg \bot \equiv \top \quad (\text{Tautologia})$$
+    
+    \item \textbf{Teorema 2 (Inibição Mútua de Agitação por Nível Baixo):}
+    Operar agitador AG-201 com nível abaixo do mínimo gera cavitação mecânica. O estado é uma contradição de segurança:
+    $$\kappa_{\text{risco}} \equiv m_{\text{reator}} \land l_{\text{baixo}} \land P_{\text{AG-201}} \equiv \bot \quad (\text{Contradição no SIS})$$
+  \end{itemize}
+
+  \begin{exampleblock}{Tabela-Verdade de Consistência (Isolamento de Linhas)}
+    \centering
+    \tiny
+    \begin{tabular}{cccc|cc|c}
+      \toprule
+      $r_1$ & $m_{\text{reator}}$ & $l_{\text{reator}}$ & Anomalia ($t_{\text{alta}} \lor p_1 \lor e_1$) & $P_{\text{HT-201}}$ & $\text{Trip}_{\text{HT-201}}$ & $\tau_1 = \neg (P \land \text{Trip})$ \\
+      \midrule
+      1 & 1 & 1 & 0 & \textbf{1 (Autorizado)} & \textbf{0 (Seguro)} & \textbf{1 (Verdadeiro)} \\
+      1 & 1 & 1 & 1 & \textbf{0 (Bloqueado)} & \textbf{1 (Trip)} & \textbf{1 (Verdadeiro)} \\
+      1 & 0 & 1 & 0 & \textbf{0 (Bloqueado)} & \textbf{1 (Trip)} & \textbf{1 (Verdadeiro)} \\
+      0 & 1 & 1 & 0 & \textbf{0 (Bloqueado)} & \textbf{1 (Trip)} & \textbf{1 (Verdadeiro)} \\
+      \bottomrule
+    \end{tabular}
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Formas Normais e Minimização Booleana}
+  \framesubtitle{Parte II -- Apresentador 2: FND, FNC e Otimização do Scan de CLP}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Representações Canônicas}
+        \begin{itemize}
+          \item \textbf{Forma Normal Disjuntiva (FND / SOP):}
+          Soma de mintermos. Ideal para identificar todos os estados permissivos de partida segura.
+          \item \textbf{Forma Normal Conjuntiva (FNC / POS):}
+          Produto de maxtermos. Estrutura canônica para implementação de matrizes de intertravamento e corte em série.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Impacto Prático na Automação Industrial}
+        A simplificação booleana da lógica de segurança:
+        \begin{itemize}
+          \item Reduz o número de instruções e portas lógicas em diagrama Ladder / FBD (IEC 61131-3).
+          \item Elimina termos redundantes e condições de corrida (\textit{glitches}).
+          \item Reduz o tempo de ciclo (\textit{scan time}) do processador de segurança para menos de $10\text{ ms}$.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.2cm}
+  \begin{exampleblock}{Exemplo de Simplificação no Intertravamento de Dosagem}
+    $$P_{\text{dosagem}} = (m \land l \land \neg p \land \neg t) \lor (m \land l \land \neg p \land \neg t \land r) \equiv m \land l \land \neg p \land \neg t \quad (\text{Lei da Absorção})$$
+  \end{exampleblock}
+\end{frame}
+
+% =============================================================
+% PARTE III -- APRESENTADOR 3
+% =============================================================
+\section{Parte III: Redes de Sensores e Prova SIS}
+
+\begin{frame}{Lógica de Primeira Ordem em Redes de Sensores}
+  \framesubtitle{Parte III -- Apresentador 3: Quantificadores Universal ($\forall$) e Existencial ($\exists$)}
+  \begin{itemize}
+    \item Seja o universo de discurso $\mathcal{S} = \{s_1, s_2, \dots, s_n\}$ o conjunto de todos os instrumentos da planta.
+    \item Modelamos a integridade distribuída da instrumentação através de predicados:
+  \end{itemize}
+
+  \begin{columns}[t]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Quantificador Universal ($\forall$ -- FORALL)}
+        \textbf{Integridade Global da Malha de Telemetria:}
+        $$\Phi_{\text{rede}} \equiv \forall s \in \mathcal{S} \, (\text{Online}(s) \land \neg \text{Fault}(s))$$
+        \begin{itemize}
+          \item Se um único transmissor entrar em falha de sinal ($< 3.6\text{ mA}$ -- \textit{under-range} NAMUR NE43), $\Phi_{\text{rede}}$ torna-se falso, gerando alarme de supervisão.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{alertblock}{Quantificador Existencial ($\exists$ -- EXISTS)}
+        \textbf{Detecção de Condição Crítica de Emergência:}
+        $$\Psi_{\text{alerta}} \equiv \exists s \in \mathcal{S}_{\text{pressão}} \, (P(s) \ge 2.5\text{ bar}) \lor \exists s \in \mathcal{S}_{\text{gás}} \, (G(s) \ge 20\text{ ppm})$$
+        \begin{itemize}
+          \item A existência de \textbf{pelo menos um} sensor indicando perigo extremo aciona instantaneamente a rotina de proteção.
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Regras Canônicas de Inferência Dedutiva no Processo}
+  \framesubtitle{Parte III -- Apresentador 3: Dedução Formal de Segurança Industrial}
+  \begin{columns}[t]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Modus Ponens (Afirmação do Antecedente)}
+        $$\frac{p_1 \land t_{\text{alta}} \quad,\quad (p_1 \land t_{\text{alta}}) \to \text{Trip}_{\text{HT-201}}}{\text{Trip}_{\text{HT-201}}}$$
+        Se há sobrepressão e alta temperatura, o desarme do aquecedor é \textbf{obrigatoriamente deduzido}.
+      \end{block}
+      \vspace{0.2cm}
+      \begin{block}{Modus Tollens (Negação do Consequente)}
+        $$\frac{\neg \text{BombaLigada} \quad,\quad \text{FluxoDetectado} \to \text{BombaLigada}}{\neg \text{FluxoDetectado}}$$
+        Se a bomba de metanol está desligada, é impossível haver fluxo normal (diagnóstico de vazamento ou recirculação).
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{block}{Silogismo Hipotético (Cadeia Causal)}
+        $$\frac{p_1 \to \text{Runaway} \quad,\quad \text{Runaway} \to \text{CorteMetóxido}}{p_1 \to \text{CorteMetóxido}}$$
+      \end{block}
+      \vspace{0.2cm}
+      \begin{block}{Silogismo Disjuntivo}
+        $$\frac{\text{AlarmeMetanol} \lor \text{AlarmeTemperatura} \quad,\quad \neg \text{AlarmeMetanol}}{\text{AlarmeTemperatura}}$$
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Detecção e Rejeição Formal de Falácias Industriais}
+  \framesubtitle{Parte III -- Apresentador 3: Como Erros Lógicos Provocam Desastres em Plantas Químicas}
+  \begin{columns}[t]
+    \begin{column}{0.48\textwidth}
+      \begin{alertblock}{Falácia 1: Afirmação do Consequente}
+        $$\frac{Q \quad,\quad P \to Q}{P \quad \text{\textbf{(INVÁLIDO!)}}}$$
+        \textbf{Exemplo Operacional Real:}
+        \begin{itemize}
+          \item \textit{Regra:} Se houver exotermia ($P$), a jaqueta aquece ($Q$).
+          \item \textit{Fato:} A jaqueta aqueceu ($Q$).
+          \item \textit{Erro falacioso:} Concluir que há exotermia descontrolada ($P$).
+          \item \textit{Causa real:} Válvula de vapor emperrada aberta!
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{alertblock}{Falácia 2: Negação do Antecedente}
+        $$\frac{\neg P \quad,\quad P \to Q}{\neg Q \quad \text{\textbf{(INVÁLIDO!)}}}$$
+        \textbf{Exemplo Operacional Real:}
+        \begin{itemize}
+          \item \textit{Regra:} Se a pressão for $> 2.5\text{ bar}$ ($P$), o alarme toca ($Q$).
+          \item \textit{Fato:} A pressão é normal $\le 2.5\text{ bar}$ ($\neg P$).
+          \item \textit{Erro falacioso:} Assumir que o alarme não deve tocar ($\neg Q$).
+          \item \textit{Causa real:} O alarme pode e deve tocar por vazamento de gás metanol ($g_{\text{alm}}$)!
+        \end{itemize}
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{A Matriz de Causa e Efeito (C\&E / Safety Matrix)}
+  \framesubtitle{Parte III -- Apresentador 3: Prova Formal de Ausência de Estados Inseguros ($2^{11}$ Estados)}
+  \begin{itemize}
+    \item A matriz SIS correlaciona todos os 11 sinais de campo com as saídas finais de segurança:
+  \end{itemize}
+
+  \begin{table}[h]
+    \centering
+    \tiny
+    \begin{tabular}{lcccccc}
+      \toprule
+      \textbf{Causa (Evento Não Conforme)} & \textbf{Trip HT-201} & \textbf{Trip XV-202} & \textbf{Trip P-102} & \textbf{Trip AG-201} & \textbf{Trip XV-301} & \textbf{Trip Global ESD} \\
+      \midrule
+      Sobrepressão ($p_1 = 1$) & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & -- & -- & -- \\
+      Sobretemperatura ($t_{\text{alta}} = 1$) & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & -- & -- & -- & -- \\
+      Vazamento Metanol ($g_{\text{alm}} = 1$) & -- & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & -- & -- & -- \\
+      Nível Baixo Reator ($l_{\text{baixo}} = 1$) & \cellcolor{alertred!25}\textbf{TRIP} & -- & -- & \cellcolor{alertred!25}\textbf{TRIP} & -- & -- \\
+      Sem Resfriamento ($\neg r_1 = 1$) & \cellcolor{alertred!25}\textbf{TRIP} & -- & -- & -- & -- & -- \\
+      Sem Interface Fases ($\neg i_{\text{glic}} = 1$) & -- & -- & -- & -- & \cellcolor{alertred!25}\textbf{TRIP} & -- \\
+      Botoeira de Emergência ($e_1 = 1$) & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} & \cellcolor{alertred!25}\textbf{TRIP} \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{exampleblock}{Prova Matemática por SAT Solver (Refutação Formal)}
+    Testamos exaustivamente todos os $2^{11} = 2048$ estados da planta:
+    $$\text{UNSAFE} \equiv (p_1 \land t_{\text{alta}} \land \neg \text{Trip}_{\text{HT-201}}) \lor (g_{\text{alm}} \land \neg \text{Trip}_{\text{XV-202}}) \lor (e_1 \land \neg \text{SafeState}_{\text{Global}})$$
+    O provador computacional demonstrou que $\text{UNSAFE} \equiv \bot$ (Insatisfatível). \textbf{Zero falhas lógicas detectadas!}
+  \end{exampleblock}
+\end{frame}
+
+% =============================================================
+% PARTE IV -- APRESENTADOR 4
+% =============================================================
+\section{Parte IV: Sistemas Especialistas e SCADA Integrado}
+
+\begin{frame}{Arquitetura do Sistema Especialista (RBS) do SCADA-Core}
+  \framesubtitle{Parte IV -- Apresentador 4: Tríade Base de Fatos, Cláusulas de Horn e Motor de Inferência}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{Componentes do RBS Industrial}
+        \begin{itemize}
+          \item \textbf{Base de Fatos Dinâmica ($\mathcal{F}$):}
+          Armazena proposições ativas com carimbo de data/hora (\textit{timestamp}) e proveniência (\texttt{SENSOR} vs \texttt{INFERIDO}).
+          \item \textbf{Base de Conhecimento ($\mathcal{R}$):}
+          Regras no formato de Cláusulas de Horn estritas:
+          $$\bigwedge_{i=1}^n A_i \longrightarrow C$$
+          com prioridade determinística SIL (10 a 7) e tempo máximo de resposta ($t_{\text{max}} \le 0.5\text{ s}$).
+          \item \textbf{Motor de Inferência ($\mathcal{E}$):}
+          Executa os algoritmos de \textit{Forward} e \textit{Backward Chaining}.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \begin{exampleblock}{Vantagens das Cláusulas de Horn}
+        \begin{itemize}
+          \item \textbf{Complexidade Linear $O(N)$:}
+          A inferência nunca entra em loop infinito e possui garantia de convergência em tempo real determinístico.
+          \item \textbf{Explicabilidade Total (XAI):}
+          Cada diagnóstico possui uma trilha causal explícita com POP (Procedimento Operacional Padrão) associado.
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Catálogo Oficial das 8 Regras de Diagnóstico (Horn)}
+  \framesubtitle{Parte IV -- Apresentador 4: Cláusulas R-01 a R-08 com Priorização SIL}
+  \begin{table}[h]
+    \centering
+    \tiny
+    \begin{tabular}{clllcl}
+      \toprule
+      \textbf{ID} & \textbf{Antecedentes ($\bigwedge A_i$)} & \textbf{Consequente ($C$)} & \textbf{Severidade} & \textbf{Prio} & \textbf{Procedimento POP Associado} \\
+      \midrule
+      \textbf{R-01} & $p_1 \land t_{\text{alta}}$ & \texttt{EXOTERMIA\_RUNAWAY\_REATOR} & CRÍTICA & 10 & POP-SIS-01: Desarme HT-201 e abre CW-201 \\
+      \textbf{R-02} & \texttt{EXOTERMIA\_RUNAWAY\_REATOR} $\land v_{\text{in\_mix}}$ & \texttt{TRIP\_ALIMENTACAO\_METOXIDO} & CRÍTICA & 10 & POP-SIS-02: Corta XV-202 e desliga P-102 \\
+      \textbf{R-03} & $g_{\text{alm}}$ & \texttt{VAZAMENTO\_GAS\_METANOL\_S100} & CRÍTICA & 9 & POP-SST-03: Corta XV-102 e liga exaustão \\
+      \textbf{R-04} & $l_{\text{alto}} \land v_{\text{in\_oleo}}$ & \texttt{TRANSBORDAMENTO\_REATOR\_R200} & CRÍTICA & 9 & POP-PR-01: Fecha XV-201 e desliga P-101 \\
+      \textbf{R-05} & $h_1 \land \neg r_1$ & \texttt{OPERACAO\_TERMICA\_SEM\_SALVAGUARDA} & CRÍTICA & 9 & POP-SIS-04: Trip HT-201 e alarme CW-201 \\
+      \textbf{R-06} & $l_{\text{baixo}} \land m_{\text{reator}}$ & \texttt{RISCO\_CAVITACAO\_AGITADOR\_R200} & ALTA & 8 & POP-MA-05: Desarma inversor de AG-201 \\
+      \textbf{R-07} & $v_{\text{glic}} \land \neg i_{\text{glic}}$ & \texttt{PERDA\_BIODIESEL\_DRENO\_GLICERINA} & ALTA & 8 & POP-SEP-02: Fecha XV-301 e reajusta decantador \\
+      \textbf{R-08} & $b_{\text{final}} \land \neg f_{\text{lav}}$ & \texttt{IMPUREZA\_CATALISADOR\_BIODIESEL} & ALTA & 7 & POP-PUR-04: Bloqueia P-401 e retém batelada \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \vspace{0.2cm}
+  \begin{alertblock}{Cascata Crítica R-01 $\to$ R-02}
+    O consequente de R-01 (\texttt{EXOTERMIA\_RUNAWAY\_REATOR}) atua como antecedente para R-02, provando o encadeamento dedutivo automático em menos de $500\text{ ms}$.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Forward Chaining vs. Backward Chaining}
+  \framesubtitle{Parte IV -- Apresentador 4: Inferência em Tempo Real vs Auditoria Forense Explicável}
+  \begin{columns}[t]
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\textbf{Forward Chaining (Tempo Real)}}
+        \textbf{Direção:} Dos Fatos $\to$ Conclusões
+        \begin{itemize}
+          \item Acionado a cada ciclo de scan da telemetria ($100\text{ ms}$).
+          \item Detecta imediatamente anomalias e atua sobre os relés de desarme do SIS.
+          \item Execução por ponto fixo: propaga novas deduções até estabilidade.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.48\textwidth}
+      \begin{block}{\textbf{Backward Chaining (Auditoria Forense)}}
+        \textbf{Direção:} Da Hipótese/Meta $\to$ Evidências
+        \begin{itemize}
+          \item Acionado pós-evento ou sob demanda pelo engenheiro de segurança.
+          \item Constrói a \textbf{Árvore de Prova Dedutiva} (\textit{Proof Tree}) justificando o motivo do desarme.
+          \item Atende integralmente aos requisitos de inteligência artificial explicável (XAI).
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.3cm}
+  \begin{exampleblock}{Exemplo de Árvore de Prova Extraída pelo Sistema}
+    \texttt{[META] TRIP\_ALIMENTACAO\_METOXIDO $\Leftarrow$ [R-02] SE EXOTERMIA\_RUNAWAY\_REATOR AND v\_in\_mix}\\
+    \texttt{\quad $\Leftarrow$ [R-01] SE p1 (2.9 bar $\ge$ 2.5) AND t\_alta (72$^\circ$C $\ge$ 65) $\Rightarrow$ PROVADO!}
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Validação Experimental: Bateria dos 5 Cenários de Estresse}
+  \framesubtitle{Parte IV -- Apresentador 4: Resultados da Avaliação Integrada do Módulo 1 (Aula 10)}
+  \begin{table}[h]
+    \centering
+    \tiny
+    \begin{tabular}{lccccp{4.5cm}}
+      \toprule
+      \textbf{Cenário de Estresse Operacional} & \textbf{Perm HT-201} & \textbf{Trip HT-201} & \textbf{Trip XV-202} & \textbf{Trip ESD} & \textbf{Diagnósticos Inferidos pelo RBS} \\
+      \midrule
+      \textbf{1. Operação Nominal Estável} & \textbf{True} & False & False & False & \textit{Nenhum (Planta em Regime)} \\
+      \textbf{2. Runaway Térmico e Pressão} & False & \cellcolor{alertred!25}\textbf{True} & \cellcolor{alertred!25}\textbf{True} & False & \texttt{EXOTERMIA\_RUNAWAY\_REATOR, TRIP\_ALIMENTACAO\_METOXIDO} \\
+      \textbf{3. Vazamento de Metanol S-100} & \textbf{True} & False & \cellcolor{alertred!25}\textbf{True} & False & \texttt{VAZAMENTO\_GAS\_METANOL\_S100} \\
+      \textbf{4. Partida a Seco do Agitador} & False & \cellcolor{alertred!25}\textbf{True} & \cellcolor{alertred!25}\textbf{True} & False & \texttt{RISCO\_CAVITACAO\_AGITADOR\_R200} \\
+      \textbf{5. Dreno sem Interface \& ESD} & False & \cellcolor{alertred!25}\textbf{True} & \cellcolor{alertred!25}\textbf{True} & \cellcolor{alertred!25}\textbf{True} & \texttt{PERDA\_BIODIESEL\_DRENO\_GLICERINA} \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \begin{exampleblock}{Taxa de Sucesso e Conformidade}
+    \begin{itemize}
+      \item $100\%$ de conformidade com a Matriz de Causa e Efeito (C\&E).
+      \item $0\%$ de falsos positivos e $0\%$ de falsos negativos em todas as baterias de testes.
+    \end{itemize}
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Simulador SCADA em Operação e Conclusões Finais}
+  \framesubtitle{Parte IV -- Apresentador 4: Demonstração Online no GitHub Pages}
+  \begin{columns}
+    \begin{column}{0.55\textwidth}
+      \begin{block}{SCADA-Core Disponível Online (GitHub Pages)}
+        \textbf{Link de Acesso:}
+        \href{https://igorfantucci.github.io/Aula-Automatica---GRUPO-5/}{\textcolor{accentblue}{\underline{https://igorfantucci.github.io/Aula-Automatica---GRUPO-5/}}}
+        \begin{itemize}
+          \item Supervisório completo com topologia industrial em 4 setores.
+          \item Injeção interativa de falhas analógicas e digitais em tempo real.
+          \item Motor de Cláusulas de Horn com emissão imediata de POPs.
+          \item Terminal de auditoria dedutiva (Backward Chaining) interativo.
+        \end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}{0.42\textwidth}
+      \begin{exampleblock}{Conclusão do Módulo 1}
+        A integração da \textbf{Matemática Discreta} (Lógica Proposicional, Predicados e Cláusulas de Horn) transforma a segurança industrial de um modelo empírico para uma \textbf{ciência exata e formalmente comprovável}.
+      \end{exampleblock}
+      \vspace{0.2cm}
+      \centering
+      \textbf{Obrigado pela atenção!}\\
+      \textit{Perguntas e Demonstração Prática.}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\end{document}
