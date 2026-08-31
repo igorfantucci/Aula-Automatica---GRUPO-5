@@ -264,7 +264,7 @@
       border-color: var(--primary);
     }
 
-    /* Narrative Status Callout */
+    /* Narrative Process Callout */
     .narrative-banner {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -319,10 +319,139 @@
       color: var(--primary-light);
     }
     
+    /* Clean Vector Process Diagram Card */
+    .clean-diagram-card {
+      background: #080d1a;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .diagram-toolbar {
+      padding: 0.6rem 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .diagram-legend {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .flow-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .flow-pill.normal {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--color-ok);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .flow-pill.danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--color-danger);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      animation: pulse-border 1.5s infinite;
+    }
+
+    .flow-pill.warn {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--color-warn);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .svg-container {
+      width: 100%;
+      padding: 0.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .process-svg {
+      width: 100%;
+      height: auto;
+      max-height: 440px;
+      display: block;
+    }
+
+    /* SVG Animations */
+    .pipe-flow.flowing {
+      animation: pipe-stream 1s linear infinite;
+    }
+    @keyframes pipe-stream {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -24; }
+    }
+
+    .pipe-flow.stopped {
+      stroke: #475569 !important;
+      stroke-dasharray: none !important;
+      opacity: 0.35;
+    }
+
+    .impeller-spin {
+      transform-origin: 395px 245px;
+      animation: spin-blade 1.2s linear infinite;
+    }
+    @keyframes spin-blade {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .sector-rect.alerting {
+      stroke: #ef4444 !important;
+      stroke-width: 2 !important;
+      fill: rgba(239, 68, 68, 0.08) !important;
+      animation: sector-pulse 1.2s infinite alternate;
+    }
+    @keyframes sector-pulse {
+      from { opacity: 0.7; }
+      to { opacity: 1; }
+    }
+
     /* Grid Layout */
     .main-grid {
       display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 1.25rem;
     }
     
@@ -368,229 +497,6 @@
       gap: 1.25rem;
     }
 
-    /* Process Diagram Visual Display */
-    .diagram-viewport {
-      position: relative;
-      background: #030712;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .diagram-img-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      aspect-ratio: 2816 / 1536;
-    }
-
-    .diagram-bg-img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: contain;
-      user-select: none;
-    }
-
-    /* Sector Pulsing Highlights */
-    .sector-highlight {
-      position: absolute;
-      pointer-events: none;
-      border: 2px dashed transparent;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .sector-highlight.S100 { top: 10%; left: 0.5%; width: 27.5%; height: 88%; }
-    .sector-highlight.S200 { top: 10%; left: 28.5%; width: 29.5%; height: 88%; }
-    .sector-highlight.S300 { top: 10%; left: 58.5%; width: 18%; height: 88%; }
-    .sector-highlight.S400 { top: 10%; left: 77%; width: 22.5%; height: 88%; }
-
-    .sector-highlight.alerting {
-      border-color: var(--color-danger);
-      background: rgba(239, 68, 68, 0.12);
-      box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.25);
-      animation: alert-box 1.2s infinite alternate;
-    }
-
-    @keyframes alert-box {
-      0% { opacity: 0.6; }
-      100% { opacity: 1; }
-    }
-
-    /* HUD Markers on Top of Process Image */
-    .hud-pin {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .hud-pin:hover {
-      transform: translate(-50%, -50%) scale(1.08);
-      z-index: 20;
-    }
-
-    .hud-pill {
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(4px);
-      padding: 0.25rem 0.5rem;
-      border-radius: 6px;
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      white-space: nowrap;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    }
-
-    .hud-pill.ok {
-      border-color: var(--color-ok);
-      color: var(--color-ok);
-    }
-
-    .hud-pill.danger {
-      border-color: var(--color-danger);
-      background: rgba(220, 38, 38, 0.85);
-      color: #fff;
-      animation: hud-blink 1s infinite alternate;
-    }
-
-    @keyframes hud-blink {
-      from { box-shadow: 0 0 4px var(--color-danger); }
-      to { box-shadow: 0 0 16px var(--color-danger); }
-    }
-
-    .hud-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    /* View Mode Tabs */
-    .view-tabs {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .tab-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 0.3rem 0.65rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .tab-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
-    /* Plant Synoptic Map (Tab 2) */
-    .synoptic-sectors {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
-    }
-    
-    @media (max-width: 900px) {
-      .synoptic-sectors { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 500px) {
-      .synoptic-sectors { grid-template-columns: 1fr; }
-    }
-    
-    .sector-box {
-      border: 1px solid var(--border-color);
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: var(--radius);
-      padding: 0.85rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      position: relative;
-    }
-    
-    .sector-header {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--primary-light);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding-bottom: 0.35rem;
-    }
-    
-    .equipment-item {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 0.5rem 0.65rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-    
-    .eq-tag {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 0.75rem;
-      color: var(--text-main);
-    }
-    
-    .eq-desc {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    
-    .eq-badge {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      background: var(--bg-surface-elevated);
-      color: var(--text-muted);
-    }
-    
-    .eq-badge.active {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--color-ok);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-    }
-    
-    .eq-badge.tripped {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--color-danger);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-    }
-    
-    .eq-badge.closed {
-      background: rgba(107, 114, 128, 0.2);
-      color: var(--text-dim);
-    }
-    
     /* Telemetry Sliders Section */
     .telemetry-grid {
       display: grid;
@@ -969,278 +875,281 @@
       <div class="narrative-content">
         <div id="narrative-title" class="narrative-title">Situação Atual: Operação Nominal Estável</div>
         <div id="narrative-desc" class="narrative-desc">
-          Todos os parâmetros físicos estão dentro das faixas nominais. A reação de transesterificação no Reator R-200 ocorre de forma controlada ($58^\circ\text{C}$, $1.2\text{ bar}$), sem sobrepressão ou vapores tóxicos. Todos os 5 permissivos de partida estão concedidos pelo CLP e não há desarmes ativos.
+          Todos os parâmetros físicos estão dentro das faixas norminais. A reação de transesterificação no Reator R-200 ocorre de forma controlada ($58^\circ\text{C}$, $1.2\text{ bar}$), sem sobrepressão ou vapores tóxicos. Todos os 5 permissivos de partida estão concedidos pelo CLP e não há desarmes ativos.
         </div>
         <div id="narrative-actions" class="narrative-actions-taken">Ações do SCADA: Permissivos Liberados • SafeState Normal • Monitoramento Contínuo</div>
       </div>
     </section>
 
+    <!-- CLEAN VECTOR PROCESS DIAGRAM (HTML5 / SVG / CSS) -->
+    <div class="clean-diagram-card">
+      <div class="diagram-toolbar">
+        <div class="diagram-legend">
+          <span class="legend-item"><span class="legend-dot" style="background:#eab308;"></span> Óleo Vegetal</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#06b6d4;"></span> Metanol / Metóxido</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#f97316;"></span> Mistura Reagente</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#10b981;"></span> Biodiesel Puro</span>
+          <span class="legend-item"><span class="legend-dot" style="background:#854d0e;"></span> Glicerina Bruta</span>
+        </div>
+        <div id="flow-status-pill" class="flow-pill normal">
+          <span class="pulse-dot"></span> <span id="flow-status-text">Fluxo de Processo: Regime Contínuo Nominal</span>
+        </div>
+      </div>
+
+      <div class="svg-container">
+        <svg viewBox="0 0 1060 410" class="process-svg" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <!-- Gradients for Liquids and Vessels -->
+            <linearGradient id="grad-oil" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fef08a" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#ca8a04" stop-opacity="0.95"/>
+            </linearGradient>
+
+            <linearGradient id="grad-met" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#67e8f9" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#0284c7" stop-opacity="0.9"/>
+            </linearGradient>
+
+            <linearGradient id="grad-reactor-nom" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fed7aa" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#ea580c" stop-opacity="0.95"/>
+            </linearGradient>
+
+            <linearGradient id="grad-reactor-runaway" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fca5a5" stop-opacity="0.98"/>
+              <stop offset="50%" stop-color="#ef4444" stop-opacity="0.98"/>
+              <stop offset="100%" stop-color="#991b1b" stop-opacity="0.98"/>
+            </linearGradient>
+
+            <linearGradient id="grad-biodiesel" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a7f3d0" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#059669" stop-opacity="0.95"/>
+            </linearGradient>
+
+            <linearGradient id="grad-glycerin" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#a16207" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#451a03" stop-opacity="0.95"/>
+            </linearGradient>
+
+            <linearGradient id="grad-vessel" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+              <stop offset="20%" stop-color="#334155" stop-opacity="0.6"/>
+              <stop offset="80%" stop-color="#334155" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#1e293b" stop-opacity="0.9"/>
+            </linearGradient>
+          </defs>
+
+          <!-- 0. BACKGROUND SECTOR BOUNDARIES (SUBTLE INDUSTRIAL ZONES) -->
+          <g class="sector-backgrounds">
+            <rect id="svg-sec-100" x="15" y="15" width="230" height="380" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" class="sector-rect"/>
+            <text x="30" y="38" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">SETOR 100: PREPARAÇÃO</text>
+
+            <rect id="svg-sec-200" x="260" y="15" width="280" height="380" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" class="sector-rect"/>
+            <text x="275" y="38" fill="#60a5fa" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">SETOR 200: REATOR CSTR (CRÍTICO)</text>
+
+            <rect id="svg-sec-300" x="555" y="15" width="220" height="380" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" class="sector-rect"/>
+            <text x="570" y="38" fill="#a78bfa" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">SETOR 300: DECANTAÇÃO</text>
+
+            <rect id="svg-sec-400" x="790" y="15" width="255" height="380" rx="10" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" class="sector-rect"/>
+            <text x="805" y="38" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700">SETOR 400: PURIFICAÇÃO & ENVIO</text>
+          </g>
+
+          <!-- 1. PIPING NETWORK (TUBULAÇÕES COM FLUXO ANIMADO) -->
+          <g class="pipe-lines">
+            <!-- Pipe 1: Óleo -> Reator -->
+            <path d="M 125 105 L 205 105 L 205 160 L 325 160" fill="none" stroke="#1e293b" stroke-width="7"/>
+            <path id="pipe-oil" d="M 125 105 L 205 105 L 205 160 L 325 160" fill="none" stroke="#eab308" stroke-width="3" stroke-dasharray="6,6" class="pipe-flow flowing"/>
+
+            <!-- Pipe 2: Metóxido -> Reator (Linha Crítica de Dosagem XV-202) -->
+            <path d="M 125 285 L 230 285 L 230 230 L 325 230" fill="none" stroke="#1e293b" stroke-width="7"/>
+            <path id="pipe-metoxide" d="M 125 285 L 230 285 L 230 230 L 325 230" fill="none" stroke="#06b6d4" stroke-width="3" stroke-dasharray="6,6" class="pipe-flow flowing"/>
+
+            <!-- Pipe 3: Reator -> Decantador (Mistura Reagida XV-203) -->
+            <path d="M 465 250 L 605 250" fill="none" stroke="#1e293b" stroke-width="7"/>
+            <path id="pipe-react-mix" d="M 465 250 L 605 250" fill="none" stroke="#f97316" stroke-width="3" stroke-dasharray="6,6" class="pipe-flow flowing"/>
+
+            <!-- Pipe 4: Dreno Inferior de Glicerina -> Tambor de Subproduto -->
+            <path d="M 665 310 L 665 350 L 735 350" fill="none" stroke="#1e293b" stroke-width="6"/>
+            <path id="pipe-glycerin" d="M 665 310 L 665 350 L 735 350" fill="none" stroke="#854d0e" stroke-width="3" stroke-dasharray="5,5" class="pipe-flow flowing"/>
+
+            <!-- Pipe 5: Saída Superior Biodiesel Bruto -> Lavador Setor 400 -->
+            <path d="M 725 160 L 825 160" fill="none" stroke="#1e293b" stroke-width="6"/>
+            <path id="pipe-raw-bio" d="M 725 160 L 825 160" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="6,6" class="pipe-flow flowing"/>
+
+            <!-- Pipe 6: Lavador -> Tanque de Armazenamento Final -->
+            <path d="M 885 235 L 935 235 L 935 200 L 965 200" fill="none" stroke="#1e293b" stroke-width="6"/>
+            <path id="pipe-pure-bio" d="M 885 235 L 935 235 L 935 200 L 965 200" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="6,6" class="pipe-flow flowing"/>
+          </g>
+
+          <!-- 2. SETOR 100: TANQUES DE MATÉRIA-PRIMA -->
+          <!-- Tanque de Óleo Vegetal -->
+          <g class="tank-oil" id="vessel-tk-oil">
+            <rect x="45" y="60" width="80" height="90" rx="8" fill="url(#grad-vessel)" stroke="#475569" stroke-width="2"/>
+            <rect x="47" y="80" width="76" height="68" rx="6" fill="url(#grad-oil)"/>
+            <text x="85" y="115" fill="#1e293b" font-family="'Inter', sans-serif" font-size="11" font-weight="800" text-anchor="middle">ÓLEO</text>
+            <text x="85" y="167" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">TK-101</text>
+          </g>
+
+          <!-- Tanque de Metanol / Metóxido -->
+          <g class="tank-met" id="vessel-tk-met">
+            <rect x="45" y="220" width="80" height="95" rx="8" fill="url(#grad-vessel)" stroke="#475569" stroke-width="2"/>
+            <rect x="47" y="245" width="76" height="68" rx="6" fill="url(#grad-met)"/>
+            <text x="85" y="280" fill="#0f172a" font-family="'Inter', sans-serif" font-size="10" font-weight="800" text-anchor="middle">METÓXIDO</text>
+            <text x="85" y="330" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">TK-103</text>
+          </g>
+
+          <!-- Sensor de Gás Metanol AT-100 -->
+          <g class="sensor-at100" id="svg-at100-badge" transform="translate(45, 185)">
+            <rect id="svg-at100-box" x="0" y="0" width="95" height="24" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+            <circle id="svg-at100-dot" cx="12" cy="12" r="4" fill="#10b981"/>
+            <text id="svg-at100-text" x="22" y="16" fill="#a7f3d0" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">AT-100: 2 ppm</text>
+          </g>
+
+          <!-- Bomba P-102 -->
+          <g class="pump-p102" id="svg-pump-p102" transform="translate(170, 272)">
+            <circle cx="13" cy="13" r="13" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+            <polygon points="8,8 20,13 8,18" fill="#10b981" id="svg-p102-arrow"/>
+            <text x="13" y="37" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">P-102</text>
+          </g>
+
+          <!-- Válvula de Corte de Dosagem XV-202 -->
+          <g class="valve-xv202" id="svg-valve-xv202" transform="translate(250, 218)">
+            <polygon id="svg-xv202-poly1" points="0,4 12,12 0,20" fill="#10b981" stroke="#334155" stroke-width="1"/>
+            <polygon id="svg-xv202-poly2" points="24,4 12,12 24,20" fill="#10b981" stroke="#334155" stroke-width="1"/>
+            <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+            <line x1="12" y1="12" x2="12" y2="0" stroke="#94a3b8" stroke-width="2"/>
+            <rect x="6" y="-6" width="12" height="6" rx="1" fill="#475569"/>
+            <text id="svg-xv202-lbl" x="12" y="32" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">XV-202</text>
+          </g>
+
+          <!-- 3. SETOR 200: REATOR CSTR R-200 (PEÇA CENTRAL) -->
+          <g class="reactor-unit" id="svg-reactor-group">
+            <!-- Jaqueta Térmica Externa HT-201 / CW-201 -->
+            <rect id="svg-jacket" x="325" y="110" width="140" height="185" rx="30" fill="none" stroke="#f97316" stroke-width="5" stroke-dasharray="10,4"/>
+
+            <!-- Corpo Principal do Reator R-200 -->
+            <rect x="335" y="120" width="120" height="170" rx="25" fill="url(#grad-vessel)" stroke="#64748b" stroke-width="2.5"/>
+
+            <!-- Nível de Líquido Dinâmico no Reator (Clipado) -->
+            <g clip-path="url(#reactor-clip)">
+              <clipPath id="reactor-clip">
+                <rect x="337" y="122" width="116" height="166" rx="23"/>
+              </clipPath>
+              <rect id="svg-reactor-liquid" x="337" y="150" width="116" height="140" fill="url(#grad-reactor-nom)"/>
+              <path id="svg-reactor-surface" d="M 337 150 Q 366 146 395 150 T 453 150 L 453 154 L 337 154 Z" fill="#ffffff" opacity="0.3"/>
+            </g>
+
+            <!-- Agitador Mecânico AG-201 -->
+            <rect x="382" y="75" width="26" height="32" rx="4" fill="#334155" stroke="#64748b" stroke-width="2"/>
+            <line x1="395" y1="107" x2="395" y2="120" stroke="#94a3b8" stroke-width="5"/>
+            <line x1="395" y1="120" x2="395" y2="245" stroke="#cbd5e1" stroke-width="3"/>
+            <!-- Pás do Agitador -->
+            <g id="svg-impeller-blades" class="impeller-spin" transform="translate(395, 245)">
+              <line x1="-35" y1="-4" x2="35" y2="4" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+              <line x1="-35" y1="4" x2="35" y2="-4" stroke="#f8fafc" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="0" cy="0" r="5" fill="#3b82f6"/>
+            </g>
+
+            <!-- Ícone de Alerta de Runaway Térmico -->
+            <g id="svg-runaway-alert-icon" style="display:none;" transform="translate(395, 140)">
+              <circle cx="0" cy="0" r="18" fill="#dc2626" opacity="0.95"/>
+              <text x="0" y="7" fill="#ffffff" font-size="18" text-anchor="middle">🔥</text>
+            </g>
+
+            <text x="395" y="306" fill="#f8fafc" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">REATOR R-200</text>
+
+            <!-- Display Digital Flutuante de Instrumentos do Reator -->
+            <g id="svg-reactor-metrics" transform="translate(305, 325)">
+              <rect x="0" y="0" width="180" height="52" rx="6" fill="#090d16" stroke="#334155" stroke-width="1.5"/>
+              
+              <text x="12" y="18" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10">Temp (TT-201):</text>
+              <text id="svg-txt-temp" x="168" y="18" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="end">58.0 °C</text>
+              
+              <text x="12" y="32" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10">Press (PT-201):</text>
+              <text id="svg-txt-press" x="168" y="32" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="end">1.2 bar</text>
+
+              <text x="12" y="46" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="10">Nível (LT-201):</text>
+              <text id="svg-txt-level" x="168" y="46" fill="#60a5fa" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="end">82 %</text>
+            </g>
+          </g>
+
+          <!-- 4. SETOR 300: DECANTAÇÃO (SEPARAÇÃO DE FASES) -->
+          <g class="separator-unit" id="svg-separator-group">
+            <path d="M 605 100 L 725 100 L 725 240 L 665 310 L 605 240 Z" fill="url(#grad-vessel)" stroke="#475569" stroke-width="2"/>
+
+            <!-- Camada Superior: Biodiesel Bruto -->
+            <path d="M 607 130 L 723 130 L 723 220 L 607 220 Z" fill="url(#grad-biodiesel)" opacity="0.9"/>
+            <text x="665" y="180" fill="#064e3b" font-family="'Inter', sans-serif" font-size="10" font-weight="800" text-anchor="middle">BIODIESEL</text>
+
+            <!-- Linha da Interface de Fases IT-301 -->
+            <line id="svg-interface-line" x1="605" y1="220" x2="725" y2="220" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="4,2"/>
+            
+            <!-- Camada Inferior: Glicerina Bruta -->
+            <path d="M 607 220 L 723 220 L 723 240 L 665 307 L 607 240 Z" fill="url(#grad-glycerin)"/>
+            <text x="665" y="255" fill="#fef08a" font-family="'Inter', sans-serif" font-size="10" font-weight="800" text-anchor="middle">GLICERINA</text>
+
+            <text x="665" y="90" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">DECANTADOR TK-300</text>
+
+            <!-- Sensor de Interface IT-301 Badge -->
+            <g id="svg-it301-badge" transform="translate(605, 335)">
+              <rect id="svg-it301-box" x="0" y="0" width="125" height="22" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+              <circle id="svg-it301-dot" cx="10" cy="11" r="3.5" fill="#10b981"/>
+              <text id="svg-it301-text" x="18" y="15" fill="#a7f3d0" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">IT-301: INTERFACE OK</text>
+            </g>
+
+            <!-- Válvula de Dreno XV-301 -->
+            <g class="valve-xv301" id="svg-valve-xv301" transform="translate(685, 338)">
+              <polygon id="svg-xv301-poly1" points="0,3 9,9 0,15" fill="#10b981" stroke="#334155" stroke-width="1"/>
+              <polygon id="svg-xv301-poly2" points="18,3 9,9 18,15" fill="#10b981" stroke="#334155" stroke-width="1"/>
+              <circle cx="9" cy="9" r="2.5" fill="#ffffff"/>
+              <text id="svg-xv301-lbl" x="9" y="28" fill="#10b981" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">XV-301</text>
+            </g>
+          </g>
+
+          <!-- 5. SETOR 400: PURIFICAÇÃO E ARMAZENAMENTO -->
+          <g class="purification-unit" id="svg-purification-group">
+            <rect x="825" y="110" width="60" height="150" rx="10" fill="url(#grad-vessel)" stroke="#475569" stroke-width="2"/>
+            
+            <path d="M 855 80 L 855 125" fill="none" stroke="#38bdf8" stroke-width="3"/>
+            <g id="svg-water-sprays" fill="#38bdf8">
+              <circle cx="845" cy="135" r="2"/>
+              <circle cx="855" cy="138" r="2.5"/>
+              <circle cx="865" cy="135" r="2"/>
+              <circle cx="850" cy="146" r="2"/>
+              <circle cx="860" cy="148" r="2"/>
+            </g>
+            <text x="855" y="70" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">ÁGUA (FS-401)</text>
+            <text x="855" y="195" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="9" font-weight="700" text-anchor="middle">LAVAGEM</text>
+
+            <!-- Tanque Final TK-402 -->
+            <rect x="965" y="130" width="65" height="140" rx="6" fill="url(#grad-vessel)" stroke="#475569" stroke-width="2"/>
+            <rect x="967" y="160" width="61" height="108" rx="4" fill="url(#grad-biodiesel)"/>
+            <text x="997" y="210" fill="#064e3b" font-family="'Inter', sans-serif" font-size="9" font-weight="900" text-anchor="middle">BIODIESEL</text>
+            <text x="997" y="223" fill="#064e3b" font-family="'Inter', sans-serif" font-size="9" font-weight="900" text-anchor="middle">PURO</text>
+            <text x="997" y="285" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">TK-402</text>
+
+            <!-- Bomba P-401 -->
+            <g id="svg-pump-p401" transform="translate(930, 310)">
+              <circle cx="12" cy="12" r="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+              <polygon points="7,7 18,12 7,17" fill="#10b981" id="svg-p401-arrow"/>
+              <text x="12" y="35" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">P-401</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
     <!-- MAIN GRID -->
     <div class="main-grid">
       
-      <!-- LEFT COLUMN: VISUAL PROCESS DIAGRAM & TELEMETRY CONTROLS -->
+      <!-- LEFT COLUMN: TELEMETRY SLIDERS & DIGITAL TOGGLES -->
       <div style="display: flex; flex-direction: column; gap: 1.25rem;">
         
-        <!-- PROCESS SCHEMATIC & VISUAL INDICATORS CARD -->
-        <div class="panel-card">
-          <div class="panel-header">
-            <span class="panel-title">🏭 Diagrama Técnico do Processo com Telemetria Dinâmica (HUD)</span>
-            <div class="view-tabs">
-              <button id="tab-btn-diagram" class="tab-btn active" onclick="switchProcessView('diagram')">🖼️ Diagrama P&ID Interativo</button>
-              <button id="tab-btn-synoptic" class="tab-btn" onclick="switchProcessView('synoptic')">📊 Painel de Equipamentos</button>
-            </div>
-          </div>
-          
-          <div class="panel-body" style="padding: 0.85rem;">
-            
-            <!-- VIEW 1: INTERACTIVE IMAGE DIAGRAM WITH DYNAMIC HUD PINS -->
-            <div id="view-diagram" class="diagram-viewport">
-              <div class="diagram-img-wrapper">
-                
-                <!-- Technical Plant Diagram Image -->
-                <img id="process-img" class="diagram-bg-img" src="Industria_Biodiesel.jpg" onerror="this.src='etapa-01-logica/Industria_Biodiesel.jpg'" alt="Fluxograma Técnico do Processo - Indústria de Biodiesel">
-
-                <!-- Dynamic Sector Highlight Boxes (Alert Glow) -->
-                <div id="sec-glow-100" class="sector-highlight S100"></div>
-                <div id="sec-glow-200" class="sector-highlight S200"></div>
-                <div id="sec-glow-300" class="sector-highlight S300"></div>
-                <div id="sec-glow-400" class="sector-highlight S400"></div>
-
-                <!-- HUD PIN 1: DETECTOR DE GÁS AT-100 (SETOR 100) -->
-                <div class="hud-pin" style="left: 8.5%; top: 51%;" title="Detector de Vapores de Metanol AT-100">
-                  <div id="hud-at100" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-at100">AT-100: 2 ppm</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 2: BOMBA METANOL P-102 & XV-102 -->
-                <div class="hud-pin" style="left: 22%; top: 66%;" title="Bomba e Válvula de Metanol (Setor 100)">
-                  <div id="hud-p102" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-p102">P-102: LIG</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 3: VÁLVULA DE DOSAGEM XV-202 (ENTRADA DO REATOR) -->
-                <div class="hud-pin" style="left: 31%; top: 68%;" title="Válvula de Dosagem de Metóxido XV-202">
-                  <div id="hud-xv202" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-xv202">XV-202: ABERTA</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 4: CENTRO DO REATOR CSTR R-200 (SETOR 200 - PERIGO PRINCIPAL) -->
-                <div class="hud-pin" style="left: 43%; top: 52%;" title="Reator de Transesterificação R-200">
-                  <div id="hud-reactor" class="hud-pill ok" style="padding: 0.35rem 0.65rem; flex-direction: column; align-items: flex-start; gap: 0.15rem;">
-                    <div style="display: flex; align-items: center; gap: 0.3rem;">
-                      <span class="hud-dot"></span>
-                      <strong id="hud-reactor-title" style="font-size: 0.72rem;">REATOR R-200: NOMINAL</strong>
-                    </div>
-                    <div style="font-size: 0.65rem; opacity: 0.9;" id="hud-reactor-telemetry">
-                      T: 58.0°C | P: 1.2 bar | Nível: 82%
-                    </div>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 5: AGITADOR PRINCIPAL AG-201 -->
-                <div class="hud-pin" style="left: 41%; top: 38%;" title="Agitador do Reator AG-201">
-                  <div id="hud-ag201" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-ag201">AG-201: ROT (OK)</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 6: AQUECEDOR HT-201 / CW-201 -->
-                <div class="hud-pin" style="left: 49%; top: 73%;" title="Aquecedor HT-201 e Circuito CW-201">
-                  <div id="hud-ht201" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-ht201">HT-201: LIG</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 7: SENSOR ÓPTICO DE INTERFACE IT-301 (DECANTADOR) -->
-                <div class="hud-pin" style="left: 68%; top: 58%;" title="Sensor Óptico de Interface IT-301">
-                  <div id="hud-it301" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-it301">IT-301: INTERFACE OK</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 8: VÁLVULA DE DRENO DE GLICERINA XV-301 -->
-                <div class="hud-pin" style="left: 71%; top: 76%;" title="Válvula de Dreno de Glicerina XV-301">
-                  <div id="hud-xv301" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-xv301">XV-301: ABERTA</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 9: ÁGUA DE LAVAGEM FS-401 (SETOR 400) -->
-                <div class="hud-pin" style="left: 80%; top: 33%;" title="Fluxômetro de Lavagem FS-401">
-                  <div id="hud-fs401" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-fs401">FS-401: FLUXO OK</span>
-                  </div>
-                </div>
-
-                <!-- HUD PIN 10: TANQUE FINAL & BOMBA P-401 -->
-                <div class="hud-pin" style="left: 88%; top: 83%;" title="Bomba de Transferência Final P-401">
-                  <div id="hud-p401" class="hud-pill ok">
-                    <span class="hud-dot"></span>
-                    <span id="hud-txt-p401">P-401: LIG</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- VIEW 2: MODULAR SYNOPTIC CARDS (ALTERNATIVE TAB) -->
-            <div id="view-synoptic" style="display: none;">
-              <div class="synoptic-sectors">
-                
-                <!-- SETOR 100 -->
-                <div class="sector-box">
-                  <div class="sector-header">Setor 100 • Metóxido</div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">P-101 / XV-101</div>
-                      <div class="eq-desc">Alimentação Óleo Vegetal</div>
-                    </div>
-                    <span id="badge-p101" class="eq-badge active">LIG</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">P-102 / XV-102</div>
-                      <div class="eq-desc">Bomba Metanol Puro</div>
-                    </div>
-                    <span id="badge-p102" class="eq-badge active">LIG</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">AG-103</div>
-                      <div class="eq-desc">Agitador Metóxido</div>
-                    </div>
-                    <span id="badge-ag103" class="eq-badge active">LIG</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">AT-100</div>
-                      <div class="eq-desc">Detector Gás Metanol</div>
-                    </div>
-                    <span id="badge-at100" class="eq-badge">0 ppm</span>
-                  </div>
-                </div>
-
-                <!-- SETOR 200 -->
-                <div class="sector-box" style="border-color: rgba(59, 130, 246, 0.4);">
-                  <div class="sector-header" style="color: #60a5fa;">Setor 200 • Reator CSTR</div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">XV-202</div>
-                      <div class="eq-desc">Válvula Dosagem Metóxido</div>
-                    </div>
-                    <span id="badge-xv202" class="eq-badge active">ABERTA</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">AG-201</div>
-                      <div class="eq-desc">Agitador Reator R-200</div>
-                    </div>
-                    <span id="badge-ag201" class="eq-badge active">ROT</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">HT-201</div>
-                      <div class="eq-desc">Aquecedor Elétrico/Vapor</div>
-                    </div>
-                    <span id="badge-ht201" class="eq-badge active">LIG</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">CW-201</div>
-                      <div class="eq-desc">Resfriamento Emergência</div>
-                    </div>
-                    <span id="badge-cw201" class="eq-badge active">PRESS</span>
-                  </div>
-                </div>
-
-                <!-- SETOR 300 -->
-                <div class="sector-box">
-                  <div class="sector-header">Setor 300 • Decantação</div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">TK-300</div>
-                      <div class="eq-desc">Decantador Gravitacional</div>
-                    </div>
-                    <span id="badge-tk300" class="eq-badge active">CHEIO</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">IT-301</div>
-                      <div class="eq-desc">Sensor Interface Fases</div>
-                    </div>
-                    <span id="badge-it301" class="eq-badge active">DETECT</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">XV-301</div>
-                      <div class="eq-desc">Dreno Glicerina Bruta</div>
-                    </div>
-                    <span id="badge-xv301" class="eq-badge active">ABERTA</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">XV-302</div>
-                      <div class="eq-desc">Saída Biodiesel Bruto</div>
-                    </div>
-                    <span id="badge-xv302" class="eq-badge">PRONTO</span>
-                  </div>
-                </div>
-
-                <!-- SETOR 400 -->
-                <div class="sector-box">
-                  <div class="sector-header">Setor 400 • Purificação</div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">FS-401</div>
-                      <div class="eq-desc">Água Lavagem / Neutraliz.</div>
-                    </div>
-                    <span id="badge-fs401" class="eq-badge active">FLUXO</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">XV-401</div>
-                      <div class="eq-desc">Válvula Tanque Final</div>
-                    </div>
-                    <span id="badge-xv401" class="eq-badge active">ABERTA</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">P-401</div>
-                      <div class="eq-desc">Bomba Envio Biodiesel</div>
-                    </div>
-                    <span id="badge-p401" class="eq-badge active">LIG</span>
-                  </div>
-                  <div class="equipment-item">
-                    <div>
-                      <div class="eq-tag">LT-402</div>
-                      <div class="eq-desc">Tanque Armazenamento</div>
-                    </div>
-                    <span id="badge-lt402" class="eq-badge">DISPON</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-
         <!-- TELEMETRY SENSORS & CONTROLS -->
         <div class="panel-card">
           <div class="panel-header">
-            <span class="panel-title">🎛️ Telemetria Contínua & Injeção Manual de Falhas</span>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Mova os controles para testar histerese e respostas automáticas</span>
+            <span class="panel-title">🎛️ Telemetria Contínua & Injeção de Falhas</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Ajuste dinâmico de grandezas físicas</span>
           </div>
           <div class="panel-body">
             
@@ -1542,26 +1451,6 @@
       themeBtn.textContent = next === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Escuro';
     });
 
-    // View tab switcher
-    function switchProcessView(view) {
-      const btnDiagram = document.getElementById('tab-btn-diagram');
-      const btnSynoptic = document.getElementById('tab-btn-synoptic');
-      const viewDiagram = document.getElementById('view-diagram');
-      const viewSynoptic = document.getElementById('view-synoptic');
-
-      if (view === 'diagram') {
-        btnDiagram.classList.add('active');
-        btnSynoptic.classList.remove('active');
-        viewDiagram.style.display = 'flex';
-        viewSynoptic.style.display = 'none';
-      } else {
-        btnDiagram.classList.remove('active');
-        btnSynoptic.classList.add('active');
-        viewDiagram.style.display = 'none';
-        viewSynoptic.style.display = 'block';
-      }
-    }
-
     // Console logger
     function logEvent(type, tag, msg) {
       const consoleBox = document.getElementById('scada-console');
@@ -1588,7 +1477,6 @@
         prio: 10,
         sev: 'CRÍTICA',
         tmax: '0.5 s',
-        sector: 200,
         pop: 'POP-SIS-01: Desarme total HT-201, corte XV-202 e resfriamento CW-201'
       },
       {
@@ -1599,7 +1487,6 @@
         prio: 10,
         sev: 'CRÍTICA',
         tmax: '0.5 s',
-        sector: 200,
         pop: 'POP-SIS-02: Fechar imediatamente XV-202, desenergizar P-102 e inertizar'
       },
       {
@@ -1610,7 +1497,6 @@
         prio: 9,
         sev: 'CRÍTICA',
         tmax: '1.0 s',
-        sector: 100,
         pop: 'POP-SST-03: Cortar XV-102 e XV-202, ligar exaustão e desenergizar bombas P-102'
       },
       {
@@ -1621,7 +1507,6 @@
         prio: 9,
         sev: 'CRÍTICA',
         tmax: '1.0 s',
-        sector: 200,
         pop: 'POP-PR-01: Fechar XV-201, desligar bomba de óleo P-101 e reter batelada'
       },
       {
@@ -1632,7 +1517,6 @@
         prio: 9,
         sev: 'CRÍTICA',
         tmax: '1.0 s',
-        sector: 200,
         pop: 'POP-SIS-04: Trip imediato HT-201 e alarme de manutenção na linha CW-201'
       },
       {
@@ -1643,7 +1527,6 @@
         prio: 8,
         sev: 'ALTA',
         tmax: '2.0 s',
-        sector: 200,
         pop: 'POP-MA-05: Desarmar inversor de AG-201 e bloquear aquecimento HT-201'
       },
       {
@@ -1654,7 +1537,6 @@
         prio: 8,
         sev: 'ALTA',
         tmax: '1.5 s',
-        sector: 300,
         pop: 'POP-SEP-02: Fechar válvula proporcional XV-301 e reajustar decantação'
       },
       {
@@ -1665,7 +1547,6 @@
         prio: 7,
         sev: 'ALTA',
         tmax: '3.0 s',
-        sector: 400,
         pop: 'POP-PUR-04: Bloquear bomba P-401, fechar XV-401 e restabelecer água'
       }
     ];
@@ -1673,7 +1554,6 @@
     // State Variables
     let currentFacts = new Set();
     let firedRules = new Set();
-    let currentScenarioId = 1;
 
     function updateTelemetry() {
       // 1. Read Inputs
@@ -1745,7 +1625,6 @@
       let newInference = true;
       while (newInference) {
         newInference = false;
-        // Sort by priority (10 down to 7)
         const sortedRules = [...RULES].sort((a, b) => b.prio - a.prio);
         for (const rule of sortedRules) {
           if (!firedRules.has(rule.id)) {
@@ -1806,19 +1685,8 @@
       updateTablePill('trip-p401', !trip_p401, 'SEGURO (0)', 'TRIP (1)', true);
       updateActuatorState('state-p401', state_p401, 'LIGADA', 'DESLIGADA');
 
-      // Synoptic badges (View 2)
-      updateBadge('badge-ht201', state_ht201 ? 'active' : 'tripped', state_ht201 ? 'LIG' : 'DESL');
-      updateBadge('badge-xv202', state_xv202 ? 'active' : 'tripped', state_xv202 ? 'ABERTA' : 'FECHADA');
-      updateBadge('badge-ag201', m_reator && !l_baixo && !e1 ? 'active' : 'tripped', m_reator && !l_baixo && !e1 ? 'ROT' : 'PARADO');
-      updateBadge('badge-cw201', r1 ? 'active' : 'tripped', r1 ? 'PRESS OK' : 'SEM PRESSÃO');
-      updateBadge('badge-xv301', state_xv301 ? 'active' : 'tripped', state_xv301 ? 'ABERTA' : 'BLOQUEADA');
-      updateBadge('badge-it301', i_glic ? 'active' : 'tripped', i_glic ? 'DETECTADA' : 'NÃO DETECTADA');
-      updateBadge('badge-fs401', f_lav ? 'active' : 'tripped', f_lav ? 'FLUXO OK' : 'SEM FLUXO');
-      updateBadge('badge-p401', state_p401 ? 'active' : 'tripped', state_p401 ? 'LIG' : 'DESL');
-      updateBadge('badge-at100', g_alm ? 'tripped' : '', at100.toFixed(0) + ' ppm');
-
-      // Update HUD Pins on the Process Diagram (View 1)
-      updateDiagramHUD(pt201, tt201, lt201, at100, p1, t_alta, l_alto, l_baixo, g_alm, r1, i_glic, f_lav, l_fim, state_ht201, state_xv202, state_xv301, state_p401, m_reator, e1);
+      // Update Clean SVG Diagram Elements
+      updateCleanSVGDiagram(pt201, tt201, lt201, at100, p1, t_alta, l_alto, l_baixo, g_alm, r1, i_glic, f_lav, l_fim, state_ht201, state_xv202, state_xv301, state_p401, m_reator, e1);
 
       // Global Header Badge
       const statusBadge = document.getElementById('system-status-badge');
@@ -1841,143 +1709,163 @@
       renderRulesList();
     }
 
-    function updateDiagramHUD(pt201, tt201, lt201, at100, p1, t_alta, l_alto, l_baixo, g_alm, r1, i_glic, f_lav, l_fim, state_ht201, state_xv202, state_xv301, state_p401, m_reator, e1) {
-      // Sector Glows
-      document.getElementById('sec-glow-100').classList.toggle('alerting', g_alm || e1);
-      document.getElementById('sec-glow-200').classList.toggle('alerting', p1 || t_alta || l_alto || l_baixo || !r1 || e1);
-      document.getElementById('sec-glow-300').classList.toggle('alerting', !i_glic || e1);
-      document.getElementById('sec-glow-400').classList.toggle('alerting', !f_lav || l_fim || e1);
-
-      // HUD 1: AT-100 Gas detector
-      const hudAt100 = document.getElementById('hud-at100');
-      const txtAt100 = document.getElementById('hud-txt-at100');
-      if (g_alm) {
-        hudAt100.className = 'hud-pill danger';
-        txtAt100.textContent = `🚨 AT-100: ${at100.toFixed(0)} ppm (VAZAMENTO!)`;
-      } else {
-        hudAt100.className = 'hud-pill ok';
-        txtAt100.textContent = `AT-100: ${at100.toFixed(0)} ppm (OK)`;
-      }
-
-      // HUD 2: P-102 Pump
-      const hudP102 = document.getElementById('hud-p102');
-      const txtP102 = document.getElementById('hud-txt-p102');
-      if (g_alm || e1) {
-        hudP102.className = 'hud-pill danger';
-        txtP102.textContent = 'P-102: DESL (CORTE)';
-      } else {
-        hudP102.className = 'hud-pill ok';
-        txtP102.textContent = 'P-102: LIG';
-      }
-
-      // HUD 3: XV-202 Valve
-      const hudXv202 = document.getElementById('hud-xv202');
-      const txtXv202 = document.getElementById('hud-txt-xv202');
-      if (state_xv202) {
-        hudXv202.className = 'hud-pill ok';
-        txtXv202.textContent = 'XV-202: ABERTA';
-      } else {
-        hudXv202.className = 'hud-pill danger';
-        txtXv202.textContent = 'XV-202: FECHADA (TRIP)';
-      }
-
-      // HUD 4: Reactor Main HUD
-      const hudReactor = document.getElementById('hud-reactor');
-      const txtReactorTitle = document.getElementById('hud-reactor-title');
-      const txtReactorTele = document.getElementById('hud-reactor-telemetry');
+    function updateCleanSVGDiagram(pt201, tt201, lt201, at100, p1, t_alta, l_alto, l_baixo, g_alm, r1, i_glic, f_lav, l_fim, state_ht201, state_xv202, state_xv301, state_p401, m_reator, e1) {
+      // 1. Digital displays on reactor
+      const txtTemp = document.getElementById('svg-txt-temp');
+      const txtPress = document.getElementById('svg-txt-press');
+      const txtLevel = document.getElementById('svg-txt-level');
       
-      txtReactorTele.textContent = `T: ${tt201.toFixed(1)}°C | P: ${pt201.toFixed(1)} bar | Nível: ${lt201.toFixed(0)}%`;
+      txtTemp.textContent = `${tt201.toFixed(1)} °C`;
+      txtTemp.setAttribute('fill', t_alta ? '#ef4444' : '#10b981');
+
+      txtPress.textContent = `${pt201.toFixed(1)} bar`;
+      txtPress.setAttribute('fill', p1 ? '#ef4444' : '#10b981');
+
+      txtLevel.textContent = `${lt201.toFixed(0)} %`;
+      txtLevel.setAttribute('fill', (l_baixo || l_alto) ? '#ef4444' : '#60a5fa');
+
+      // 2. Liquid level in reactor
+      // Height total is 166px inside clipPath (top at 122, bottom at 288)
+      const liquidHeight = Math.max(10, Math.min(166, 166 * (lt201 / 100)));
+      const liquidY = 288 - liquidHeight;
+      const liquidRect = document.getElementById('svg-reactor-liquid');
+      const liquidSurface = document.getElementById('svg-reactor-surface');
       
-      if (e1) {
-        hudReactor.className = 'hud-pill danger';
-        txtReactorTitle.textContent = 'REATOR R-200: PARADA GERAL ESD';
-      } else if (p1 && t_alta) {
-        hudReactor.className = 'hud-pill danger';
-        txtReactorTitle.textContent = '🚨 RUNAWAY TÉRMICO E PRESSÃO!';
-      } else if (t_alta) {
-        hudReactor.className = 'hud-pill danger';
-        txtReactorTitle.textContent = '⚠️ ALTA TEMPERATURA (≥ 65°C)';
-      } else if (p1) {
-        hudReactor.className = 'hud-pill danger';
-        txtReactorTitle.textContent = '⚠️ SOBREPRESSÃO (≥ 2.5 bar)';
-      } else if (l_baixo) {
-        hudReactor.className = 'hud-pill danger';
-        txtReactorTitle.textContent = '⚠️ NÍVEL BAIXO (CAVITAÇÃO)';
-      } else if (l_alto) {
-        hudReactor.className = 'hud-pill danger';
-        txtReactorTitle.textContent = '⚠️ TRANSBORDAMENTO (≥ 95%)';
+      liquidRect.setAttribute('y', liquidY);
+      liquidRect.setAttribute('height', liquidHeight);
+      liquidSurface.setAttribute('d', `M 337 ${liquidY} Q 366 ${liquidY - 3} 395 ${liquidY} T 453 ${liquidY} L 453 ${liquidY + 4} L 337 ${liquidY + 4} Z`);
+
+      // Color of liquid in reactor: runaway -> red, nominal -> orange
+      if (p1 && t_alta) {
+        liquidRect.setAttribute('fill', 'url(#grad-reactor-runaway)');
+        document.getElementById('svg-runaway-alert-icon').style.display = 'block';
       } else {
-        hudReactor.className = 'hud-pill ok';
-        txtReactorTitle.textContent = 'REATOR R-200: OPERAÇÃO ESTÁVEL';
+        liquidRect.setAttribute('fill', 'url(#grad-reactor-nom)');
+        document.getElementById('svg-runaway-alert-icon').style.display = 'none';
       }
 
-      // HUD 5: Agitator AG-201
-      const hudAg201 = document.getElementById('hud-ag201');
-      const txtAg201 = document.getElementById('hud-txt-ag201');
-      if (l_baixo && m_reator) {
-        hudAg201.className = 'hud-pill danger';
-        txtAg201.textContent = 'AG-201: DESARMADO (CAVITAÇÃO)';
-      } else if (m_reator && !e1) {
-        hudAg201.className = 'hud-pill ok';
-        txtAg201.textContent = 'AG-201: GIRANDO (HOMOGÊNEO)';
-      } else {
-        hudAg201.className = 'hud-pill danger';
-        txtAg201.textContent = 'AG-201: PARADO';
-      }
-
-      // HUD 6: HT-201 / CW-201
-      const hudHt201 = document.getElementById('hud-ht201');
-      const txtHt201 = document.getElementById('hud-txt-ht201');
+      // 3. Thermal Jacket
+      const jacket = document.getElementById('svg-jacket');
       if (!state_ht201) {
-        hudHt201.className = 'hud-pill danger';
-        txtHt201.textContent = !r1 ? 'HT-201: TRIP (SEM CW-201)' : 'HT-201: DESLIGADO (TRIP)';
+        jacket.setAttribute('stroke', '#64748b'); // off
+      } else if (p1 && t_alta) {
+        jacket.setAttribute('stroke', '#ef4444'); // runaway hot
       } else {
-        hudHt201.className = 'hud-pill ok';
-        txtHt201.textContent = 'HT-201: AQUECENDO (OK)';
+        jacket.setAttribute('stroke', '#f97316'); // nominal heating
       }
 
-      // HUD 7: IT-301 Phase Interface
-      const hudIt301 = document.getElementById('hud-it301');
-      const txtIt301 = document.getElementById('hud-txt-it301');
+      // 4. Agitator AG-201
+      const impeller = document.getElementById('svg-impeller-blades');
+      if (m_reator && !l_baixo && !e1) {
+        impeller.classList.add('impeller-spin');
+      } else {
+        impeller.classList.remove('impeller-spin');
+      }
+
+      // 5. Valve XV-202 & Metoxide Pipe Flow
+      const xv202Poly1 = document.getElementById('svg-xv202-poly1');
+      const xv202Poly2 = document.getElementById('svg-xv202-poly2');
+      const xv202Lbl = document.getElementById('svg-xv202-lbl');
+      const pipeMetoxide = document.getElementById('pipe-metoxide');
+      
+      if (state_xv202) {
+        xv202Poly1.setAttribute('fill', '#10b981');
+        xv202Poly2.setAttribute('fill', '#10b981');
+        xv202Lbl.textContent = 'XV-202';
+        xv202Lbl.setAttribute('fill', '#10b981');
+        pipeMetoxide.className.baseVal = 'pipe-flow flowing';
+      } else {
+        xv202Poly1.setAttribute('fill', '#ef4444');
+        xv202Poly2.setAttribute('fill', '#ef4444');
+        xv202Lbl.textContent = 'XV-202 (TRIP)';
+        xv202Lbl.setAttribute('fill', '#ef4444');
+        pipeMetoxide.className.baseVal = 'pipe-flow stopped';
+      }
+
+      // 6. Gas detector AT-100
+      const at100Box = document.getElementById('svg-at100-box');
+      const at100Dot = document.getElementById('svg-at100-dot');
+      const at100Txt = document.getElementById('svg-at100-text');
+      const p102Arrow = document.getElementById('svg-p102-arrow');
+      
+      if (g_alm) {
+        at100Box.setAttribute('fill', '#7f1d1d');
+        at100Box.setAttribute('stroke', '#ef4444');
+        at100Dot.setAttribute('fill', '#ef4444');
+        at100Txt.textContent = `AT-100: ${at100.toFixed(0)} ppm (GÁS!)`;
+        at100Txt.setAttribute('fill', '#fecaca');
+        p102Arrow.setAttribute('fill', '#ef4444'); // trip pump
+      } else {
+        at100Box.setAttribute('fill', '#064e3b');
+        at100Box.setAttribute('stroke', '#10b981');
+        at100Dot.setAttribute('fill', '#10b981');
+        at100Txt.textContent = `AT-100: ${at100.toFixed(0)} ppm`;
+        at100Txt.setAttribute('fill', '#a7f3d0');
+        p102Arrow.setAttribute('fill', '#10b981');
+      }
+
+      // 7. Decanter IT-301 & XV-301
+      const it301Box = document.getElementById('svg-it301-box');
+      const it301Dot = document.getElementById('svg-it301-dot');
+      const it301Txt = document.getElementById('svg-it301-text');
+      const xv301Poly1 = document.getElementById('svg-xv301-poly1');
+      const xv301Poly2 = document.getElementById('svg-xv301-poly2');
+      const xv301Lbl = document.getElementById('svg-xv301-lbl');
+      const pipeGlycerin = document.getElementById('pipe-glycerin');
+
       if (i_glic) {
-        hudIt301.className = 'hud-pill ok';
-        txtIt301.textContent = 'IT-301: INTERFACE OK';
+        it301Box.setAttribute('fill', '#064e3b');
+        it301Box.setAttribute('stroke', '#10b981');
+        it301Dot.setAttribute('fill', '#10b981');
+        it301Txt.textContent = 'IT-301: INTERFACE OK';
+        it301Txt.setAttribute('fill', '#a7f3d0');
       } else {
-        hudIt301.className = 'hud-pill danger';
-        txtIt301.textContent = '🚨 IT-301: SEM INTERFACE!';
+        it301Box.setAttribute('fill', '#7f1d1d');
+        it301Box.setAttribute('stroke', '#ef4444');
+        it301Dot.setAttribute('fill', '#ef4444');
+        it301Txt.textContent = 'IT-301: SEM INTERFACE';
+        it301Txt.setAttribute('fill', '#fecaca');
       }
 
-      // HUD 8: XV-301 Glycerin Drain Valve
-      const hudXv301 = document.getElementById('hud-xv301');
-      const txtXv301 = document.getElementById('hud-txt-xv301');
       if (state_xv301) {
-        hudXv301.className = 'hud-pill ok';
-        txtXv301.textContent = 'XV-301: ABERTA';
+        xv301Poly1.setAttribute('fill', '#10b981');
+        xv301Poly2.setAttribute('fill', '#10b981');
+        xv301Lbl.setAttribute('fill', '#10b981');
+        pipeGlycerin.className.baseVal = 'pipe-flow flowing';
       } else {
-        hudXv301.className = 'hud-pill danger';
-        txtXv301.textContent = 'XV-301: BLOQUEADA';
+        xv301Poly1.setAttribute('fill', '#ef4444');
+        xv301Poly2.setAttribute('fill', '#ef4444');
+        xv301Lbl.setAttribute('fill', '#ef4444');
+        pipeGlycerin.className.baseVal = 'pipe-flow stopped';
       }
 
-      // HUD 9: FS-401 Wash water
-      const hudFs401 = document.getElementById('hud-fs401');
-      const txtFs401 = document.getElementById('hud-txt-fs401');
-      if (f_lav) {
-        hudFs401.className = 'hud-pill ok';
-        txtFs401.textContent = 'FS-401: FLUXO OK';
-      } else {
-        hudFs401.className = 'hud-pill danger';
-        txtFs401.textContent = 'FS-401: SEM ÁGUA';
-      }
+      // 8. Sector Rect Highlight Glows
+      document.getElementById('svg-sec-100').classList.toggle('alerting', g_alm || e1);
+      document.getElementById('svg-sec-200').classList.toggle('alerting', p1 || t_alta || l_baixo || l_alto || !r1 || e1);
+      document.getElementById('svg-sec-300').classList.toggle('alerting', !i_glic || e1);
+      document.getElementById('svg-sec-400').classList.toggle('alerting', !f_lav || l_fim || e1);
 
-      // HUD 10: P-401 Final pump
-      const hudP401 = document.getElementById('hud-p401');
-      const txtP401 = document.getElementById('hud-txt-p401');
-      if (state_p401) {
-        hudP401.className = 'hud-pill ok';
-        txtP401.textContent = 'P-401: LIG';
+      // 9. Overall Flow Pill
+      const flowPill = document.getElementById('flow-status-pill');
+      const flowText = document.getElementById('flow-status-text');
+      if (e1) {
+        flowPill.className = 'flow-pill danger';
+        flowText.textContent = 'PARADA GERAL DE EMERGÊNCIA (ESD)';
+      } else if (p1 && t_alta) {
+        flowPill.className = 'flow-pill danger';
+        flowText.textContent = 'INTERRUPÇÃO POR RUNAWAY TÉRMICO (R-01/R-02)';
+      } else if (g_alm) {
+        flowPill.className = 'flow-pill danger';
+        flowText.textContent = 'INTERRUPÇÃO POR VAZAMENTO DE METANOL (R-03)';
+      } else if (l_baixo) {
+        flowPill.className = 'flow-pill warn';
+        flowText.textContent = 'BLOQUEIO DE AGITAÇÃO POR NÍVEL BAIXO (R-06)';
+      } else if (!i_glic) {
+        flowPill.className = 'flow-pill warn';
+        flowText.textContent = 'RETENÇÃO DE DECANTAÇÃO (PERDA DE INTERFACE)';
       } else {
-        hudP401.className = 'hud-pill danger';
-        txtP401.textContent = l_fim ? 'P-401: TRIP (TK CHEIO)' : 'P-401: DESL';
+        flowPill.className = 'flow-pill normal';
+        flowText.textContent = 'Fluxo de Processo: Regime Contínuo Nominal';
       }
     }
 
@@ -2070,13 +1958,6 @@
       }
     }
 
-    function updateBadge(id, cls, text) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.className = 'eq-badge ' + cls;
-      el.textContent = text;
-    }
-
     function renderRulesList() {
       const container = document.getElementById('rules-container');
       const countEl = document.getElementById('active-diagnostics-count');
@@ -2117,13 +1998,11 @@
         const pad = '  '.repeat(depth);
         logs.push(`${pad}[AVALIANDO META] Investigando '${hypothesis}'...`);
 
-        // Caso base 1: ja esta na base de fatos (sensor ou fato primario)
         if (currentFacts.has(hypothesis)) {
           logs.push(`${pad}  [FATO CONFIRMADO] Hipótese '${hypothesis}' presente na base de fatos.`);
           return true;
         }
 
-        // Procura regras cujo consequente seja a hipotese
         const candidateRules = RULES.filter(r => r.consequent === hypothesis);
         if (candidateRules.length === 0) {
           logs.push(`${pad}  [FALHA] Nenhuma regra na base deduz '${hypothesis}' e não é fato conhecido.`);
@@ -2161,8 +2040,6 @@
 
     // Scenario Loaders (5 scenarios from Aula 10)
     function loadScenario(num) {
-      currentScenarioId = num;
-      // Remove active class from buttons
       document.querySelectorAll('.btn-scenario').forEach(b => b.classList.remove('active'));
       const buttons = document.querySelectorAll('.btn-scenario');
       if (buttons[num - 1]) buttons[num - 1].classList.add('active');
@@ -2184,15 +2061,15 @@
         logEvent('OK', 'CENÁRIO 1', 'Operação Nominal Estável carregada. Todos os permissivos liberados.');
       } else if (num === 2) {
         // Runaway Térmico
-        document.getElementById('slider-pt201').value = 2.9; // p1 = 1
-        document.getElementById('slider-tt201').value = 72.0; // t_alta = 1
+        document.getElementById('slider-pt201').value = 2.9;
+        document.getElementById('slider-tt201').value = 72.0;
         document.getElementById('slider-lt201').value = 85.0;
         document.getElementById('slider-at100').value = 3.0;
         document.getElementById('chk-r1').checked = true;
         document.getElementById('chk-iglic').checked = true;
         document.getElementById('chk-flav').checked = true;
         document.getElementById('chk-lfim').checked = false;
-        document.getElementById('chk-vinmix').checked = true; // v_in_mix = 1
+        document.getElementById('chk-vinmix').checked = true;
         document.getElementById('chk-vinoleo').checked = true;
         document.getElementById('chk-mreator').checked = true;
         document.getElementById('chk-e1').checked = false;
@@ -2202,7 +2079,7 @@
         document.getElementById('slider-pt201').value = 1.2;
         document.getElementById('slider-tt201').value = 58.0;
         document.getElementById('slider-lt201').value = 80.0;
-        document.getElementById('slider-at100').value = 28.0; // g_alm = 1
+        document.getElementById('slider-at100').value = 28.0;
         document.getElementById('chk-r1').checked = true;
         document.getElementById('chk-iglic').checked = true;
         document.getElementById('chk-flav').checked = true;
@@ -2216,7 +2093,7 @@
         // Partida a Seco
         document.getElementById('slider-pt201').value = 1.0;
         document.getElementById('slider-tt201').value = 45.0;
-        document.getElementById('slider-lt201').value = 10.0; // l_baixo = 1
+        document.getElementById('slider-lt201').value = 10.0;
         document.getElementById('slider-at100').value = 1.0;
         document.getElementById('chk-r1').checked = true;
         document.getElementById('chk-iglic').checked = true;
@@ -2224,7 +2101,7 @@
         document.getElementById('chk-lfim').checked = false;
         document.getElementById('chk-vinmix').checked = false;
         document.getElementById('chk-vinoleo').checked = false;
-        document.getElementById('chk-mreator').checked = true; // m_reator = 1
+        document.getElementById('chk-mreator').checked = true;
         document.getElementById('chk-e1').checked = false;
         logEvent('TRIP', 'CENÁRIO 4', 'Partida a Seco do Agitador detectada (Nível <= 15%). Disparo de R-06.');
       } else if (num === 5) {
@@ -2234,13 +2111,13 @@
         document.getElementById('slider-lt201').value = 80.0;
         document.getElementById('slider-at100').value = 2.0;
         document.getElementById('chk-r1').checked = true;
-        document.getElementById('chk-iglic').checked = false; // not_i_glic = 1
+        document.getElementById('chk-iglic').checked = false;
         document.getElementById('chk-flav').checked = true;
         document.getElementById('chk-lfim').checked = false;
         document.getElementById('chk-vinmix').checked = false;
         document.getElementById('chk-vinoleo').checked = false;
         document.getElementById('chk-mreator').checked = true;
-        document.getElementById('chk-e1').checked = true; // e1 = 1
+        document.getElementById('chk-e1').checked = true;
         logEvent('TRIP', 'CENÁRIO 5', 'Drenagem de Glicerina sem Interface e Parada Geral ESD acionada. Trip Total!');
       }
       updateTelemetry();
