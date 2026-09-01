@@ -56,18 +56,12 @@ A pasta [`etapa-01-logica`](./etapa-01-logica/) contém toda a modelagem formal,
 
 ---
 
-## 📽️ Apresentação Executiva em LaTeX (Beamer)
+## 📽️ Apresentação Executiva (Slides)
 
-Para a defesa do **Motor de Intertravamento e Diagnóstico**, foi elaborada uma apresentação completa em LaTeX Beamer estruturada para apresentação compartilhada por 4 integrantes:
+Para a defesa do **Motor de Intertravamento e Diagnóstico**, a apresentação em slides está disponível em formato PDF:
 
-* **Código-fonte em LaTeX:** [`apresentacao_etapa_01.tex`](./apresentacao_etapa_01.tex)
-* **Slides Compilados em PDF:** [`apresentacao_etapa_01.pdf`](./apresentacao_etapa_01.pdf)
+* **Apresentação em PDF:** [`apresentacao_etapa_01.pdf`](./etapa-01-logica/apresentacao_etapa_01.pdf)
 
-### Estrutura das Falas (4 Apresentadores):
-1. **Apresentador 1 — Fundamentos \& Modelagem ISA-5.1:** Contexto da Planta de Biodiesel, Reação Química, Topologia dos 4 Setores Industriais, Instrumentação ISA-5.1 e Discretização Matemática de Sinais com Banda Morta ($\delta$).
-2. **Apresentador 2 — Lógica Proposicional \& Otimização Booleana:** Permissivos de Partida (*Start Permissives*), Desarmes *Fail-Safe*, Prova de Tautologias de Segurança, Formas Normais (FND/FNC) e Minimização de Scan no CLP.
-3. **Apresentador 3 — Redes de Sensores \& Prova SIS:** Predicados e Quantificadores ($\forall, \exists$), Regras Canônicas de Inferência (MP, MT, Silogismos), Rejeição Formal de Falácias Industriais e Prova por SAT Solver da Matriz ESD ($2^{11}$ estados).
-4. **Apresentador 4 — Sistemas Especialistas \& SCADA Integrado:** Arquitetura do RBS, Catálogo de 8 Cláusulas de Horn (R-01 a R-08), Motores *Forward* e *Backward Chaining* (XAI), Bateria de 5 Cenários de Estresse e Demonstração do Simulador SCADA em Tempo Real.
 
 
 
