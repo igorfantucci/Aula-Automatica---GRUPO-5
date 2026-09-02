@@ -88,31 +88,27 @@ A planta de transesterificação em batelada é monitorada pelos seguintes instr
 
 ---
 
-## 3. Matriz de Permissivos, Intertravamentos e Provas Formais
-
 ### 3.1. Equações dos Permissivos e Desarmes (*Fail-Safe*)
 
 1. **Aquecedor do Reator $\text{HT-201}$:**
    $$P_{\text{HT-201}} \equiv r_1 \land m_{\text{reator}} \land l_{\text{reator}} \land \neg t_{\text{alta}} \land \neg p_1 \land \neg e_1$$
-   $$\text{Trip}_{\text{HT-201}} \equiv \neg r_1 \lor \neg m_{\text{reator}} \lor \neg l_{\text{reator}} \lor t_{\text{alta}} \lor p_1 \lor e_1$$
+   $$text{Trip}_{\text{HT-201}} \equiv \neg r_1 \lor \neg m_{\text{reator}} \lor \neg l_{\text{reator}} \lor t_{\text{alta}} \lor p_1 \lor e_1$$
 
 2. **Válvula de Adição de Metóxido $\text{XV-202}$:**
    $$P_{\text{XV-202}} \equiv m_{\text{reator}} \land l_{\text{reator}} \land \neg p_1 \land \neg t_{\text{alta}} \land \neg l_{\text{alto}} \land \neg g_{\text{alm}} \land \neg e_1$$
    $$\text{Trip}_{\text{XV-202}} \equiv \neg m_{\text{reator}} \lor \neg l_{\text{reator}} \lor p_1 \lor t_{\text{alta}} \lor l_{\text{alto}} \lor g_{\text{alm}} \lor e_1$$
 
 3. **Misturador de Metóxido $\text{AG-103}$:**
-   $$P_{\text{AG-103}} \equiv l_{\text{mix}} \land \neg g_{\text{alm}} \land \neg e_1 \quad\implies\quad \text{Trip}_{\text{AG-103}} \equiv \neg l_{\text{mix}} \lor g_{\text{alm}} \lor e_1$$
+   $$P_{\text{AG-103}} \equiv l_{\text{mix}} \land \neg g_{\text{alm}} \land \neg e_1 \implies \text{Trip}_{\text{AG-103}} \equiv \neg l_{\text{mix}} \lor g_{\text{alm}} \lor e_1$$
 
 4. **Dreno de Glicerina $\text{XV-301}$:**
-   $$P_{\text{XV-301}} \equiv l_{\text{dec}} \land i_{\text{glic}} \land \neg e_1 \quad\implies\quad \text{Trip}_{\text{XV-301}} \equiv \neg l_{\text{dec}} \lor \neg i_{\text{glic}} \lor e_1$$
+   $$P_{\text{XV-301}} \equiv l_{\text{dec}} \land i_{\text{glic}} \land \neg e_1 \implies \text{Trip}_{\text{XV-301}} \equiv \neg l_{\text{dec}} \lor \neg i_{\text{glic}} \lor e_1$$
 
 5. **Transferência Final $\text{P-401}$:**
-   $$P_{\text{P-401}} \equiv f_{\text{lav}} \land v_{\text{final}} \land \neg l_{\text{fim}} \land \neg e_1 \quad\implies\quad \text{Trip}_{\text{P-401}} \equiv \neg f_{\text{lav}} \lor \neg v_{\text{final}} \lor l_{\text{fim}} \lor e_1$$
+   $$P_{\text{P-401}} \equiv f_{\text{lav}} \land v_{\text{final}} \land \neg l_{\text{fim}} \land \neg e_1 \implies \text{Trip}_{\text{P-401}} \equiv \neg f_{\text{lav}} \lor \neg v_{\text{final}} \lor l_{\text{fim}} \lor e_1$$
 
 6. **Parada Total de Emergência ($\text{ESD-100}$):**
-   $$e_1 \rightarrow \big(\neg h_1 \land \neg v_{\text{in\_mix}} \land \neg v_{\text{in\_oleo}} \land \neg b_{\text{met}} \land \neg v_{\text{glic}} \land \neg b_{\text{final}}\big)$$
-
----
+   $$e_1 \rightarrow \big(\neg h_1 \land \neg v_{\text{inmix}} \land \neg v_{\text{inoleo}} \land \neg b_{\text{met}} \land \neg v_{\text{glic}} \land \neg b_{\text{final}}\big)$$
 
 ## 4. Catálogo Oficial da Base de Conhecimento Especialista (Cláusulas de Horn)
 
@@ -121,9 +117,9 @@ O catálogo consolida as **8 Regras Especialistas de Diagnóstico de Causa-Raiz 
 | ID Regra | Antecedentes ($\bigwedge A_{i,j}$) | Consequente ($C_i$) | Diagnóstico de Causa-Raiz | Severidade / Prioridade | $t_{\text{max}}$ | Procedimento Operacional Padrão (POP) |
 | :--- | :--- | :--- | :--- | :---: | :---: | :--- |
 | **R-01** | $p_1 \land t_{\text{alta}}$ | `EXOTERMIA_RUNAWAY_REATOR` | **Exotermia Descontrolada e Sobrepressão no Reator R-200** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-01:** Desarme total de `HT-201`, corte de `XV-202` e abertura plena de `CW-201` |
-| **R-02** | `EXOTERMIA_RUNAWAY_REATOR` $\land v_{\text{in\_mix}}$ | `TRIP_ALIMENTACAO_METOXIDO` | **Corte Imediato da Dosagem de Metóxido por Reação Fora de Controle** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-02:** Fechar imediatamente `XV-202`, desenergizar `P-102` e inertizar com $\text{N}_2$ |
+| **R-02** | `EXOTERMIA_RUNAWAY_REATOR` $\land v_{\text{inmix}}$ | `TRIP_ALIMENTACAO_METOXIDO` | **Corte Imediato da Dosagem de Metóxido por Reação Fora de Controle** | **CRÍTICA** (Prio: 10) | $0.5\text{ s}$ | **POP-SIS-02:** Fechar imediatamente `XV-202`, desenergizar `P-102` e inertizar com $\text{N}_2$ |
 | **R-03** | $g_{\text{alm}}$ | `VAZAMENTO_GAS_METANOL_S100` | **Detecção de Vapores Inflamáveis/Tóxicos de Metanol no Setor 100** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SST-03:** Cortar `XV-102` e `XV-202`, ligar exaustão e desenergizar bombas `P-102` |
-| **R-04** | $l_{\text{alto}} \land v_{\text{in\_oleo}}$ | `TRANSBORDAMENTO_REATOR_R200` | **Sobrecarga Volumétrica de Óleo Vegetal no Reator de Transesterificação** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-PR-01:** Fechar `XV-201`, desligar bomba de óleo `P-101` e reter batelada |
+| **R-04** | $l_{\text{alto}} \land v_{\text{inoleo}}$ | `TRANSBORDAMENTO_REATOR_R200` | **Sobrecarga Volumétrica de Óleo Vegetal no Reator de Transesterificação** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-PR-01:** Fechar `XV-201`, desligar bomba de óleo `P-101` e reter batelada |
 | **R-05** | $h_1 \land \neg r_1$ | `OPERACAO_TERMICA_SEM_SALVAGUARDA` | **Acionamento de Aquecedor HT-201 sem Circuito de Resfriamento de Emergência** | **CRÍTICA** (Prio: 9) | $1.0\text{ s}$ | **POP-SIS-04:** Trip imediato de `HT-201` e alarme de manutenção na linha `CW-201` |
 | **R-06** | $l_{\text{baixo}} \land m_{\text{reator}}$ | `RISCO_CAVITACAO_AGITADOR_R200` | **Operação do Agitador sem Carga Hidráulica Mínima no Reator R-200** | **ALTA** (Prio: 8) | $2.0\text{ s}$ | **POP-MA-05:** Desarmar inversor de `AG-201` e bloquear aquecimento `HT-201` |
 | **R-07** | $v_{\text{glic}} \land \neg i_{\text{glic}}$ | `PERDA_BIODIESEL_DRENO_GLICERINA` | **Drenagem Indevida de Biodiesel Bruto pela Linha de Fundo de Glicerina** | **ALTA** (Prio: 8) | $1.5\text{ s}$ | **POP-SEP-02:** Fechar válvula `XV-301` e reajustar tempo de decantação |
@@ -136,7 +132,7 @@ O catálogo consolida as **8 Regras Especialistas de Diagnóstico de Causa-Raiz 
 O notebook executa a simulação determinística de 5 cenários críticos de processo:
 
 1. **Cenário 1 — Operação Nominal Estável:** Todas as variáveis em faixas nominais. Permissivos liberados, zero alarmes e zero trips.
-2. **Cenário 2 — Runaway Térmico e Sobrepressão no Reator R-200 ($p_1 = 1, t_{\text{alta}} = 1, v_{\text{in\_mix}} = 1$):** Ativação em cascata das Regras R-01 e R-02 pelo motor *Forward Chaining*, trip imediato de `HT-201` e `XV-202`, e despacho dos POP-SIS-01 e POP-SIS-02.
+2. **Cenário 2 — Runaway Térmico e Sobrepressão no Reator R-200 ($p_1 = 1, t_{\text{alta}} = 1, v_{\text{inmix}} = 1$):** Ativação em cascata das Regras R-01 e R-02 pelo motor *Forward Chaining*, trip imediato de `HT-201` e `XV-202`, e despacho dos POP-SIS-01 e POP-SIS-02.
 3. **Cenário 3 — Vazamento de Vapores de Metanol no Setor 100 ($g_{\text{alm}} = 1$):** Ativação de R-03, desarme de dosagem de metanol e emissão do POP-SST-03.
 4. **Cenário 4 — Partida a Seco do Agitador no Reator ($l_{\text{baixo}} = 1, m_{\text{reator}} = 1$):** Ativação de R-06, desarme de `AG-201` e inibição do aquecimento `HT-201` via POP-MA-05.
 5. **Cenário 5 — Drenagem sem Interface e Parada Geral de Emergência ($v_{\text{glic}} = 1, \neg i_{\text{glic}}, e_1 = 1$):** Ativação de R-07, desarme de `XV-301` e trip global failsafe em 100% dos atuadores com emissão do POP-SEP-02.
