@@ -43,9 +43,9 @@ graph LR
     MAN101 -->|10m - XV-101B| P102["P-102: Bomba de Carga B"]
     P101 -->|25m - XV-201A| R200["R-200: Reator CSTR Encamisado"]
     P102 -->|22m - XV-201B| R200
-    R200 -.->|30m - XV-203 (VAZAMENTO / ISOLADO)| TK300["TK-300: Decantador Cônico"]
-    R200 ==>|18m - XV-202B (DESVIO ATIVO)| TK201["TK-201: Pulmão / Arrefecimento"]
-    TK201 ==>|20m - XV-204 (DESVIO ATIVO)| TK300
+    R200 -.->|30m - XV-203 VAZAMENTO / ISOLADO| TK300["TK-300: Decantador Cônico"]
+    R200 ==>|18m - XV-202B DESVIO ATIVO| TK201["TK-201: Pulmão / Arrefecimento"]
+    TK201 ==>|20m - XV-204 DESVIO ATIVO| TK300
 
     style TK300 fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
     style R200 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
@@ -110,8 +110,8 @@ TK-300_Decant  |       ∞       ∞        ∞       ∞       ∞       ∞   
 
 A ativação da rota de contingência acarreta alterações quantitativas no escoamento que devem ser monitoradas pelo supervisório:
 
-1. **Acréscimo Métrico Percentual ($\Delta L_{\%}$):**
-   $$\Delta L_{\%} = \frac{L_{\text{contingência}} - L_{\text{nominal}}}{L_{\text{nominal}}} \times 100 = \frac{85.0 - 77.0}{77.0} \times 100 \approx +10.39\%$$
+1. **Acréscimo Métrico Percentual ($\Delta L_{\text{\%}}$):**
+   $$\Delta L_{\text{\%}} = \frac{L_{\text{contingência}} - L_{\text{nominal}}}{L_{\text{nominal}}} \times 100$$ = \frac{85.0 - 77.0}{77.0} \times 100 \approx +10.39\%$$
 2. **Impacto na Perda de Carga Distribuída ($\Delta P$):**
    Pela formulação de Darcy-Weisbach, o acréscimo linear de $8.0\,\text{m}$ em tubulação de $6$ polegadas eleva a contrapressão em aproximadamente $0.12\,\text{bar}$, valor perfeitamente suportável pela curva característica da bomba $P\text{-}102$.
 3. **Tempo Adicional de Residência Hidráulica ($\Delta \tau$):**
@@ -157,20 +157,20 @@ Embora essa estratégia seja essencial para redes continentais de telecomunicaç
 
 No relatório consolidado emitido pelo módulo `SistemaDesvioAutomatico`, registra-se com rigor a métrica de telemetria **`Tempo_Decisão_ms`**, mensurada através de temporizadores de alta resolução do sistema operacional:
 
-$$t_{\text{decisão}} = (t_{\text{conclusão\_dijkstra}} - t_{\text{disparo\_alarme}}) \times 1000 \quad [\text{ms}]$$
+$$t_{\text{decisão}} = (t_{\text{conclusão dijkstra}} - t_{\text{disparo alarme}}) \times 1000 \quad [\text{ms}]$$
 
 Na engenharia de segurança de processos químicos, esse parâmetro é confrontado diretamente com o conceito de **Tempo de Segurança do Processo (*Process Safety Time* - PST)** estipulado pela norma internacional **IEC 61511**:
 
-$$\text{PST} \ge t_{\text{detecção}} + t_{\text{transmissão}} + t_{\text{decisão\_algorítmica}} + t_{\text{atuação\_física}} + t_{\text{acomodação}}$$
+$$\text{PST} \ge t_{\text{detecção}} + t_{\text{transmissão}} + t_{\text{decisão algorítmica}} + t_{\text{atuação física}} + t_{\text{acomodação}}$$
 
 Onde cada parcela representa:
 1. **$t_{\text{detecção}}$:** Tempo de resposta dos transmissores de vazão mássica ou pressão ($100\text{ ms}$ a $300\text{ ms}$);
 2. **$t_{\text{transmissão}}$:** Latência de comunicação no barramento de campo industrial (ex.: PROFINET / Foundation Fieldbus: $2\text{ ms}$ a $10\text{ ms}$);
-3. **$t_{\text{decisão\_algorítmica}}$:** Tempo de execução do algoritmo de menor caminho no CLP/SCADA ($\approx 0.048\text{ ms}$);
-4. **$t_{\text{atuação\_física}}$:** Tempo mecânico para fechamento da válvula de isolamento e abertura da válvula de desvio ($3.0\text{ s}$ a $8.0\text{ s}$ para atuadores pneumáticos rotativos de 6 polegadas);
+3. **$t_{\text{decisãoalgorítmica}}$:** Tempo de execução do algoritmo de menor caminho no CLP/SCADA ($\approx 0.048\text{ ms}$);
+4. **$t_{\text{atuaçãofísica}}$:** Tempo mecânico para fechamento da válvula de isolamento e abertura da válvula de desvio ($3.0\text{ s}$ a $8.0\text{ s}$ para atuadores pneumáticos rotativos de 6 polegadas);
 5. **$t_{\text{acomodação}}$:** Tempo de estabilização do regime hidráulico e amortecimento do golpe de aríete (*water hammer*) ($500\text{ ms}$).
 
-> **Conclusão Fundamental:** Como $t_{\text{decisão\_algorítmica}} \approx 0.048\text{ ms}$ representa apenas $0.0006\%$ do tempo total de fechamento mecânico das válvulas, o **gargalo de segurança do processo reside estritamente na inércia dos atuadores pneumáticos/mecânicos**, comprovando que o algoritmo de grafos opera com folga de ordens de magnitude em relação aos limites de segurança funcional.
+> **Conclusão Fundamental:** Como $t_{\text{decisãoalgorítmica}} \approx 0.048\text{ ms}$ representa apenas $0.0006\%$ do tempo total de fechamento mecânico das válvulas, o **gargalo de segurança do processo reside estritamente na inércia dos atuadores pneumáticos/mecânicos**, comprovando que o algoritmo de grafos opera com folga de ordens de magnitude em relação aos limites de segurança funcional.
 
 ---
 
@@ -244,9 +244,9 @@ Durante a descarga contínua de uma batelada de ésteres a $60^\circ\text{C}$, o
 
 1. **Isolamento Topológico Inicial:**  
    O SCADA atualiza as matrizes do grafo na memória:
-   $$W(\text{R-200}, \text{TK-300\_Decant}) \leftarrow \infty, \quad A_{\text{bin}}[\text{R-200}][\text{TK-300\_Decant}] \leftarrow 0$$
+   $$W(\text{R-200}, \text{TK-300Decant}) \leftarrow \infty, \quad A_{\text{bin}}[\text{R-200}][\text{TK-300Decant}] \leftarrow 0$$
 2. **Rota Nominal Anterior:**  
-   $$\text{TK-101\_Oleo} \xrightarrow{15\text{m}} \text{MAN-101} \xrightarrow{10\text{m}} \text{P-102} \xrightarrow{22\text{m}} \text{R-200} \xrightarrow{30\text{m}} \text{TK-300\_Decant} \quad (L = 77.0\,\text{m})$$
+   $$\text{TK-101Oleo} \xrightarrow{15\text{m}} \text{MAN-101} \xrightarrow{10\text{m}} \text{P-102} \xrightarrow{22\text{m}} \text{R-200} \xrightarrow{30\text{m}} \text{TK-300Decant} \quad (L = 77.0\,\text{m})$$
 3. **Execução de Dijkstra sob Reponderação:**  
    * O algoritmo parte de `TK-101_Oleo` ($d = 0.0$), atinge `MAN-101` ($d = 15.0$) e seleciona a motobomba `P-102` ($d = 25.0$).
    * Atinge o reator `R-200` com custo acumulado:
@@ -255,10 +255,10 @@ Durante a descarga contínua de uma batelada de ésteres a $60^\circ\text{C}$, o
      * Para `TK-300_Decant`: peso é $\infty$ $\implies$ não ocorre relaxação.
      * Para `TK-201_Pulmao`: peso é $18.0\,\text{m}$ $\implies$ relaxa com $d = 47.0 + 18.0 = 65.0\,\text{m}$.
    * A partir de `TK-201_Pulmao`, relaxa `TK-300_Decant` via duto de arrefecimento ($20.0\,\text{m}$):
-     $$d[\text{TK-300\_Decant}] = 65.0 + 20.0 = 85.0\,\text{m}$$
+     $$d[\text{TK-300Decant}] = 65.0 + 20.0 = 85.0\,\text{m}$$
 4. **Resultado Consolidado:**  
    * **Nova Rota Ativa:**  
-     $$\text{TK-101\_Oleo} \rightarrow \text{MAN-101} \rightarrow \text{P-102} \rightarrow \text{R-200} \rightarrow \text{TK-201\_Pulmao} \rightarrow \text{TK-300\_Decant}$$
+     $$\text{TK-101Oleo} \rightarrow \text{MAN-101} \rightarrow \text{P-102} \rightarrow \text{R-200} \rightarrow \text{TK-201Pulmao} \rightarrow \text{TK-300Decant}$$
    * **Comprimento Total:** $85.0\,\text{m}$ (acréscimo de $8.0\,\text{m}$ em relação à nominal).
    * **Tempo de Decisão:** $t_{\text{decisão}} \approx 0.0480\,\text{ms}$.
 
@@ -289,59 +289,14 @@ Suponha que, enquanto a linha direta `R-200 -> TK-300_Decant` encontra-se isolad
 
 **Resolução:**  
 * Ambas as arestas convergentes para `TK-300_Decant` passam a ter peso $\infty$.
-* O grau de entrada efetivo do decantador torna-se nulo: $\deg^-(\text{TK-300\_Decant}) = 0$.
+* O grau de entrada efetivo do decantador torna-se nulo: $\deg^-(\text{TK-300Decant}) = 0$.
 * O algoritmo de Dijkstra esgota a fila de prioridades Min-Heap sem relaxar o vértice de destino, finalizando com:
-  $$d[\text{TK-300\_Decant}] = \infty, \quad \text{pred}[\text{TK-300\_Decant}] = \text{None}, \quad \text{caminho} = [\,]$$
+  $$d[\text{TK-300Decant}] = \infty, \quad \text{pred}[\text{TK-300Decant}] = \text{None}, \quad \text{caminho} = [\,]$$
 * **Ação do SIS:** O sistema identifica formalmente a perda irreversível de conectividade com o decantador, aborta a batelada, desliga imediatamente as bombas `P-101` e `P-102` e aciona o sistema de parada de emergência (ESD - *Emergency Shutdown*).
 
 ---
 
-## 4. Atividades de Investigação
-
-1. **Varredura Algorítmica de Pontes na Planta de Biodiesel:**  
-   a) Escreva um script em Python que itere sobre cada uma das 9 arestas cadastradas na malha, aplique a punição $W \leftarrow \infty$ individualmente e execute o algoritmo de Dijkstra entre `TK-101_Oleo` e `TK-300_Decant`.  
-   b) Identifique quais arestas causam retorno de custo $\infty$ (pontes críticas de suprimento).  
-   c) Compare o resultado obtido com a detecção analítica baseada no Algoritmo de Tarjan.  
-   d) Formule uma proposta de arquitetura para registrar essas pontes automaticamente no banco de dados SCADA.
-
-2. **Dimensionamento de Segurança em Tempo Real (PST vs. Atuadores):**  
-   a) Considere que as válvulas motorizadas rotativas da planta possuem velocidade de fechamento angular de $6^\circ/\text{s}$, exigindo $15\text{ segundos}$ para um curso completo de $90^\circ$.  
-   b) Sabendo que o tempo de decisão de Dijkstra medido no notebook foi de aproximadamente $0.048\text{ ms}$, determine a razão de grandezas entre o tempo mecânico e o computacional.  
-   c) Discuta como transitórios de pressão (golpe de aríete) influenciam a taxa de fechamento segura de válvulas de bloqueio rápido ISA-5.1.  
-   d) Proponha um mecanismo de controle por amortecimento pneumático proporcional (*cushioning*) para evitar danos mecânicos.
-
-3. **Projeto de Topologia 3-Aresta-Conexa (Tolerância a Dupla Falha):**  
-   a) Proponha a inserção de uma terceira tubulação de emergência entre os setores de reação e decantação da planta de biodiesel.  
-   b) Defina o equipamento de origem, destino, comprimento hipotético em metros e tag de instrumentação ISA-5.1.  
-   c) Demonstre que, com essa terceira linha, a rede passa a tolerar o cenário de falha dupla simultânea do Exemplo Resolvido 2 sem interromper a produção.  
-   d) Avalie o custo-benefício de capital (CAPEX) da tubulação extra frente às perdas operacionais decorrentes de um shutdown não-planejado.
-
-4. **Análise Assintótica: Dijkstra Recomputado vs. Dynamic SSSP:**  
-   a) Considere uma refinaria petroquímica com $n = 5.000$ nós e $m = 15.000$ tubulações. Calcule o número estimado de operações elementares para recomputar o Dijkstra do zero com Min-Heap: $\mathcal{O}((n + m) \log n)$.  
-   b) Suponha que um algoritmo dinâmico incremental (Ramalingam-Reps) afete apenas um subgrafo local com $\|\Delta\| = 40$ nós e $\|\Delta_E\| = 90$ arestas. Estime o número de operações.  
-   c) Explique por que, em plantas de pequeno porte como a piloto do Grupo 5, o ganho de eficiência dos algoritmos incrementais não compensa a complexidade de implementação.  
-   d) Analise os impactos de concorrência multithread ao atualizar árvores de caminhos mínimos dinâmicas em ambientes industriais distribuídos.
-
----
-
-### 4.1. Gabarito Conceitual e Soluções das Atividades de Investigação
-
-Para apoiar a análise crítica dos alunos e engenheiros de automação, apresentam-se as resoluções técnicas esperadas:
-
-* **Solução da Atividade 1 (Pontes Críticas):**  
-  Das 9 tubulações, apenas o trecho `TK-101_Oleo -> MAN-101` atua como ponte estrita para o transporte de óleo vegetal até o decantador. Caso seja penalizado com $\infty$, o Dijkstra retorna distância $\infty$. As tubulações associadas às bombas (`MAN-101 -> P-101/P-102` e `P-101/P-102 -> R-200`) e às saídas do reator (`R-200 -> TK-300` e `R-200 -> TK-201 -> TK-300`) possuem rotas alternativas paralelas, mantendo a conectividade intacta sob falha individual.
-* **Solução da Atividade 2 (Razão de Ordens de Grandeza):**  
-  A razão entre o tempo de atuação mecânica ($t_{\text{mec}} = 15.0\text{ s} = 15.000\text{ ms}$) e o tempo de decisão do algoritmo ($t_{\text{alg}} \approx 0.048\text{ ms}$) é dada por:
-  $$\frac{t_{\text{mec}}}{t_{\text{alg}}} = \frac{15.000}{0.048} \approx 312.500$$
-  O algoritmo computacional é mais de **300.000 vezes mais rápido** que o movimento mecânico da haste da válvula, confirmando que a inteligência de software não adiciona atraso significativo à malha de intertravamento.
-* **Solução da Atividade 3 (Linha Redundante de Emergência):**  
-  A adição de uma linha de desvio emergencial `R-200 -> TK-300_Emerg` com $35.0\text{ m}$ (válvula $XV\text{-}205$) eleva a conectividade para 3 caminhos disjuntos. Mesmo sob falha simultânea de $XV\text{-}203$ e $XV\text{-}204$, o fluxo de transesterificação escoa via $XV\text{-}205$, prevenindo perdas financeiras estimadas em dezenas de milhares de reais por batelada descartada.
-* **Solução da Atividade 4 (Análise de Escala):**  
-  Para $n = 5.000$ e $m = 15.000$, $(n+m)\log_2(n) \approx 20.000 \times 12.3 \approx 2.45 \times 10^5$ operações elementares, executadas em poucos milissegundos em processadores modernos. Em contrapartida, o algoritmo incremental requer gerenciar ponteiros de dependência cíclica, cujo risco de falha de software (*bug* de sincronização) suplanta qualquer benefício de microssegundos em plantas de batelada.
-
----
-
-## 5. Relação com as Próximas Aulas do Módulo de Grafos
+## 4. Relação com as Próximas Aulas do Módulo de Grafos
 
 A modelagem de reconfiguração dinâmica em tempo real desenvolvida nesta Aula 15 conecta-se diretamente com os temas subsequentes da disciplina:
 
@@ -354,7 +309,7 @@ A modelagem de reconfiguração dinâmica em tempo real desenvolvida nesta Aula 
 
 ---
 
-## 6. Glossário Normativo e Técnico
+## 5. Glossário Normativo e Técnico
 
 * **ESD (*Emergency Shutdown*):** Sistema de parada de emergência projetado para desenergizar e isolar processos industriais sob risco iminente de dano severo.
 * **IEC 61511:** Padrão internacional de segurança funcional para o setor de indústrias de processo utilizando sistemas instrumentados de segurança (SIS).
@@ -365,7 +320,7 @@ A modelagem de reconfiguração dinâmica em tempo real desenvolvida nesta Aula 
 
 ---
 
-## 7. Entregável da Aula 15
+## 6. Entregável da Aula 15
 
 * **Módulo `SistemaDesvioAutomatico` em Python:** Sistema integrado de isolamento emergencial de dutos com reponderação instantânea de matrizes de custo, cálculo reativo de caminhos mínimos via `RoteadorDijkstra` e monitoramento de tempos de resposta computacional (`Tempo_Decisão_ms`).
 * **Caderno Jupyter Executável:** Arquivo [`15 - Simulacao de Vazamentos e Desvio Automatico.ipynb`](./15%20-%20Simulacao%20de%20Vazamentos%20e%20Desvio%20Automatico.ipynb) com simulação de estresse de injeção de falhas, validação de rota substituta de $85.0\,\text{m}$ e asserções automatizadas.
