@@ -75,20 +75,20 @@ graph TD
         TK402["TK-402 (Biodiesel Puro)"]
     end
 
-    TK101 ---|12m| TK102
-    TK102 ---|10m| TK103
-    TK101 ---|16m| TK103
-    TK103 ---|22m| R200
-    TK101 ---|28m| R200
-    TK102 ---|30m| R200
-    R200 ---|14m| TK201
-    R200 ---|26m| TK300
-    TK201 ---|18m| TK300
-    TK300 ---|20m| COL401
-    TK300 ---|35m| TK402
-    COL401 ---|15m| TK402
-    TK201 ---|32m| COL401
-    R200 ---|40m| COL401
+    TK101 ---|"12m"| TK102
+    TK102 ---|"10m"| TK103
+    TK101 ---|"16m"| TK103
+    TK103 ---|"22m"| R200
+    TK101 ---|"28m"| R200
+    TK102 ---|"30m"| R200
+    R200 ---|"14m"| TK201
+    R200 ---|"26m"| TK300
+    TK201 ---|"18m"| TK300
+    TK300 ---|"20m"| COL401
+    TK300 ---|"35m"| TK402
+    COL401 ---|"15m"| TK402
+    TK201 ---|"32m"| COL401
+    R200 ---|"40m"| COL401
 ```
 
 O conjunto completo de rotas preliminares totaliza $|E| = 14$ arestas, somando uma extensão física total de:
@@ -152,12 +152,12 @@ A topologia final dimensionada para os leitos de utilidades e barramento SCADA d
 ```mermaid
 graph LR
     subgraph S100["SETOR 100"]
-        TK101["TK-101 (Óleo)"] ---|12m| TK102["TK-102 (Metanol)"]
-        TK102 ---|10m| TK103["TK-103 (Metóxido)"]
+        TK101["TK-101 (Óleo)"] ---|"12m"| TK102["TK-102 (Metanol)"]
+        TK102 ---|"10m"| TK103["TK-103 (Metóxido)"]
     end
 
     subgraph S200["SETOR 200"]
-        R200["R-200 (Reator CSTR)"] ---|14m| TK201["TK-201 (Pulmão)"]
+        R200["R-200 (Reator CSTR)"] ---|"14m"| TK201["TK-201 (Pulmão)"]
     end
 
     subgraph S300["SETOR 300"]
@@ -165,12 +165,12 @@ graph LR
     end
 
     subgraph S400["SETOR 400"]
-        COL401["COL-401 (Lavagem)"] ---|15m| TK402["TK-402 (Biodiesel Puro)"]
+        COL401["COL-401 (Lavagem)"] ---|"15m"| TK402["TK-402 (Biodiesel Puro)"]
     end
 
-    TK103 ===|22m (Tronco Intersetorial)| R200
-    TK201 ===|18m (Tronco Intersetorial)| TK300
-    TK300 ===|20m (Tronco Intersetorial)| COL401
+    TK103 ---|"22m - Tronco Intersetorial"| R200
+    TK201 ---|"18m - Tronco Intersetorial"| TK300
+    TK300 ---|"20m - Tronco Intersetorial"| COL401
 
     style TK103 stroke:#2ecc71,stroke-width:2px
     style R200 stroke:#e74c3c,stroke-width:3px

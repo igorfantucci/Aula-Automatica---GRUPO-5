@@ -74,20 +74,20 @@ Convencionando o bit `0` para a ramificação esquerda (maior probabilidade) e o
 ```mermaid
 graph TD
     ROOT["Raiz (P = 1.000)"]
-    ROOT -->|bit 0| S_00000["'00000' (P = 0.900)<br>Código: 0"]
-    ROOT -->|bit 1| N4["N4 (P = 0.100)"]
+    ROOT -->|"bit 0"| S_00000["'00000' (P = 0.900) | Codigo: 0"]
+    ROOT -->|"bit 1"| N4["N4 (P = 0.100)"]
 
-    N4 -->|bit 0| S_00010["'00010' (P = 0.050)<br>Código: 10"]
-    N4 -->|bit 1| N3["N3 (P = 0.050)"]
+    N4 -->|"bit 0"| S_00010["'00010' (P = 0.050) | Codigo: 10"]
+    N4 -->|"bit 1"| N3["N3 (P = 0.050)"]
 
-    N3 -->|bit 0| S_10000["'10000' (P = 0.025)<br>Código: 110"]
-    N3 -->|bit 1| N2["N2 (P = 0.025)"]
+    N3 -->|"bit 0"| S_10000["'10000' (P = 0.025) | Codigo: 110"]
+    N3 -->|"bit 1"| N2["N2 (P = 0.025)"]
 
-    N2 -->|bit 0| S_01000["'01000' (P = 0.015)<br>Código: 1110"]
-    N2 -->|bit 1| N1["N1 (P = 0.010)"]
+    N2 -->|"bit 0"| S_01000["'01000' (P = 0.015) | Codigo: 1110"]
+    N2 -->|"bit 1"| N1["N1 (P = 0.010)"]
 
-    N1 -->|bit 0| S_00100["'00100' (P = 0.009)<br>Código: 11110"]
-    N1 -->|bit 1| S_00001["'00001' (P = 0.001)<br>Código: 11111"]
+    N1 -->|"bit 0"| S_00100["'00100' (P = 0.009) | Codigo: 11110"]
+    N1 -->|"bit 1"| S_00001["'00001' (P = 0.001) | Codigo: 11111"]
 
     style S_00000 fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff
     style S_00010 fill:#3498db,stroke:#2980b9,stroke-width:2px,color:#fff
