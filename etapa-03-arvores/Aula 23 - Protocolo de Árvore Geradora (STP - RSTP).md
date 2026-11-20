@@ -31,7 +31,7 @@ Para garantir alta disponibilidade ($> 99.99\%$) e tolerância a rompimentos de 
 ## 2. Fundamentação em Matemática Discreta e o Problema dos Ciclos em Camada 2
 
 A rede de switches gerenciáveis da planta é modelada formalmente como um grafo não direcionado, conexo e ponderado $G = (V, E, w)$, onde:
-* $V = \{v\_{\text{CORE}}, v\_{\text{ZONA1}}, v\_{\text{ZONA2}}, v\_{\text{ZONA3}}\}$ representa os switches industriais;
+* $V = \{v_{\text{CORE}}, v_{\text{ZONA1}}, v_{\text{ZONA2}}, v_{\text{ZONA3}}\}$ representa os switches industriais;
 * $E$ representa os enlaces físicos de fibra óptica e cabos de cobre par trançado blindado ($\text{STP/SFTP}$);
 * $w: E \to \mathbb{R}^+$ é o custo de caminho normalizado da norma **IEEE 802.1w**, inversamente proporcional à largura de banda:
 
@@ -47,9 +47,9 @@ Como os quadros de Camada 2 do padrão IEEE 802.3 **não possuem campo TTL (*Tim
 2. **Flapping de Tabela MAC (*MAC Table Thrashing*):** O endereço MAC do CLP de segurança passa a ser registrado alternadamente em portas distintas a cada microssegundo, inviabilizando o envio de comandos determinísticos.
 
 ### 2.2 Solução Formal: Árvore Geradora Mínima (MST)
-O protocolo **RSTP (IEEE 802.1w)** executa uma variante distribuída para derivar de $G$ uma Árvore Geradora $T = (V, E\_T)$ tal que:
-1. $T$ é conexo e acíclico, contendo exatamente $|E\_T| = |V| - 1$ arestas ativas;
-2. As arestas redundantes $e \in (E \setminus E\_T)$ são configuradas no estado **Discarding (Bloqueada)** para eliminação de ciclos, permanecendo em *standby* quente para ativação instantânea em caso de corte de cabo.
+O protocolo **RSTP (IEEE 802.1w)** executa uma variante distribuída para derivar de $G$ uma Árvore Geradora $T = (V, E_T)$ tal que:
+1. $T$ é conexo e acíclico, contendo exatamente $|E_T| = |V| - 1$ arestas ativas;
+2. As arestas redundantes $e \in (E \setminus E_T)$ são configuradas no estado **Discarding (Bloqueada)** para eliminação de ciclos, permanecendo em *standby* quente para ativação instantânea em caso de corte de cabo.
 
 ---
 
@@ -116,7 +116,7 @@ Quando a rota troncal de fibra óptica de $10\text{ Gbps}$ entre $\text{SW-CORE}
 1. Os transceptores ópticos detectam perda de sinal (*Loss of Signal — LoS*) em menos de $1\text{ ms}$;
 2. O switch $\text{SW-ZONA2}$ envia instantaneamente uma BPDU de notificação de alteração de topologia (*Topology Change Notification — TCN*);
 3. A porta *Alternate* do enlace $\text{SW-ZONA1} \leftrightarrow \text{SW-ZONA2}$, que estava bloqueada no estado *Discarding*, transita diretamente para *Forwarding* via troca rápida de *Proposal/Agreement* em menos de $50\text{ ms}$;
-4. A integridade acíclica da árvore geradora é mantida ($|E\_T| = |V| - 1 = 3$), restabelecendo o fluxo de telemetria antes que qualquer alarme falso de perda de comunicação seja disparado na IHM.
+4. A integridade acíclica da árvore geradora é mantida ($|E_T| = |V| - 1 = 3$), restabelecendo o fluxo de telemetria antes que qualquer alarme falso de perda de comunicação seja disparado na IHM.
 
 ---
 

@@ -35,25 +35,25 @@ Para solucionar o problema de planejamento de movimento contínuo em espaço bid
 ## 2. Formulação Matemática do Algoritmo RRT
 
 O espaço de configuração de navegação planar do robô é formalizado por $\mathcal{C} \subset \mathbb{R}^2$, delimitado pelas dimensões do galpão industrial da planta:
-$$\mathcal{C} = [0, X\_{\max}] \times [0, Y\_{\max}]$$
+$$\mathcal{C} = [0, X_{\max}] \times [0, Y_{\max}]$$
 
-### 2.1 Espaço Livre ($\mathcal{C}\_{\text{livre}}$) e Espaço de Obstáculos ($\mathcal{C}\_{\text{obs}}$)
-O conjunto de obstáculos físicos da planta $\mathcal{O} = \{O\_1, O\_2, \dots, O\_m\}$ abrange os equipamentos cilíndricos (tanques e reatores modelados como discos circulares com raio expandido de segurança $r\_i + r\_{\text{robô}}$) e as bacias de contenção retangulares:
-$$\mathcal{C}\_{\text{obs}} = \bigcup\_{i=1}^m O\_i \subset \mathcal{C}$$
-$$\mathcal{C}\_{\text{livre}} = \mathcal{C} \setminus \mathcal{C}\_{\text{obs}}$$
+### 2.1 Espaço Livre ($\mathcal{C}_{\text{livre}}$) e Espaço de Obstáculos ($\mathcal{C}_{\text{obs}}$)
+O conjunto de obstáculos físicos da planta $\mathcal{O} = \{O_1, O_2, \dots, O_m\}$ abrange os equipamentos cilíndricos (tanques e reatores modelados como discos circulares com raio expandido de segurança $r_i + r_{\text{robo}}$) e as bacias de contenção retangulares:
+$$\mathcal{C}_{\text{obs}} = \bigcup_{i=1}^m O_i \subset \mathcal{C}$$
+$$\mathcal{C}_{\text{livre}} = \mathcal{C} \setminus \mathcal{C}_{\text{obs}}$$
 
-O objetivo consiste em sintetizar uma trajetória contínua e colisão-livre $\gamma: [0, 1] \to \mathcal{C}\_{\text{livre}}$ tal que $\gamma(0) = \mathbf{q}\_{\text{lab}}$ e $\gamma(1) = \mathbf{q}\_{\text{alvo}}$.
+O objetivo consiste em sintetizar uma trajetória contínua e colisão-livre $\gamma: [0, 1] \to \mathcal{C}_{\text{livre}}$ tal que $\gamma(0) = \mathbf{q}_{\text{lab}}$ e $\gamma(1) = \mathbf{q}_{\text{alvo}}$.
 
 ### 2.2 Estrutura da Árvore Direcionada $\mathcal{T} = (V, E)$
-O algoritmo constrói incrementalmente uma arborescência direcionada $\mathcal{T} = (V, E)$ enraizada no Laboratório de Qualidade $\mathbf{q}\_{\text{lab}}$, em que:
-* $V \subset \mathcal{C}\_{\text{livre}}$ é o conjunto de coordenadas discretas visitadas;
+O algoritmo constrói incrementalmente uma arborescência direcionada $\mathcal{T} = (V, E)$ enraizada no Laboratório de Qualidade $\mathbf{q}_{\text{lab}}$, em que:
+* $V \subset \mathcal{C}_{\text{livre}}$ é o conjunto de coordenadas discretas visitadas;
 * $E \subset V \times V$ são os segmentos lineares de deslocamento livre de colisão;
-* Para todo $v \in V \setminus \{\mathbf{q}\_{\text{lab}}\}$, o grau de entrada é estritamente unitário ($\text{indegree}(v) = 1$), garantindo caminho único até a raiz por retrocesso (*backtracking*).
+* Para todo $v \in V \setminus \{\mathbf{q}_{\text{lab}}\}$, o grau de entrada é estritamente unitário ($\text{indegree}(v) = 1$), garantindo caminho único até a raiz por retrocesso (*backtracking*).
 
 ### 2.3 Propriedade Fundamental: Viés de Voronoi (*Voronoi Bias*)
-A alta velocidade de convergência do RRT em relação a métodos de busca exaustiva em grade decorre da **partição de Voronoi** induzida pelo conjunto de vértices $V$. A probabilidade de um vértice existente $\mathbf{q}\_{\text{near}} \in V$ ser selecionado para extensão na iteração é dada pela medida da sua célula de Voronoi $\mathcal{V}(\mathbf{q}\_{\text{near}})$:
+A alta velocidade de convergência do RRT em relação a métodos de busca exaustiva em grade decorre da **partição de Voronoi** induzida pelo conjunto de vértices $V$. A probabilidade de um vértice existente $\mathbf{q}_{\text{near}} \in V$ ser selecionado para extensão na iteração é dada pela medida da sua célula de Voronoi $\mathcal{V}(\mathbf{q}_{\text{near}})$:
 
-$$P(\mathbf{q}\_{\text{near}} \text{ ser o vizinho mais próximo}) = \frac{\mu\big(\mathcal{V}(\mathbf{q}\_{\text{near}}) \cap \mathcal{C}\big)}{\mu(\mathcal{C})}$$
+$$P(\mathbf{q}_{\text{near}} \text{ ser o vizinho mais próximo}) = \frac{\mu\big(\mathcal{V}(\mathbf{q}_{\text{near}}) \cap \mathcal{C}\big)}{\mu(\mathcal{C})}$$
 
 Como os nós situados nas fronteiras externas da árvore contêm células de Voronoi substancialmente maiores voltadas para áreas ainda inexploradas da planta, a amostragem aleatória uniforme "puxa" os galhos rapidamente em direção aos espaços livres e ao ponto de amostragem alvo.
 
@@ -95,9 +95,9 @@ flowchart TD
 
 | Primitiva | Fundamento Matemático | Aplicação no AGV de Amostragem |
 | :--- | :--- | :--- |
-| **`SAMPLE`** | Distribuição mista $(1 - p\_{\text{goal}})\mathcal{U}(\mathcal{C}) + p\_{\text{goal}}\delta(\mathbf{q}\_{\text{alvo}})$. | Sorteia coordenadas no piso industrial, direcionando $10\%$ das amostras diretamente ao vaso químico alvo. |
-| **`NEAREST`** | Busca métrica euclidiana $v^* = \arg\min\_{v \in V} \Vert{}v - \mathbf{q}\_{\text{rand}}\Vert{}\_2$. | Identifica o ponto da rede de caminhos mais apto a emitir um novo trecho de navegação. |
-| **`STEER`** | Projeção linear $\mathbf{q}\_{\text{new}} = \mathbf{q}\_{\text{near}} + \Delta q \frac{\mathbf{q}\_{\text{rand}} - \mathbf{q}\_{\text{near}}}{\Vert{}\mathbf{q}\_{\text{rand}} - \mathbf{q}\_{\text{near}}\Vert{}}$. | Limita o avanço a passos incrementais $\Delta q = 0.5\text{ m}$, respeitando o raio de giro do robô móvel. |
+| **`SAMPLE`** | Distribuição mista $(1 - p_{\text{goal}})\mathcal{U}(\mathcal{C}) + p_{\text{goal}}\delta(\mathbf{q}_{\text{alvo}})$. | Sorteia coordenadas no piso industrial, direcionando $10\%$ das amostras diretamente ao vaso químico alvo. |
+| **`NEAREST`** | Busca métrica euclidiana $v^* = \arg\min_{v \in V} \Vert{}v - \mathbf{q}_{\text{rand}}\Vert{}_2$. | Identifica o ponto da rede de caminhos mais apto a emitir um novo trecho de navegação. |
+| **`STEER`** | Projeção linear $\mathbf{q}_{\text{new}} = \mathbf{q}_{\text{near}} + \Delta q \frac{\mathbf{q}_{\text{rand}} - \mathbf{q}_{\text{near}}}{\Vert{}\mathbf{q}_{\text{rand}} - \mathbf{q}_{\text{near}}\Vert{}}$. | Limita o avanço a passos incrementais $\Delta q = 0.5\text{ m}$, respeitando o raio de giro do robô móvel. |
 | **`COLLISION_FREE`** | Teste de interseção raio-disco e raio-retângulo em $\tau \in [0, \Delta q]$. | Verifica se a linha de deslocamento colide com os tanques $\text{TK-101/102/103}$, $\text{R-200}$ ou muretas. |
 | **`BACKTRACK`** | Travessia reversa em grafo com $\text{indegree} = 1$. | Reconstrói a rota sem ciclos conectando o laboratório ao bocal de amostragem do equipamento. |
 
@@ -106,8 +106,8 @@ flowchart TD
 ## 4. Mapa Físico e Obstáculos da Planta Piloto de Biodiesel
 
 O galpão de processamento possui área retangular de $20.0\text{ m} \times 12.0\text{ m}$ disposta no plano cartesiano:
-* **Origem (Laboratório de Qualidade):** Coordenada inicial $\mathbf{q}\_{\text{lab}} = (1.5, 1.5)$;
-* **Destino Principal (Bocal de Amostragem Reator R-200):** Coordenada alvo $\mathbf{q}\_{\text{alvo}} = (10.0, 9.0)$;
+* **Origem (Laboratório de Qualidade):** Coordenada inicial $\mathbf{q}_{\text{lab}} = (1.5, 1.5)$;
+* **Destino Principal (Bocal de Amostragem Reator R-200):** Coordenada alvo $\mathbf{q}_{\text{alvo}} = (10.0, 9.0)$;
 * **Obstáculo 1 (Setor 100 - Bacia de Insumos):** Região retangular $[2.5, 6.5] \times [4.0, 8.5]$ contendo os tanques $\text{TK-101}$ (Óleo), $\text{TK-102}$ (Metanol) e $\text{TK-103}$ (Metóxido);
 * **Obstáculo 2 (Setor 200 - Reator R-200 e Vaso Pulmão TK-201):** Discos centrados em $(9.5, 6.0)$ e $(9.5, 3.0)$ com envoltória de segurança;
 * **Obstáculo 3 (Setor 300 - Decantador Cônico TK-300):** Disco centrado em $(14.0, 5.0)$ e bacia de contenção de glicerina;
@@ -118,7 +118,7 @@ O galpão de processamento possui área retangular de $20.0\text{ m} \times 12.0
 ## 5. Análise de Desempenho e Viabilidade Operacional
 
 1. **Eficiência Computacional:** Devido à propriedade de cobertura rápida dos nós de fronteira de Voronoi, o algoritmo sintetiza rotas viáveis em menos de $0.5\text{ s}$ para mais de $1.000$ iterações exploratórias.
-2. **Suavização de Trajetória (*Path Pruning*):** Como o RRT clássico gera arestas ziguezagueantes inerentes à estocasticidade da amostragem, aplica-se na pós-convergência um algoritmo guloso de atalhos (*shortcut pruning*), conectando vértices não adjacentes que possuam visada direta desobstruída em $\mathcal{C}\_{\text{livre}}$, reduzindo a distância percorrida pelo robô em até $25\%$.
+2. **Suavização de Trajetória (*Path Pruning*):** Como o RRT clássico gera arestas ziguezagueantes inerentes à estocasticidade da amostragem, aplica-se na pós-convergência um algoritmo guloso de atalhos (*shortcut pruning*), conectando vértices não adjacentes que possuam visada direta desobstruída em $\mathcal{C}_{\text{livre}}$, reduzindo a distância percorrida pelo robô em até $25\%$.
 3. **Segurança Intrínseca em Área Classificada:** A garantia de desvio de obstáculos com envelope de tolerância impede qualquer colisão do robô com as tubulações pressurizadas de metanol e vapor, atendendo aos padrões de segurança industrial da NR-10 e NR-20.
 
 ---
