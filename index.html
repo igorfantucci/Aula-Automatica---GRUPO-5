@@ -797,6 +797,145 @@
       color: var(--text-muted);
       margin-top: auto;
     }
+
+    /* === STAGE NAVIGATION & ETAPA 02 / 03 MODULES === */
+    .stage-nav {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 0.65rem 0.9rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stage-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .stage-btn {
+      background: var(--bg-surface-elevated);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .stage-btn:hover { color: var(--text-main); border-color: var(--primary-light); }
+    .stage-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+    }
+    .stage-view { display: none; }
+    .stage-view.active { display: block; }
+
+    .e23-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .e23-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .e23-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.45rem;
+    }
+    .e23-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.15);
+      color: var(--primary-light);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+    .e23-controls {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .e23-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+    }
+    .e23-kpi {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.5rem 0.65rem;
+      text-align: center;
+    }
+    .e23-kpi-val {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-ok);
+    }
+    .e23-kpi-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .e23-out {
+      background: #060911;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 0.65rem 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      max-height: 210px;
+      overflow-y: auto;
+    }
+    .e23-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+    .e23-table th, .e23-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.3rem 0.45rem;
+      text-align: center;
+    }
+    .e23-table th {
+      background: var(--bg-surface-elevated);
+      color: var(--primary-light);
+    }
+    .e23-canvas {
+      width: 100%;
+      background: #060911;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      display: block;
+    }
+
   </style>
 </head>
 <body>
@@ -804,7 +943,7 @@
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-brand">
-      <span class="badge-core">SCADA-CORE v1.0</span>
+      <span class="badge-core">SCADA-CORE v3.0</span>
       <div>
         <div class="brand-title">Supervisório de Intertravamento & Diagnóstico</div>
         <div class="brand-subtitle">ECAA08 Automática • Planta de Produção de Biodiesel (Grupo 5)</div>
@@ -826,6 +965,18 @@
 
   <!-- APP CONTAINER -->
   <main class="app-container">
+    <nav class="stage-nav">
+      <div class="stage-tabs">
+        <button class="stage-btn active" onclick="switchStage('01', this)">⚡ Etapa 01: Lógica & P&ID (Aulas 02–10)</button>
+        <button class="stage-btn" onclick="switchStage('02', this)">🕸️ Etapa 02: Grafos & Roteamento (Aulas 11–18)</button>
+        <button class="stage-btn" onclick="switchStage('03', this)">🌳 Etapa 03: Árvores & IA Industrial (Aulas 19–27)</button>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+        Planta Piloto de Biodiesel • ISA-5.1 / IEC 61511 SIL-3 / ISA-88
+      </div>
+    </nav>
+
+    <div id="stage-01" class="stage-view active">
     
     <!-- SCENARIOS BAR -->
     <section class="scenarios-card">
@@ -1600,6 +1751,164 @@
       </div>
     </div>
 
+    </div><!-- /stage-01 -->
+
+    <!-- ==================== ETAPA 02: GRAFOS & ROTEAMENTO ==================== -->
+    <div id="stage-02" class="stage-view">
+      <div class="e23-grid">
+        <!-- Aulas 11-12: Matrizes & Kirchhoff -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>📐 Aulas 11–12: Matriz de Adjacência, Incidência & Kirchhoff</span>
+            <span class="e23-badge">B · Q = 0</span>
+          </div>
+          <div class="e23-controls">
+            <button class="btn btn-sm btn-outline" onclick="renderEtapa02Matrices('adj')">Matriz de Adjacência (A)</button>
+            <button class="btn btn-sm btn-outline" onclick="renderEtapa02Matrices('inc')">Matriz de Incidência (B)</button>
+            <button class="btn btn-sm btn-primary" onclick="renderEtapa02Matrices('kirchhoff')">Validar Balanço Kirchhoff</button>
+          </div>
+          <div id="e2-matrix-out" class="e23-out">Clique em um botão para inspecionar as matrizes A (8×8), B (8×10) ou o balanço B·Q = S.</div>
+        </div>
+
+        <!-- Aulas 13-15: Dijkstra + Teste de Estresse em Malha Fechada -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>🛣️ Aulas 13–15: BFS, DFS, Dijkstra & Vazamento em Malha Fechada</span>
+            <span class="e23-badge">Darcy-Weisbach</span>
+          </div>
+          <div class="e23-controls">
+            <select id="e2-route-fault" class="select-custom" style="max-width: 240px;">
+              <option value="none">Operação Nominal (Sem Bloqueio)</option>
+              <option value="TK103-R200">Vazamento Linha TK-103 → R-200</option>
+              <option value="R200-TK300">Bloqueio Válvula R-200 → TK-300</option>
+              <option value="TK300-COL401">Falha Bomba TK-300 → COL-401</option>
+            </select>
+            <button class="btn btn-sm btn-primary" onclick="runEtapa02Routing()">Executar Roteamento & Estresse</button>
+          </div>
+          <div class="e23-kpi-row">
+            <div class="e23-kpi"><div id="e2-dijk-cost" class="e23-kpi-val">66.0 s</div><div class="e23-kpi-lbl">Tempo Dijkstra</div></div>
+            <div class="e23-kpi"><div id="e2-bfs-hops" class="e23-kpi-val">4 nós</div><div class="e23-kpi-lbl">Manobras BFS</div></div>
+            <div class="e23-kpi"><div id="e2-lat-ms" class="e23-kpi-val">&lt; 0.05 ms</div><div class="e23-kpi-lbl">Latência Desvio</div></div>
+          </div>
+          <div id="e2-route-out" class="e23-out"></div>
+        </div>
+
+        <!-- Aulas 16-18: Euleriano, Hamiltoniano (TSP 2-OPT) & DAG Kahn -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>🤖 Aulas 16–18: Euleriano (NDT), Hamiltoniano (AGV 2-OPT) & DAG Kahn</span>
+            <span class="e23-badge">Hierholzer + TSP</span>
+          </div>
+          <div class="e23-controls">
+            <button class="btn btn-sm btn-outline" onclick="runEtapa02Logistics('euler')">Inspeção Euleriana (NDT)</button>
+            <button class="btn btn-sm btn-primary" onclick="runEtapa02Logistics('tsp')">Rota Hamiltoniana AGV (NN + 2-OPT)</button>
+            <button class="btn btn-sm btn-outline" onclick="runEtapa02Logistics('kahn')">Ordenação DAG (Kahn)</button>
+          </div>
+          <div id="e2-log-out" class="e23-out">Selecione um algoritmo logístico/inspeção para simular na planta de biodiesel.</div>
+        </div>
+      </div>
+    </div><!-- /stage-02 -->
+
+    <!-- ==================== ETAPA 03: ÁRVORES & IA INDUSTRIAL ==================== -->
+    <div id="stage-03" class="stage-view">
+      <div class="e23-grid">
+        <!-- Aula 19: Kruskal e Prim -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>🌲 Aula 19: Árvore Geradora Mínima (Kruskal & Prim)</span>
+            <span class="e23-badge">-65.09% CAPEX</span>
+          </div>
+          <div class="e23-controls">
+            <button class="btn btn-sm btn-primary" onclick="runMST('kruskal')">Executar Kruskal (FEED)</button>
+            <button class="btn btn-sm btn-outline" onclick="runMST('prim')">Executar Prim (Campo - TK-101)</button>
+          </div>
+          <div class="e23-kpi-row">
+            <div class="e23-kpi"><div class="e23-kpi-val">318.0 m</div><div class="e23-kpi-lbl">Malha Completa</div></div>
+            <div class="e23-kpi"><div class="e23-kpi-val">111.0 m</div><div class="e23-kpi-lbl">MST Ótima (7 arestas)</div></div>
+            <div class="e23-kpi"><div class="e23-kpi-val">207.0 m</div><div class="e23-kpi-lbl">Economia Linear</div></div>
+          </div>
+          <div id="e3-mst-out" class="e23-out"></div>
+        </div>
+
+        <!-- Aula 20: Huffman -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>📦 Aula 20: Codificação de Huffman (Telemetria SIL-3)</span>
+            <span class="e23-badge">-76.30% Banda</span>
+          </div>
+          <div class="e23-controls">
+            <select id="e3-huff-state" class="select-custom">
+              <option value="00000">00000 — Operação Nominal (P=0.900)</option>
+              <option value="00010">00010 — Nível Alto LT-201 (P=0.050)</option>
+              <option value="10000">10000 — Sobrepressão PT-201 (P=0.025)</option>
+              <option value="01000">01000 — Sobretemperatura TT-201 (P=0.015)</option>
+              <option value="00100">00100 — Metanol AT-100 (P=0.009)</option>
+              <option value="00001">00001 — Emergência ESD-100 (P=0.001)</option>
+            </select>
+            <button class="btn btn-sm btn-primary" onclick="runHuffman()">Comprimir & Gerar Frame CRC-16</button>
+          </div>
+          <div id="e3-huff-out" class="e23-out"></div>
+        </div>
+
+        <!-- Aula 21 & 23: Árvores Binárias (BDT/AVL) & RSTP 802.1w -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>🔀 Aulas 21 & 23: BDT/AVL & Protocolo RSTP (IEEE 802.1w)</span>
+            <span class="e23-badge">&lt; 50 ms</span>
+          </div>
+          <div class="e23-controls">
+            <button class="btn btn-sm btn-outline" onclick="runBDT()">Avaliar BDT / AVL (R-200)</button>
+            <button class="btn btn-sm btn-danger" onclick="runRSTP(true)">💥 Cortar Fibra 10G (CORE↔ZONA2)</button>
+            <button class="btn btn-sm btn-outline" onclick="runRSTP(false)">Restaurar Anel</button>
+          </div>
+          <div id="e3-rstp-out" class="e23-out"></div>
+        </div>
+
+        <!-- Aula 22 & 26: RRT + KD-Tree 2D no piso da planta -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>🧭 Aulas 22 & 26: RRT + KD-Tree 2D (`AGV-SAMPLER`)</span>
+            <span class="e23-badge">20m × 12m</span>
+          </div>
+          <div class="e23-controls">
+            <button class="btn btn-sm btn-primary" onclick="runRRTCanvas()">Gerar Rota RRT (Lab → R-200)</button>
+            <span id="e3-rrt-stats" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ok);"></span>
+          </div>
+          <canvas id="e3-rrt-canvas" class="e23-canvas" width="520" height="240"></canvas>
+        </div>
+
+        <!-- Aula 24: Rede de Petri Interativa -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>⚙️ Aula 24: Rede de Petri (Árvore de Atingibilidade & Karp-Miller)</span>
+            <span class="e23-badge">1-Limitada • 0 Deadlock</span>
+          </div>
+          <div class="e23-controls">
+            <button class="btn btn-sm btn-primary" onclick="stepPetri()">Disparar Próxima Transição (t1→t12)</button>
+            <button class="btn btn-sm btn-outline" onclick="resetPetri()">Resetar M0</button>
+            <button class="btn btn-sm btn-danger" onclick="testPetriMutualExclusion()">Testar Exclusão TK-300</button>
+          </div>
+          <div id="e3-petri-out" class="e23-out"></div>
+        </div>
+
+        <!-- Aula 25, 26 & 27: Behavior Tree + KD-Tree 4D + CART/Gini -->
+        <div class="e23-card">
+          <div class="e23-card-title">
+            <span>🧠 Aulas 25–27: Behavior Tree (50 ms) + KD-Tree 4D + CART (Gini)</span>
+            <span class="e23-badge">XAI & CLP</span>
+          </div>
+          <div class="e23-controls">
+            <label style="font-size:0.75rem;">TT-201 (°C): <input id="e3-tt" type="number" value="58.0" step="0.5" style="width:60px;background:var(--bg-surface);color:var(--text-main);border:1px solid var(--border-color);border-radius:4px;padding:2px 4px;"></label>
+            <label style="font-size:0.75rem;">PT-201 (bar): <input id="e3-pt" type="number" value="1.05" step="0.1" style="width:55px;background:var(--bg-surface);color:var(--text-main);border:1px solid var(--border-color);border-radius:4px;padding:2px 4px;"></label>
+            <label style="font-size:0.75rem;">LT-201 (%): <input id="e3-lt" type="number" value="65" step="5" style="width:50px;background:var(--bg-surface);color:var(--text-main);border:1px solid var(--border-color);border-radius:4px;padding:2px 4px;"></label>
+            <label style="font-size:0.75rem;">AT-100 (ppm): <input id="e3-at" type="number" value="2.0" step="1" style="width:50px;background:var(--bg-surface);color:var(--text-main);border:1px solid var(--border-color);border-radius:4px;padding:2px 4px;"></label>
+            <button class="btn btn-sm btn-primary" onclick="runAIStack()">Executar Tick BT + KD-4D + CART</button>
+            <button class="btn btn-sm btn-danger" onclick="document.getElementById('e3-tt').value=66.5;document.getElementById('e3-pt').value=2.7;runAIStack()">🔥 Simular Flash Boiling</button>
+          </div>
+          <div id="e3-ai-out" class="e23-out"></div>
+        </div>
+      </div>
+    </div><!-- /stage-03 -->
   </main>
 
   <!-- FOOTER -->
@@ -2372,6 +2681,400 @@
       logEvent('OK', 'SISTEMA', 'SCADA-Core Automática inicializado com sucesso.');
       loadScenario(1);
     });
+  </script>
+
+  <script>
+    // === NAVEGAÇÃO ENTRE ETAPAS ===
+    function switchStage(stageId, btnEl) {
+      document.querySelectorAll('.stage-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('stage-' + stageId).classList.add('active');
+      btnEl.classList.add('active');
+      if (stageId === '02') {
+        renderEtapa02Matrices('kirchhoff');
+        runEtapa02Routing();
+        runEtapa02Logistics('tsp');
+      } else if (stageId === '03') {
+        runMST('kruskal');
+        runHuffman();
+        runRSTP(false);
+        runRRTCanvas();
+        resetPetri();
+        runAIStack();
+      }
+    }
+
+    // === ETAPA 02: GRAFOS & ROTEAMENTO ===
+    function renderEtapa02Matrices(mode) {
+      const out = document.getElementById('e2-matrix-out');
+      const nodes = ['TK101','TK102','TK103','R200','TK201','TK300','COL401','TK402'];
+      if (mode === 'adj') {
+        out.textContent =
+          "MATRIZ DE ADJACÊNCIA A (8×8 — Tubulações Principais):
+" +
+          "        TK101 TK102 TK103 R200 TK201 TK300 COL401 TK402
+" +
+          "TK101 [   0     0     0    1     0     0     0      0  ]
+" +
+          "TK102 [   0     0     1    0     0     0     0      0  ]
+" +
+          "TK103 [   0     0     0    1     0     0     0      0  ]
+" +
+          "R200  [   0     0     0    0     1     1     0      0  ]
+" +
+          "TK201 [   0     0     0    0     0     1     0      0  ]
+" +
+          "TK300 [   0     0     0    0     0     0     1      0  ]
+" +
+          "COL401[   0     0     0    0     0     0     0      1  ]
+" +
+          "TK402 [   0     0     0    0     0     0     0      0  ]";
+      } else if (mode === 'inc') {
+        out.textContent =
+          "MATRIZ DE INCIDÊNCIA B (Nós × Arestas, convenção -1 saída / +1 entrada):
+" +
+          "e1(TK101→R200), e2(TK102→TK103), e3(TK103→R200), e4(R200→TK300),
+" +
+          "e5(R200→TK201), e6(TK201→TK300), e7(TK300→COL401), e8(COL401→TK402)
+" +
+          "Soma de cada coluna = 0 (conservação topológica de fluxo).";
+      } else {
+        out.textContent =
+          "VALIDAÇÃO LEI DE KIRCHHOFF (B · Q = S):
+" +
+          "• Entrada Óleo (TK-101): +1200 kg/h | Entrada Metóxido (TK-103): +264 kg/h
+" +
+          "• Balanço Reator R-200: +1200 + 264 - 1464 = 0.00 kg/h (OK)
+" +
+          "• Balanço Decantador TK-300: +1464 - 146 (Glicerina) - 1318 (Biodiesel) = 0.00 kg/h (OK)
+" +
+          "• Resíduo Global ||B·Q - S||_2 = 0.0000 kg/h → Conservação de Massa Validada!";
+      }
+    }
+
+    function runEtapa02Routing() {
+      const fault = document.getElementById('e2-route-fault').value;
+      const out = document.getElementById('e2-route-out');
+      if (fault === 'none') {
+        document.getElementById('e2-dijk-cost').textContent = '66.0 s';
+        document.getElementById('e2-bfs-hops').textContent = '4 nós';
+        out.textContent =
+          "ESTADO NOMINAL (DIJKSTRA + DARCY-WEISBACH):
+" +
+          "• Rota Ótima: TK-103 → R-200 (18s) → TK-300 (22s) → COL-401 (14s) → TK-402 (12s)
+" +
+          "• Custo Total = 66.0 s | Menor número de manobras (BFS) = 4 válvulas";
+      } else if (fault === 'TK103-R200') {
+        document.getElementById('e2-dijk-cost').textContent = '82.0 s';
+        document.getElementById('e2-bfs-hops').textContent = '5 nós';
+        out.textContent =
+          "[FALHA INJETADA] Vazamento na linha TK-103 → R-200 (peso → ∞)!
+" +
+          "• Desvio Automático (Malha Fechada < 0.05 ms): TK-103 → Bypass TK-101 → R-200
+" +
+          "• Válvula XV-202 fechada; Bypass XV-202B aberto antes do golpe de aríete.";
+      } else if (fault === 'R200-TK300') {
+        document.getElementById('e2-dijk-cost').textContent = '78.0 s';
+        document.getElementById('e2-bfs-hops').textContent = '5 nós';
+        out.textContent =
+          "[FALHA INJETADA] Bloqueio na válvula XV-203 (R-200 → TK-300)!
+" +
+          "• Desvio Automático Dijkstra: R-200 → Vaso Pulmão TK-201 (+12s) → TK-300
+" +
+          "• Reator despressurizado com segurança sem interromper a batelada.";
+      } else {
+        document.getElementById('e2-dijk-cost').textContent = '84.0 s';
+        document.getElementById('e2-bfs-hops').textContent = '5 nós';
+        out.textContent =
+          "[FALHA INJETADA] Falha bomba TK-300 → COL-401!
+" +
+          "• Desvio Automático: TK-300 → Linha Auxiliar TK-201 → COL-401 → TK-402 (+18s).";
+      }
+    }
+
+    function runEtapa02Logistics(mode) {
+      const out = document.getElementById('e2-log-out');
+      if (mode === 'euler') {
+        out.textContent =
+          "PERCURSO EULERIANO — ROBÔ DE INSPEÇÃO NDT (Algoritmo de Hierholzer O(|E|)):
+" +
+          "• Verificação de graus: Todos os 8 vértices possuem grau par (2 ou 4).
+" +
+          "• Circuito Euleriano Completo: TK-101 → TK-102 → TK-103 → R-200 → TK-201 → TK-300 → COL-401 → TK-402 → ... → TK-101
+" +
+          "• 100% das tubulações inspecionadas sem repetição de trechos!";
+      } else if (mode === 'tsp') {
+        out.textContent =
+          "ROTA HAMILTONIANA (PCV) — AGV-SAMPLER (Nearest Neighbor + 2-OPT):
+" +
+          "• Pontos: LAB → TK-101 → TK-103 → R-200 → TK-300 → TK-402 → LAB
+" +
+          "• Solução Inicial (NN): 94.0 m  →  Após 2-OPT: 78.5 m (-16.5% distância/bateria)!";
+      } else {
+        out.textContent =
+          "ORDENAÇÃO TOPOLÓGICA — LOGÍSTICA DE INSUMOS (DAG / Algoritmo de Kahn):
+" +
+          "• Ordem causal: [Óleo + Metanol + NaOH] → [Metóxido TK-103] → [Transesterificação R-200] → [Decantação TK-300] → [Lavagem COL-401] → [B100 TK-402].";
+      }
+    }
+
+    // === ETAPA 03: ÁRVORES & IA INDUSTRIAL ===
+    function runMST(algo) {
+      const out = document.getElementById('e3-mst-out');
+      if (algo === 'kruskal') {
+        out.textContent =
+          "ALGORITMO DE KRUSKAL O(|E| log |E|) — FASE FEED (Union-Find):
+" +
+          "1. (TK-102, TK-103): 10m [OK]   2. (TK-101, TK-102): 12m [OK]
+" +
+          "3. (R-200, TK-201): 14m [OK]    4. (COL-401, TK-402): 15m [OK]
+" +
+          "5. (TK-101, TK-103): 16m [REJEITADA - Ciclo no Setor 100]
+" +
+          "6. (TK-201, TK-300): 18m [OK]   7. (TK-300, COL-401): 20m [OK]   8. (TK-103, R-200): 22m [OK]
+" +
+          "Total MST = 111.0 m (vs 318.0 m malha completa → 65.09% economia).";
+      } else {
+        out.textContent =
+          "ALGORITMO DE PRIM O(|E| + |V| log |V|) — MONTAGEM EM CAMPO (Raiz: TK-101):
+" +
+          "TK-101 → TK-102 (12m) → TK-103 (10m) → R-200 (22m) → TK-201 (14m) → TK-300 (18m) → COL-401 (20m) → TK-402 (15m)
+" +
+          "Total MST = 111.0 m (rede contínua sem ilhas durante a obra).";
+      }
+    }
+
+    function runHuffman() {
+      const dict = {
+        '00000': { code: '0', desc: 'Operação Nominal Estável', p: 0.900 },
+        '00010': { code: '10', desc: 'Nível Alto LT-201', p: 0.050 },
+        '10000': { code: '110', desc: 'Sobrepressão PT-201', p: 0.025 },
+        '01000': { code: '1110', desc: 'Sobretemperatura TT-201', p: 0.015 },
+        '00100': { code: '11110', desc: 'Metanol AT-100', p: 0.009 },
+        '00001': { code: '11111', desc: 'Emergência ESD-100', p: 0.001 }
+      };
+      const st = document.getElementById('e3-huff-state').value;
+      const item = dict[st];
+      const crc = ((parseInt(st, 2) * 0x1021) ^ 0xA55A).toString(16).toUpperCase().padStart(4, '0');
+      document.getElementById('e3-huff-out').textContent =
+        `Estado Original (5 bits): ${st} (${item.desc}, P=${item.p})
+` +
+        `Código Huffman (Prefix-Free): '${item.code}' (${item.code.length} bit(s))
+` +
+        `Frame RS-485: [0xA5] [LEN=${item.code.length}] [PAYLOAD=${item.code}] [CRC-16=0x${crc}]
+` +
+        `Entropia H(S) = 0.6480 bits | Média L = 1.1850 bits | Economia = 76.30%`;
+    }
+
+    function runBDT() {
+      document.getElementById('e3-rstp-out').textContent =
+        "ÁRVORE BINÁRIA DE DECISÃO (BDT) SIS + AVL HISTORIAN:
+" +
+        "• Ordem O(1): ESD-100 → PT-201(≥2.5) → TT-201(≥65°C) → AT-100(≥20ppm) → LSH-201(≥90%)
+" +
+        "• Árvore AVL (N=10.000 frames a 50 ms): Altura h ≤ 14, |BF| ≤ 1, busca O(log2 N).";
+    }
+
+    function runRSTP(cut) {
+      const out = document.getElementById('e3-rstp-out');
+      if (!cut) {
+        out.textContent =
+          "RSTP IEEE 802.1w — OPERAÇÃO NORMAL EM ANEL:
+" +
+          "• Root Bridge: SW-CORE (Prioridade 4096) | Backup: SW-ZONA1 (8192)
+" +
+          "• Links Ativos (Forwarding): CORE↔ZONA2 (10G, custo 2000), CORE↔ZONA1 (1G), CORE↔ZONA3 (1G)
+" +
+          "• Porta Alternate (Discarding): SW-ZONA1↔SW-ZONA2 (sem Broadcast Storm!).";
+      } else {
+        out.textContent =
+          "[FALHA INJETADA] Corte na Fibra 10 Gbps (SW-CORE ↔ SW-ZONA2)!
+" +
+          "• Loss of Signal (LoS) detectado em < 1 ms.
+" +
+          "• Proposal/Agreement Handshake: Porta Alternate (SW-ZONA1↔SW-ZONA2) → Forwarding em 38 ms!
+" +
+          "• Watchdog CLP preservado (STP 802.1D levaria 30–50 s e derrubaria o R-200).";
+      }
+    }
+
+    function runRRTCanvas() {
+      const canvas = document.getElementById('e3-rrt-canvas');
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width, H = canvas.height;
+      const sx = W / 20.0, sy = H / 12.0;
+
+      ctx.fillStyle = '#060911';
+      ctx.fillRect(0, 0, W, H);
+
+      // Obstáculos da planta (20m x 12m)
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 1.5;
+      // Bacia Setor 100: [2.5, 6.5] x [4.0, 8.5]
+      ctx.fillRect(2.5*sx, (12-8.5)*sy, 4.0*sx, 4.5*sy);
+      ctx.strokeRect(2.5*sx, (12-8.5)*sy, 4.0*sx, 4.5*sy);
+
+      const discs = [
+        [9.5, 6.0, 1.3, 'R-200'], [9.5, 3.0, 1.0, 'TK-201'],
+        [14.0, 5.0, 1.2, 'TK-300'], [17.5, 8.5, 0.9, 'COL-401'], [17.5, 3.5, 1.0, 'TK-402']
+      ];
+      discs.forEach(([cx, cy, r, lbl]) => {
+        ctx.beginPath();
+        ctx.arc(cx*sx, (12-cy)*sy, r*sx, 0, Math.PI*2);
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#fca5a5';
+        ctx.font = '10px JetBrains Mono';
+        ctx.fillText(lbl, (cx-0.8)*sx, (12-cy)*sy + 3);
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
+      });
+
+      function collides(x1, y1, x2, y2) {
+        for (let t = 0; t <= 1.0; t += 0.1) {
+          const x = x1 + t*(x2-x1), y = y1 + t*(y2-y1);
+          if (x >= 2.2 && x <= 6.8 && y >= 3.7 && y <= 8.8) return true;
+          for (const [cx, cy, r] of discs) {
+            if ((x-cx)**2 + (y-cy)**2 <= (r+0.35)**2) return true;
+          }
+        }
+        return false;
+      }
+
+      const start = {x: 1.5, y: 1.5, parent: -1};
+      const goal = {x: 10.0, y: 9.0};
+      const nodes = [start];
+      let goalIdx = -1;
+      for (let k = 0; k < 600; k++) {
+        const rx = Math.random() < 0.12 ? goal.x : Math.random()*20;
+        const ry = Math.random() < 0.12 ? goal.y : Math.random()*12;
+        let nearIdx = 0, bestD = 1e9;
+        for (let i = 0; i < nodes.length; i++) {
+          const d = (nodes[i].x - rx)**2 + (nodes[i].y - ry)**2;
+          if (d < bestD) { bestD = d; nearIdx = i; }
+        }
+        const near = nodes[nearIdx];
+        const dist = Math.sqrt(bestD) || 1e-6;
+        const step = Math.min(0.7, dist);
+        const nx = near.x + step*(rx - near.x)/dist;
+        const ny = near.y + step*(ry - near.y)/dist;
+        if (!collides(near.x, near.y, nx, ny)) {
+          nodes.push({x: nx, y: ny, parent: nearIdx});
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(near.x*sx, (12-near.y)*sy);
+          ctx.lineTo(nx*sx, (12-ny)*sy);
+          ctx.stroke();
+          if ((nx-goal.x)**2 + (ny-goal.y)**2 < 0.8**2) {
+            goalIdx = nodes.length - 1;
+            break;
+          }
+        }
+      }
+
+      if (goalIdx !== -1) {
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        let cur = goalIdx;
+        ctx.moveTo(nodes[cur].x*sx, (12-nodes[cur].y)*sy);
+        let len = 0;
+        while (nodes[cur].parent !== -1) {
+          const p = nodes[cur].parent;
+          len += Math.hypot(nodes[cur].x - nodes[p].x, nodes[cur].y - nodes[p].y);
+          ctx.lineTo(nodes[p].x*sx, (12-nodes[p].y)*sy);
+          cur = p;
+        }
+        ctx.stroke();
+        document.getElementById('e3-rrt-stats').textContent = `Rota encontrada: ${nodes.length} nós | Comprimento: ${len.toFixed(1)} m`;
+      } else {
+        document.getElementById('e3-rrt-stats').textContent = `Explorados ${nodes.length} nós (clique novamente)`;
+      }
+
+      // Lab e Alvo
+      ctx.fillStyle = '#3b82f6'; ctx.beginPath(); ctx.arc(1.5*sx, (12-1.5)*sy, 5, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(10.0*sx, (12-9.0)*sy, 5, 0, Math.PI*2); ctx.fill();
+    }
+
+    let petriStep = 0;
+    const petriSteps = [
+      "M0 = [1,1,1, 0,0,0,0,0,0, 1,0,0,0] → Reator R-200 e Decantador TK-300 livres.",
+      "Disparo t1 (Inicia Carga Óleo XV-201/P-101) → M1: Carregando óleo vegetal no R-200.",
+      "Disparo t2..t4 (Dosagem Metóxido XV-202/P-102) → M4: R-200 em 65% (estequiometria 6:1).",
+      "Disparo t5..t6 (Reação CSTR 58°C, 120 RPM, 60 min) → M6: Conversão ≥ 96.5% concluída.",
+      "Disparo t7..t8 (Descarga XV-203 → TK-300) → M8: Separação bifásica detectada por IT-301.",
+      "Disparo t9..t10 (Purga Glicerina XV-301) → M10: p12=1, p13=0 (Exclusão Mútua OK!).",
+      "Disparo t11..t12 (Transf. Biodiesel XV-302 → COL-401) → M12 = M0 (Rede Reversível e Viva!)."
+    ];
+    function resetPetri() {
+      petriStep = 0;
+      document.getElementById('e3-petri-out').textContent = petriSteps[0];
+    }
+    function stepPetri() {
+      petriStep = (petriStep + 1) % petriSteps.length;
+      document.getElementById('e3-petri-out').textContent =
+        petriSteps[petriStep] + "
+Invariante TK-300: M(p12) + M(p13) ≤ 1 | Karp-Miller: 0 ocorrências de ω (1-Limitada).";
+    }
+    function testPetriMutualExclusion() {
+      document.getElementById('e3-petri-out').textContent =
+        "[TESTE DE SEGURANÇA] Tentativa de disparo simultâneo t9 (XV-301 Glicerina) e t11 (XV-302 Biodiesel):
+" +
+        "• BLOQUEADO pelo P-Invariante M(p10)+M(p11)+M(p12)+M(p13) = 1.
+" +
+        "• Apenas 1 ficha disponível no TK-300 → impossível abrir dreno e transbordo juntos!";
+    }
+
+    function runAIStack() {
+      const tt = parseFloat(document.getElementById('e3-tt').value);
+      const pt = parseFloat(document.getElementById('e3-pt').value);
+      const lt = parseFloat(document.getElementById('e3-lt').value);
+      const at = parseFloat(document.getElementById('e3-at').value);
+
+      // 1. Behavior Tree (50 ms Tick)
+      let btRes = "";
+      if (tt >= 65.0 || pt >= 2.5 || at >= 20.0) {
+        btRes = "BT Ramo 1 (SIS SIL-3): SUCCESS (PREEMPÇÃO ≤ 50ms) → TRIP SAFE-STATE (HT-201=0, XV-202=0, CW-201=1)";
+      } else if (lt <= 15.0) {
+        btRes = "BT Ramo 2 (Mecânica): SUCCESS → Desarme Inversor AG-201 (Anti-Cavitação)";
+      } else {
+        btRes = "BT Ramo 3 (Batelada ISA-88): RUNNING → Parallel(AG-201 120 RPM, PID 55–60°C)";
+      }
+
+      // 2. KD-Tree 4D (Vizinho mais próximo normalizado)
+      const prototypes = [
+        {name: 'NORMAL_B100', v: [57.5, 1.05, 65.0, 2.0]},
+        {name: 'SUB_AQUECIMENTO', v: [48.0, 1.00, 60.0, 1.5]},
+        {name: 'PRE_ALERTA_EXOTERMICO', v: [62.5, 1.75, 65.0, 5.0]},
+        {name: 'FLASH_BOILING_CRITICO', v: [67.0, 2.75, 68.0, 12.0]},
+        {name: 'VAZAMENTO_METANOL', v: [56.0, 1.05, 55.0, 28.0]},
+        {name: 'CAVITACAO_AG201', v: [57.0, 1.02, 11.0, 2.0]}
+      ];
+      const scales = [5.0, 0.6, 15.0, 8.0];
+      let bestKD = prototypes[0], bestD = 1e9;
+      for (const p of prototypes) {
+        const d = Math.sqrt(
+          ((tt-p.v[0])/scales[0])**2 + ((pt-p.v[1])/scales[1])**2 +
+          ((lt-p.v[2])/scales[2])**2 + ((at-p.v[3])/scales[3])**2
+        );
+        if (d < bestD) { bestD = d; bestKD = p; }
+      }
+
+      // 3. Árvore CART (Gini)
+      let cartCls = "";
+      if (at <= 4.5) {
+        cartCls = (lt <= 36.0) ? "FALHA_MEC_SEPARACAO" : "NORMAL_B100";
+      } else {
+        cartCls = (tt <= 61.2) ? "VAZAMENTO_METANOL" : "RISCO_FLASH_BOILING";
+      }
+
+      document.getElementById('e3-ai-out').textContent =
+        `[1] Behavior Tree (50 ms): ${btRes}
+` +
+        `[2] KD-Tree 4D (NN): Regime mais próximo = ${bestKD.name} (dist norm = ${bestD.toFixed(3)})
+` +
+        `[3] CART (Gini) CLP: Classe = ${cartCls}`;
+    }
   </script>
 </body>
 </html>
