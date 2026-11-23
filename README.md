@@ -144,6 +144,41 @@ A pasta [`etapa-01-logica`](./etapa-01-logica/) contém toda a modelagem formal,
 
 ---
 
+## 🕸️ Estrutura do Repositório — Etapa 02: Teoria dos Grafos e Roteamento
+
+A pasta [`etapa-02-grafos`](./etapa-02-grafos/) reúne a modelagem da infraestrutura hidráulica, algoritmos de busca, roteamento dinâmico de fluidos e rotas logísticas de inspeção/amostragem:
+
+| Módulo | Documento Teórico (.md) | Caderno Executável (.ipynb) | Conteúdo e Foco de Engenharia |
+| :---: | :--- | :---: | :--- |
+| **11** | [11 - Modelagem da Tubulacao e Instrumentos como Grafo.md](./etapa-02-grafos/11%20-%20Modelagem%20da%20Tubulacao%20e%20Instrumentos%20como%20Grafo.md) | [11 - Modelagem da Tubulacao e Instrumentos como Grafo.ipynb](./etapa-02-grafos/11%20-%20Modelagem%20da%20Tubulacao%20e%20Instrumentos%20como%20Grafo.ipynb) | Modelagem da tubulação e instrumentos como grafo dirigido e ponderado. |
+| **12** | [12 - Matrizes de Incidencia Adjacencia e Custos.md](./etapa-02-grafos/12%20-%20Matrizes%20de%20Incidencia%20Adjacencia%20e%20Custos.md) | [12 - Matrizes de Incidencia Adjacencia e Custos.ipynb](./etapa-02-grafos/12%20-%20Matrizes%20de%20Incidencia%20Adjacencia%20e%20Custos.ipynb) | Matrizes de adjacência, incidência e ponderação por tempos/custos de processo. |
+| **13** | [13 - Algoritmos de Busca BFS e DFS em Tubulacoes.md](./etapa-02-grafos/13%20-%20Algoritmos%20de%20Busca%20BFS%20e%20DFS%20em%20Tubulacoes.md) | [13 - Algoritmos de Busca BFS e DFS em Tubulacoes.ipynb](./etapa-02-grafos/13%20-%20Algoritmos%20de%20Busca%20BFS%20e%20DFS%20em%20Tubulacoes.ipynb) | Busca em largura (BFS) e profundidade (DFS) para alcançabilidade e caminhos ativos. |
+| **14** | [14 - Menor Caminho Dijkstra e Roteamento Dinamico.md](./etapa-02-grafos/14%20-%20Menor%20Caminho%20Dijkstra%20e%20Roteamento%20Dinamico.md) | [14 - Menor Caminho Dijkstra e Roteamento Dinamico.ipynb](./etapa-02-grafos/14%20-%20Menor%20Caminho%20Dijkstra%20e%20Roteamento%20Dinamico.ipynb) | Algoritmo de Dijkstra para roteamento dinâmico de fluidos sob bloqueios. |
+| **15** | [15 - Simulacao de Vazamentos e Desvio Automatico.md](./etapa-02-grafos/15%20-%20Simulacao%20de%20Vazamentos%20e%20Desvio%20Automatico.md) | [15 - Simulacao de Vazamentos e Desvio Automatico.ipynb](./etapa-02-grafos/15%20-%20Simulacao%20de%20Vazamentos%20e%20Desvio%20Automatico.ipynb) | Injeção de falhas na malha hidráulica e validação de desvio automático. |
+| **16** | [16 - Problemas Eulerianos e Inspecao de Infraestrutura.md](./etapa-02-grafos/16%20-%20Problemas%20Eulerianos%20e%20Inspecao%20de%20Infraestrutura.md) | [16 - Problemas Eulerianos e Inspecao de Infraestrutura.ipynb](./etapa-02-grafos/16%20-%20Problemas%20Eulerianos%20e%20Inspecao%20de%20Infraestrutura.ipynb) | Percursos Eulerianos para inspeção completa da infraestrutura física. |
+| **17** | [17 - Problemas Hamiltonianos e Roteamento de AGV.md](./etapa-02-grafos/17%20-%20Problemas%20Hamiltonianos%20e%20Roteamento%20de%20AGV.md) | [17 - Problemas Hamiltonianos e Roteamento de AGV.ipynb](./etapa-02-grafos/17%20-%20Problemas%20Hamiltonianos%20e%20Roteamento%20de%20AGV.ipynb) | Problema do Caixeiro Viajante (PCV) para rota de amostragem do AGV nos tanques. |
+| **18** | [18 - Grafos de Logistica de Insumos e Produtos Acabados.md](./etapa-02-grafos/18%20-%20Grafos%20de%20Logistica%20de%20Insumos%20e%20Produtos%20Acabados.md) | [18 - Grafos de Logistica de Insumos e Produtos Acabados.ipynb](./etapa-02-grafos/18%20-%20Grafos%20de%20Logistica%20de%20Insumos%20e%20Produtos%20Acabados.ipynb) | Logística externa de insumos (óleo, metanol) e escoamento de biodiesel B100/glicerina. |
+
+---
+
+## 🌳 Estrutura do Repositório — Etapa 03: Árvores
+
+A pasta [`etapa-03-arvores`](./etapa-03-arvores/) contém a aplicação de estruturas em árvore para otimização de infraestrutura, compressão de telemetria, redes industriais, verificação formal e aprendizado de máquina no processo de biodiesel:
+
+| Aula | Documento Teórico (.md) | Caderno Executável (.ipynb) | Conteúdo e Foco de Engenharia |
+| :---: | :--- | :---: | :--- |
+| **19** | [Aula 19 - Algoritmo de Kruskal e Prim.md](./etapa-03-arvores/Aula%2019%20-%20Algoritmo%20de%20Kruskal%20e%20Prim.md) | [Aula 19 - Algoritmo de Kruskal e Prim - code.ipynb](./etapa-03-arvores/Aula%2019%20-%20Algoritmo%20de%20Kruskal%20e%20Prim%20-%20code.ipynb) | Árvore Geradora Mínima (MST) para *pipe racks* de utilidades e barramento SCADA entre os 4 setores. |
+| **20** | [Aula 20 - Algoritmo de Huffman.md](./etapa-03-arvores/Aula%2020%20-%20Algoritmo%20de%20Huffman.md) | [Aula 20 - Algoritmo de Huffman - code.ipynb](./etapa-03-arvores/Aula%2020%20-%20Algoritmo%20de%20Huffman%20-%20code.ipynb) | Compressão sem perdas da telemetria de segurança SIL-3 (`PT-201`, `TT-201`, `AT-100`, `LT-201`, `ESD-100`). |
+| **21** | [Aula 21 - Árvores Binárias.md](./etapa-03-arvores/Aula%2021%20-%20%C3%81rvores%20Bin%C3%A1rias.md) | [Aula 21 - Árvores Binárias - code.ipynb](./etapa-03-arvores/Aula%2021%20-%20%C3%81rvores%20Bin%C3%A1rias%20-%20code.ipynb) | BDT de intertravamento SIS do `R-200`, AST de expressões booleanas (`HT-201`) e árvores AVL para tags. |
+| **22** | [Aula 22 - Rapidly-exploring Random Trees.md](./etapa-03-arvores/Aula%2022%20-%20Rapidly-exploring%20Random%20Trees.md) | [Aula 22 - Rapidly-exploring Random Trees - code.ipynb](./etapa-03-arvores/Aula%2022%20-%20Rapidly-exploring%20Random%20Trees%20-%20code.ipynb) | Planejamento de trajetória contínua livre de colisão para o robô `AGV-SAMPLER` nos setores da planta. |
+| **23** | [Aula 23 - Protocolo de Árvore Geradora (STP - RSTP).md](./etapa-03-arvores/Aula%2023%20-%20Protocolo%20de%20%C3%81rvore%20Geradora%20(STP%20-%20RSTP).md) | [Aula 23 - Protocolo de Árvore Geradora (STP - RSTP) - code.ipynb](./etapa-03-arvores/Aula%2023%20-%20Protocolo%20de%20%C3%81rvore%20Geradora%20(STP%20-%20RSTP)%20-%20code.ipynb) | Redundância em anel Ethernet industrial (IEEE 802.1w RSTP) para prevenção de *broadcast storms* no SCADA. |
+| **24** | [Aula 24 - Árvore de Atingibilidade e Cobertura em Redes de Petri.md](./etapa-03-arvores/Aula%2024%20-%20%C3%81rvore%20de%20Atingibilidade%20e%20Cobertura%20em%20Redes%20de%20Petri.md) | [Aula 24 - Árvore de Atingibilidade e Cobertura em Redes de Petri - code.ipynb](./etapa-03-arvores/Aula%2024%20-%20%C3%81rvore%20de%20Atingibilidade%20e%20Cobertura%20em%20Redes%20de%20Petri%20-%20code.ipynb) | Verificação formal de concorrência, limitação e ausência de *deadlock* no ciclo ISA-88 (`R-200` e `TK-300`). |
+| **25** | [Aula 25 - Árvores de Comportamento.md](./etapa-03-arvores/Aula%2025%20-%20%C3%81rvores%20de%20Comportamento.md) | [Aula 25 - Árvores de Comportamento - code.ipynb](./etapa-03-arvores/Aula%2025%20-%20%C3%81rvores%20de%20Comportamento%20-%20code.ipynb) | Arquitetura reativa (*Fallback*, *Sequence*, *Parallel*) a 50 ms para preempção SIS e controle de batelada. |
+| **26** | [Aula 26 - KD-Trees.md](./etapa-03-arvores/Aula%2026%20-%20KD-Trees.md) | [Aula 26 - KD-Trees - code.ipynb](./etapa-03-arvores/Aula%2026%20-%20KD-Trees%20-%20code.ipynb) | Indexação 4D de estados do Reator `R-200` ($k$-NN e *Range Search*) e aceleração `NEAREST` do `AGV-SAMPLER`. |
+| **27** | [Aula 27 - Árvores de Decisão - Algoritmos Clássicos de Construção de Árvore.md](./etapa-03-arvores/Aula%2027%20-%20%C3%81rvores%20de%20Decis%C3%A3o%20-%20Algoritmos%20Cl%C3%A1ssicos%20de%20Constru%C3%A7%C3%A3o%20de%20%C3%81rvore.md) | [Aula 27 - Árvores de Decisão - Algoritmos Clássicos de Construção de Árvore - code.ipynb](./etapa-03-arvores/Aula%2027%20-%20%C3%81rvores%20de%20Decis%C3%A3o%20-%20Algoritmos%20Cl%C3%A1ssicos%20de%20Constru%C3%A7%C3%A3o%20de%20%C3%81rvore%20-%20code.ipynb) | Indução automática de regras diagnósticas (ID3, C4.5 e CART/Gini) e exportação `IF...THEN` para CLP. |
+
+---
+
 ## 🖼️ Diagrama Funcional da Planta de Biodiesel
 
 ![Diagrama Técnico de Blocos Funcionais](./etapa-01-logica/Industria_Biodiesel.jpg)
