@@ -1,18 +1,15 @@
 # Indústria Escolhida: Produção de Biodiesel (Transesterificação em Batelada)
 
-## 🌐 Simulador SCADA em Operação (GitHub Pages)
+## 🌐 Simulador SCADA em Operação (Web / GitHub Pages)
 
-Acesse o sistema supervisório e motor de inferência em tempo real diretamente pelo navegador:
+Acesse o sistema supervisório integrado das **Etapas 01, 02 e 03** diretamente pelo navegador ou abrindo o arquivo local [`index.html`](./index.html):
 
-👉 **[SCADA-Core Automática — Planta de Biodiesel (Grupo 5)](https://igorfantucci.github.io/Aula-Automatica---GRUPO-5/)**
+👉 **[Abrir Simulador Local (`index.html`)](./index.html)**  |  **[SCADA-Core Automática — GitHub Pages](https://igorfantucci.github.io/Aula-Automatica---GRUPO-5/)**
 
-O simulador web permite:
-* **Diagrama P&ID interativo completo:** Desenho vetorial em SVG nativo dos 4 setores industriais, detalhando tanques, tubulações com fluxo contínuo animado, bombas, válvulas normalizadas ($\bowtie$) com indicação dinâmica de abertura/corte, e cabos de sinalização e comando ligados ao painel do CLP;
-* **Injeção de falhas com 1 clique:** Bateria de testes com os 5 cenários de estresse operacional da Aula 10;
-* **Manipulação contínua:** Sliders analógicos ($PT-201, TT-201, LT-201, AT-100$) com discretização por histerese ($\delta$);
-* **Painel de Segurança SIS/SIL 3:** Avaliação instantânea de Permissivos de Partida e Desarmes Fail-Safe;
-* **Sistema Especialista:** Encadeamento progressivo (*Forward Chaining*) processando as Cláusulas de Horn R-01 a R-08;
-* **Auditoria Forense Explicável (XAI):** Reconstrução da árvore de prova causal por encadeamento regressivo (*Backward Chaining*).
+O simulador web (`SCADA-Core v3.0`) permite:
+* **Etapa 01 — Lógica Formal & P&ID:** Diagrama SVG interativo dos 4 setores, injeção dos 5 cenários da Aula 10, sliders analógicos ($PT-201, TT-201, LT-201, AT-100$), painel SIS/SIL-3, *Forward Chaining* (R-01 a R-08) e *Backward Chaining* (XAI);
+* **Etapa 02 — Grafos & Roteamento:** Matriz de Adjacência/Incidência, validação de balanço de massa por Lei de Kirchhoff ($B \cdot Q = S$), Dijkstra dinâmico com simulação de vazamentos em malha fechada, percurso Euleriano (Hierholzer NDT), rota Hamiltoniana do `AGV-SAMPLER` (`NN + 2-OPT`) e ordenação DAG (Kahn);
+* **Etapa 03 — Árvores & IA Industrial:** Otimização MST (Kruskal/Prim), compressão de telemetria Huffman com quadro `CRC-16`, BDT/AVL, protocolo RSTP 802.1w com corte de fibra `10 Gbps`, canvas interativo RRT + KD-Tree 2D, Rede de Petri P/T passo a passo com teste de exclusão mútua `TK-300`, Behavior Tree (`50 ms`), KD-Tree 4D e classificador CART (Gini).
 
 ---
 
@@ -182,11 +179,3 @@ A pasta [`etapa-03-arvores`](./etapa-03-arvores/) contém a aplicação de estru
 ## 🖼️ Diagrama Funcional da Planta de Biodiesel
 
 ![Diagrama Técnico de Blocos Funcionais](./etapa-01-logica/Industria_Biodiesel.jpg)
-
----
-
-## 📽️ Apresentação Executiva (Slides)
-
-Para a defesa do **Motor de Intertravamento e Diagnóstico**, a apresentação em slides está disponível em formato PDF:
-
-* **Apresentação em PDF:** [`apresentacao_etapa_01.pdf`](./etapa-01-logica/apresentacao_etapa_01.pdf)
