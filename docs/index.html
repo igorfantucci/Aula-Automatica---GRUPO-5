@@ -2707,47 +2707,30 @@
     // === ETAPA 02: GRAFOS & ROTEAMENTO ===
     function renderEtapa02Matrices(mode) {
       const out = document.getElementById('e2-matrix-out');
-      const nodes = ['TK101','TK102','TK103','R200','TK201','TK300','COL401','TK402'];
       if (mode === 'adj') {
         out.textContent =
-          "MATRIZ DE ADJACÊNCIA A (8×8 — Tubulações Principais):
-" +
-          "        TK101 TK102 TK103 R200 TK201 TK300 COL401 TK402
-" +
-          "TK101 [   0     0     0    1     0     0     0      0  ]
-" +
-          "TK102 [   0     0     1    0     0     0     0      0  ]
-" +
-          "TK103 [   0     0     0    1     0     0     0      0  ]
-" +
-          "R200  [   0     0     0    0     1     1     0      0  ]
-" +
-          "TK201 [   0     0     0    0     0     1     0      0  ]
-" +
-          "TK300 [   0     0     0    0     0     0     1      0  ]
-" +
-          "COL401[   0     0     0    0     0     0     0      1  ]
-" +
+          "MATRIZ DE ADJACÊNCIA A (8×8 — Tubulações Principais):\n" +
+          "        TK101 TK102 TK103 R200 TK201 TK300 COL401 TK402\n" +
+          "TK101 [   0     0     0    1     0     0     0      0  ]\n" +
+          "TK102 [   0     0     1    0     0     0     0      0  ]\n" +
+          "TK103 [   0     0     0    1     0     0     0      0  ]\n" +
+          "R200  [   0     0     0    0     1     1     0      0  ]\n" +
+          "TK201 [   0     0     0    0     0     1     0      0  ]\n" +
+          "TK300 [   0     0     0    0     0     0     1      0  ]\n" +
+          "COL401[   0     0     0    0     0     0     0      1  ]\n" +
           "TK402 [   0     0     0    0     0     0     0      0  ]";
       } else if (mode === 'inc') {
         out.textContent =
-          "MATRIZ DE INCIDÊNCIA B (Nós × Arestas, convenção -1 saída / +1 entrada):
-" +
-          "e1(TK101→R200), e2(TK102→TK103), e3(TK103→R200), e4(R200→TK300),
-" +
-          "e5(R200→TK201), e6(TK201→TK300), e7(TK300→COL401), e8(COL401→TK402)
-" +
+          "MATRIZ DE INCIDÊNCIA B (Nós × Arestas, convenção -1 saída / +1 entrada):\n" +
+          "e1(TK101→R200), e2(TK102→TK103), e3(TK103→R200), e4(R200→TK300),\n" +
+          "e5(R200→TK201), e6(TK201→TK300), e7(TK300→COL401), e8(COL401→TK402)\n" +
           "Soma de cada coluna = 0 (conservação topológica de fluxo).";
       } else {
         out.textContent =
-          "VALIDAÇÃO LEI DE KIRCHHOFF (B · Q = S):
-" +
-          "• Entrada Óleo (TK-101): +1200 kg/h | Entrada Metóxido (TK-103): +264 kg/h
-" +
-          "• Balanço Reator R-200: +1200 + 264 - 1464 = 0.00 kg/h (OK)
-" +
-          "• Balanço Decantador TK-300: +1464 - 146 (Glicerina) - 1318 (Biodiesel) = 0.00 kg/h (OK)
-" +
+          "VALIDAÇÃO LEI DE KIRCHHOFF (B · Q = S):\n" +
+          "• Entrada Óleo (TK-101): +1200 kg/h | Entrada Metóxido (TK-103): +264 kg/h\n" +
+          "• Balanço Reator R-200: +1200 + 264 - 1464 = 0.00 kg/h (OK)\n" +
+          "• Balanço Decantador TK-300: +1464 - 146 (Glicerina) - 1318 (Biodiesel) = 0.00 kg/h (OK)\n" +
           "• Resíduo Global ||B·Q - S||_2 = 0.0000 kg/h → Conservação de Massa Validada!";
       }
     }
@@ -2759,35 +2742,28 @@
         document.getElementById('e2-dijk-cost').textContent = '66.0 s';
         document.getElementById('e2-bfs-hops').textContent = '4 nós';
         out.textContent =
-          "ESTADO NOMINAL (DIJKSTRA + DARCY-WEISBACH):
-" +
-          "• Rota Ótima: TK-103 → R-200 (18s) → TK-300 (22s) → COL-401 (14s) → TK-402 (12s)
-" +
+          "ESTADO NOMINAL (DIJKSTRA + DARCY-WEISBACH):\n" +
+          "• Rota Ótima: TK-103 → R-200 (18s) → TK-300 (22s) → COL-401 (14s) → TK-402 (12s)\n" +
           "• Custo Total = 66.0 s | Menor número de manobras (BFS) = 4 válvulas";
       } else if (fault === 'TK103-R200') {
         document.getElementById('e2-dijk-cost').textContent = '82.0 s';
         document.getElementById('e2-bfs-hops').textContent = '5 nós';
         out.textContent =
-          "[FALHA INJETADA] Vazamento na linha TK-103 → R-200 (peso → ∞)!
-" +
-          "• Desvio Automático (Malha Fechada < 0.05 ms): TK-103 → Bypass TK-101 → R-200
-" +
+          "[FALHA INJETADA] Vazamento na linha TK-103 → R-200 (peso → ∞)!\n" +
+          "• Desvio Automático (Malha Fechada < 0.05 ms): TK-103 → Bypass TK-101 → R-200\n" +
           "• Válvula XV-202 fechada; Bypass XV-202B aberto antes do golpe de aríete.";
       } else if (fault === 'R200-TK300') {
         document.getElementById('e2-dijk-cost').textContent = '78.0 s';
         document.getElementById('e2-bfs-hops').textContent = '5 nós';
         out.textContent =
-          "[FALHA INJETADA] Bloqueio na válvula XV-203 (R-200 → TK-300)!
-" +
-          "• Desvio Automático Dijkstra: R-200 → Vaso Pulmão TK-201 (+12s) → TK-300
-" +
+          "[FALHA INJETADA] Bloqueio na válvula XV-203 (R-200 → TK-300)!\n" +
+          "• Desvio Automático Dijkstra: R-200 → Vaso Pulmão TK-201 (+12s) → TK-300\n" +
           "• Reator despressurizado com segurança sem interromper a batelada.";
       } else {
         document.getElementById('e2-dijk-cost').textContent = '84.0 s';
         document.getElementById('e2-bfs-hops').textContent = '5 nós';
         out.textContent =
-          "[FALHA INJETADA] Falha bomba TK-300 → COL-401!
-" +
+          "[FALHA INJETADA] Falha bomba TK-300 → COL-401!\n" +
           "• Desvio Automático: TK-300 → Linha Auxiliar TK-201 → COL-401 → TK-402 (+18s).";
       }
     }
@@ -2796,24 +2772,18 @@
       const out = document.getElementById('e2-log-out');
       if (mode === 'euler') {
         out.textContent =
-          "PERCURSO EULERIANO — ROBÔ DE INSPEÇÃO NDT (Algoritmo de Hierholzer O(|E|)):
-" +
-          "• Verificação de graus: Todos os 8 vértices possuem grau par (2 ou 4).
-" +
-          "• Circuito Euleriano Completo: TK-101 → TK-102 → TK-103 → R-200 → TK-201 → TK-300 → COL-401 → TK-402 → ... → TK-101
-" +
+          "PERCURSO EULERIANO — ROBÔ DE INSPEÇÃO NDT (Algoritmo de Hierholzer O(|E|)):\n" +
+          "• Verificação de graus: Todos os 8 vértices possuem grau par (2 ou 4).\n" +
+          "• Circuito Euleriano Completo: TK-101 → TK-102 → TK-103 → R-200 → TK-201 → TK-300 → COL-401 → TK-402 → ... → TK-101\n" +
           "• 100% das tubulações inspecionadas sem repetição de trechos!";
       } else if (mode === 'tsp') {
         out.textContent =
-          "ROTA HAMILTONIANA (PCV) — AGV-SAMPLER (Nearest Neighbor + 2-OPT):
-" +
-          "• Pontos: LAB → TK-101 → TK-103 → R-200 → TK-300 → TK-402 → LAB
-" +
+          "ROTA HAMILTONIANA (PCV) — AGV-SAMPLER (Nearest Neighbor + 2-OPT):\n" +
+          "• Pontos: LAB → TK-101 → TK-103 → R-200 → TK-300 → TK-402 → LAB\n" +
           "• Solução Inicial (NN): 94.0 m  →  Após 2-OPT: 78.5 m (-16.5% distância/bateria)!";
       } else {
         out.textContent =
-          "ORDENAÇÃO TOPOLÓGICA — LOGÍSTICA DE INSUMOS (DAG / Algoritmo de Kahn):
-" +
+          "ORDENAÇÃO TOPOLÓGICA — LOGÍSTICA DE INSUMOS (DAG / Algoritmo de Kahn):\n" +
           "• Ordem causal: [Óleo + Metanol + NaOH] → [Metóxido TK-103] → [Transesterificação R-200] → [Decantação TK-300] → [Lavagem COL-401] → [B100 TK-402].";
       }
     }
@@ -2823,23 +2793,16 @@
       const out = document.getElementById('e3-mst-out');
       if (algo === 'kruskal') {
         out.textContent =
-          "ALGORITMO DE KRUSKAL O(|E| log |E|) — FASE FEED (Union-Find):
-" +
-          "1. (TK-102, TK-103): 10m [OK]   2. (TK-101, TK-102): 12m [OK]
-" +
-          "3. (R-200, TK-201): 14m [OK]    4. (COL-401, TK-402): 15m [OK]
-" +
-          "5. (TK-101, TK-103): 16m [REJEITADA - Ciclo no Setor 100]
-" +
-          "6. (TK-201, TK-300): 18m [OK]   7. (TK-300, COL-401): 20m [OK]   8. (TK-103, R-200): 22m [OK]
-" +
+          "ALGORITMO DE KRUSKAL O(|E| log |E|) — FASE FEED (Union-Find):\n" +
+          "1. (TK-102, TK-103): 10m [OK]   2. (TK-101, TK-102): 12m [OK]\n" +
+          "3. (R-200, TK-201): 14m [OK]    4. (COL-401, TK-402): 15m [OK]\n" +
+          "5. (TK-101, TK-103): 16m [REJEITADA - Ciclo no Setor 100]\n" +
+          "6. (TK-201, TK-300): 18m [OK]   7. (TK-300, COL-401): 20m [OK]   8. (TK-103, R-200): 22m [OK]\n" +
           "Total MST = 111.0 m (vs 318.0 m malha completa → 65.09% economia).";
       } else {
         out.textContent =
-          "ALGORITMO DE PRIM O(|E| + |V| log |V|) — MONTAGEM EM CAMPO (Raiz: TK-101):
-" +
-          "TK-101 → TK-102 (12m) → TK-103 (10m) → R-200 (22m) → TK-201 (14m) → TK-300 (18m) → COL-401 (20m) → TK-402 (15m)
-" +
+          "ALGORITMO DE PRIM O(|E| + |V| log |V|) — MONTAGEM EM CAMPO (Raiz: TK-101):\n" +
+          "TK-101 → TK-102 (12m) → TK-103 (10m) → R-200 (22m) → TK-201 (14m) → TK-300 (18m) → COL-401 (20m) → TK-402 (15m)\n" +
           "Total MST = 111.0 m (rede contínua sem ilhas durante a obra).";
       }
     }
@@ -2857,21 +2820,16 @@
       const item = dict[st];
       const crc = ((parseInt(st, 2) * 0x1021) ^ 0xA55A).toString(16).toUpperCase().padStart(4, '0');
       document.getElementById('e3-huff-out').textContent =
-        `Estado Original (5 bits): ${st} (${item.desc}, P=${item.p})
-` +
-        `Código Huffman (Prefix-Free): '${item.code}' (${item.code.length} bit(s))
-` +
-        `Frame RS-485: [0xA5] [LEN=${item.code.length}] [PAYLOAD=${item.code}] [CRC-16=0x${crc}]
-` +
+        `Estado Original (5 bits): ${st} (${item.desc}, P=${item.p})\n` +
+        `Código Huffman (Prefix-Free): '${item.code}' (${item.code.length} bit(s))\n` +
+        `Frame RS-485: [0xA5] [LEN=${item.code.length}] [PAYLOAD=${item.code}] [CRC-16=0x${crc}]\n` +
         `Entropia H(S) = 0.6480 bits | Média L = 1.1850 bits | Economia = 76.30%`;
     }
 
     function runBDT() {
       document.getElementById('e3-rstp-out').textContent =
-        "ÁRVORE BINÁRIA DE DECISÃO (BDT) SIS + AVL HISTORIAN:
-" +
-        "• Ordem O(1): ESD-100 → PT-201(≥2.5) → TT-201(≥65°C) → AT-100(≥20ppm) → LSH-201(≥90%)
-" +
+        "ÁRVORE BINÁRIA DE DECISÃO (BDT) SIS + AVL HISTORIAN:\n" +
+        "• Ordem O(1): ESD-100 → PT-201(≥2.5) → TT-201(≥65°C) → AT-100(≥20ppm) → LSH-201(≥90%)\n" +
         "• Árvore AVL (N=10.000 frames a 50 ms): Altura h ≤ 14, |BF| ≤ 1, busca O(log2 N).";
     }
 
@@ -2879,21 +2837,15 @@
       const out = document.getElementById('e3-rstp-out');
       if (!cut) {
         out.textContent =
-          "RSTP IEEE 802.1w — OPERAÇÃO NORMAL EM ANEL:
-" +
-          "• Root Bridge: SW-CORE (Prioridade 4096) | Backup: SW-ZONA1 (8192)
-" +
-          "• Links Ativos (Forwarding): CORE↔ZONA2 (10G, custo 2000), CORE↔ZONA1 (1G), CORE↔ZONA3 (1G)
-" +
+          "RSTP IEEE 802.1w — OPERAÇÃO NORMAL EM ANEL:\n" +
+          "• Root Bridge: SW-CORE (Prioridade 4096) | Backup: SW-ZONA1 (8192)\n" +
+          "• Links Ativos (Forwarding): CORE↔ZONA2 (10G, custo 2000), CORE↔ZONA1 (1G), CORE↔ZONA3 (1G)\n" +
           "• Porta Alternate (Discarding): SW-ZONA1↔SW-ZONA2 (sem Broadcast Storm!).";
       } else {
         out.textContent =
-          "[FALHA INJETADA] Corte na Fibra 10 Gbps (SW-CORE ↔ SW-ZONA2)!
-" +
-          "• Loss of Signal (LoS) detectado em < 1 ms.
-" +
-          "• Proposal/Agreement Handshake: Porta Alternate (SW-ZONA1↔SW-ZONA2) → Forwarding em 38 ms!
-" +
+          "[FALHA INJETADA] Corte na Fibra 10 Gbps (SW-CORE ↔ SW-ZONA2)!\n" +
+          "• Loss of Signal (LoS) detectado em < 1 ms.\n" +
+          "• Proposal/Agreement Handshake: Porta Alternate (SW-ZONA1↔SW-ZONA2) → Forwarding em 38 ms!\n" +
           "• Watchdog CLP preservado (STP 802.1D levaria 30–50 s e derrubaria o R-200).";
       }
     }
@@ -2907,11 +2859,9 @@
       ctx.fillStyle = '#060911';
       ctx.fillRect(0, 0, W, H);
 
-      // Obstáculos da planta (20m x 12m)
       ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
       ctx.strokeStyle = '#ef4444';
       ctx.lineWidth = 1.5;
-      // Bacia Setor 100: [2.5, 6.5] x [4.0, 8.5]
       ctx.fillRect(2.5*sx, (12-8.5)*sy, 4.0*sx, 4.5*sy);
       ctx.strokeRect(2.5*sx, (12-8.5)*sy, 4.0*sx, 4.5*sy);
 
@@ -2991,7 +2941,6 @@
         document.getElementById('e3-rrt-stats').textContent = `Explorados ${nodes.length} nós (clique novamente)`;
       }
 
-      // Lab e Alvo
       ctx.fillStyle = '#3b82f6'; ctx.beginPath(); ctx.arc(1.5*sx, (12-1.5)*sy, 5, 0, Math.PI*2); ctx.fill();
       ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(10.0*sx, (12-9.0)*sy, 5, 0, Math.PI*2); ctx.fill();
     }
@@ -3013,15 +2962,12 @@
     function stepPetri() {
       petriStep = (petriStep + 1) % petriSteps.length;
       document.getElementById('e3-petri-out').textContent =
-        petriSteps[petriStep] + "
-Invariante TK-300: M(p12) + M(p13) ≤ 1 | Karp-Miller: 0 ocorrências de ω (1-Limitada).";
+        petriSteps[petriStep] + "\nInvariante TK-300: M(p12) + M(p13) ≤ 1 | Karp-Miller: 0 ocorrências de ω (1-Limitada).";
     }
     function testPetriMutualExclusion() {
       document.getElementById('e3-petri-out').textContent =
-        "[TESTE DE SEGURANÇA] Tentativa de disparo simultâneo t9 (XV-301 Glicerina) e t11 (XV-302 Biodiesel):
-" +
-        "• BLOQUEADO pelo P-Invariante M(p10)+M(p11)+M(p12)+M(p13) = 1.
-" +
+        "[TESTE DE SEGURANÇA] Tentativa de disparo simultâneo t9 (XV-301 Glicerina) e t11 (XV-302 Biodiesel):\n" +
+        "• BLOQUEADO pelo P-Invariante M(p10)+M(p11)+M(p12)+M(p13) = 1.\n" +
         "• Apenas 1 ficha disponível no TK-300 → impossível abrir dreno e transbordo juntos!";
     }
 
@@ -3031,7 +2977,6 @@ Invariante TK-300: M(p12) + M(p13) ≤ 1 | Karp-Miller: 0 ocorrências de ω (1-
       const lt = parseFloat(document.getElementById('e3-lt').value);
       const at = parseFloat(document.getElementById('e3-at').value);
 
-      // 1. Behavior Tree (50 ms Tick)
       let btRes = "";
       if (tt >= 65.0 || pt >= 2.5 || at >= 20.0) {
         btRes = "BT Ramo 1 (SIS SIL-3): SUCCESS (PREEMPÇÃO ≤ 50ms) → TRIP SAFE-STATE (HT-201=0, XV-202=0, CW-201=1)";
@@ -3041,7 +2986,6 @@ Invariante TK-300: M(p12) + M(p13) ≤ 1 | Karp-Miller: 0 ocorrências de ω (1-
         btRes = "BT Ramo 3 (Batelada ISA-88): RUNNING → Parallel(AG-201 120 RPM, PID 55–60°C)";
       }
 
-      // 2. KD-Tree 4D (Vizinho mais próximo normalizado)
       const prototypes = [
         {name: 'NORMAL_B100', v: [57.5, 1.05, 65.0, 2.0]},
         {name: 'SUB_AQUECIMENTO', v: [48.0, 1.00, 60.0, 1.5]},
@@ -3060,7 +3004,6 @@ Invariante TK-300: M(p12) + M(p13) ≤ 1 | Karp-Miller: 0 ocorrências de ω (1-
         if (d < bestD) { bestD = d; bestKD = p; }
       }
 
-      // 3. Árvore CART (Gini)
       let cartCls = "";
       if (at <= 4.5) {
         cartCls = (lt <= 36.0) ? "FALHA_MEC_SEPARACAO" : "NORMAL_B100";
@@ -3069,10 +3012,8 @@ Invariante TK-300: M(p12) + M(p13) ≤ 1 | Karp-Miller: 0 ocorrências de ω (1-
       }
 
       document.getElementById('e3-ai-out').textContent =
-        `[1] Behavior Tree (50 ms): ${btRes}
-` +
-        `[2] KD-Tree 4D (NN): Regime mais próximo = ${bestKD.name} (dist norm = ${bestD.toFixed(3)})
-` +
+        `[1] Behavior Tree (50 ms): ${btRes}\n` +
+        `[2] KD-Tree 4D (NN): Regime mais próximo = ${bestKD.name} (dist norm = ${bestD.toFixed(3)})\n` +
         `[3] CART (Gini) CLP: Classe = ${cartCls}`;
     }
   </script>

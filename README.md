@@ -1,10 +1,12 @@
 # Indústria Escolhida: Produção de Biodiesel (Transesterificação em Batelada)
 
-## 🌐 Simulador SCADA em Operação (Web / GitHub Pages)
+## 🌐 Simulador SCADA em Operação (GitHub Pages)
 
-Acesse o sistema supervisório integrado das **Etapas 01, 02 e 03** diretamente pelo navegador ou abrindo o arquivo local [`index.html`](./index.html):
+Acesse o sistema supervisório integrado das **Etapas 01, 02 e 03** diretamente pelo navegador (via GitHub Pages):
 
-👉 **[Abrir Simulador Local (`index.html`)](./index.html)**  |  **[SCADA-Core Automática — GitHub Pages](https://igorfantucci.github.io/Aula-Automatica---GRUPO-5/)**
+👉 **[Abrir Simulador SCADA-Core v3.0 (GitHub Pages)](https://igorfantucci.github.io/Aula-Automatica---GRUPO-5/)**
+
+> *(Nota: no repositório do GitHub, clicar diretamente em `index.html` exibe o código-fonte. Para executar localmente no PC, baixe o repositório e abra o arquivo [`index.html`](./index.html) no seu navegador.)*
 
 O simulador web (`SCADA-Core v3.0`) permite:
 * **Etapa 01 — Lógica Formal & P&ID:** Diagrama SVG interativo dos 4 setores, injeção dos 5 cenários da Aula 10, sliders analógicos ($PT-201, TT-201, LT-201, AT-100$), painel SIS/SIL-3, *Forward Chaining* (R-01 a R-08) e *Backward Chaining* (XAI);
